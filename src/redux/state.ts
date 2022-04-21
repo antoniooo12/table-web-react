@@ -1,12 +1,12 @@
-import {EnumTableReducer, Item, TableReducerActions, TableState} from "./reduxTypes";
+import {EnumStatus, EnumTableReducer, Item, TableReducerActions, TableState, TStatus} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
 import {v4 as uuidv4} from 'uuid';
 
 
 const defaultState: TableState = {
     storage: new Map([
-        ['isAll', {data: []}],
-        ['isNew', {data: []}]
+        [EnumStatus.isAll, {data: []}],
+        [EnumStatus.isNew, {data: []}]
     ])
 }
 
@@ -37,34 +37,53 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
             }, new Map<string, Item>())
 
             return produce(state, draft => {
-                draft.storage.get('isNew')?.data.push({
-                    id: Date.now(),
-                    wasEdit: false,
+                draft.storage.get(EnumStatus.isNew)?.data.push({
+                    lineInformation: {
+                        status: EnumStatus.isNew,
+                        toDelete: false,
+                        id: uuidv4(),
+                        wasEdit: false,
+                    },
                     columns: columns,
-                    toDelete: false
                 })
             })
         }
         case EnumTableReducer.changeCell: {
             const {status, value, nameCell, lineId, TypeSubData, parentCell} = action.payload
+
+            // console.log(typeof status === TStatus)
+            // if()
             return produce(state, draft => {
-                const line = draft.storage.get(status)
-                    ?.data.find(line => line.id === lineId)
-
-                if (TypeSubData === 'default') {
-                    const cell = line?.columns.get(nameCell)
-                    if (cell) {
-                        line?.columns.set(nameCell, {...cell, value: value})
-                    }
-                } else if (TypeSubData === "Map" && parentCell) {
-                    const cell = line?.columns.get(parentCell)?.subData?.get(nameCell)
-                    if (cell) {
-                        line?.columns.get(parentCell)?.subData?.set(nameCell, {...cell, value})
-                    }
-
+                const lineIndex = draft.storage.get(status)!.data
+                    .findIndex(line => line.lineInformation.id === lineId)
+                const line = draft.storage.get(status)!.data[lineIndex]
+                const cell = line?.columns.get(nameCell)
+                if (cell) {
+                    line?.columns.set(nameCell, {...cell, value: value})
                 }
 
 
+            })
+        }
+        case EnumTableReducer.deleteLine: {
+            const {status, lineId} = action.payload
+            return produce(state, draft => {
+                const lineIndex = state.storage.get(status)!.data.findIndex(el => {
+                    console.log(el.lineInformation.id, lineId)
+                    if (el.lineInformation.id === lineId) {
+                        return el
+                    }
+                })
+                // console.log(lineIndex)
+                // console.log(state.storage.get(status)?.data)
+                const line = draft.storage.get(status)!.data[lineIndex]
+                // console.log(line)
+                draft.storage.get(status)?.data.splice(lineIndex, 1, {
+                    ...line, lineInformation: {
+                        ...line.lineInformation, toDelete: !line.lineInformation.toDelete
+                    }
+                })
+                // draft.storage.get(status)?.data.splice(lineIndex,1,{ ...line, toDelete: !line.toDelete})
             })
         }
         default:

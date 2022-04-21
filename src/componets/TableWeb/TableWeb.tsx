@@ -7,14 +7,17 @@ import {Header} from "../Header/Header";
 import {Provider} from "react-redux";
 import {tableStore} from "../../redux";
 import {TableWebContext} from "./TableWebContext";
+import {useWebTable} from "../../hooks/useWebTable";
+import {BottomTablePanel} from "../Panels/BottomTablePanel";
 
 const TableWeb: React.FC<{ tableStructure: TableStructure }> = ({tableStructure}) => {
     const {shield} = tableStructure
-
+const {columns}= useWebTable(tableStructure)
     return (
         <TableWebContext.Provider
             value={{
-                columnParams: shield.columns
+                columns,
+                shield: shield
             }}
         >
             <Provider store={tableStore}>
@@ -22,12 +25,14 @@ const TableWeb: React.FC<{ tableStructure: TableStructure }> = ({tableStructure}
                 <div
                 className={cl.wrapper}
                 >
+                    <BottomTablePanel columnStructure={columns}/>
+
                     <Header/>
                     <Shield shieldStructure={shield}/>
 
                 </div>
             </Provider>
-        </TableWebContext.Provider>
+        // </TableWebContext.Provider>
     );
 };
 

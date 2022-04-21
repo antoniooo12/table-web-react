@@ -1,8 +1,28 @@
 .wrapper {
+  position: relative;
+  //padding-left: 5px;
   height: fit-content;
   display: flex;
-width: fit-content;
+  width: fit-content;
+  transition: .3s ;
+//transform: translate3d(0, -100%,0);
 }
-.newLine{
+.wrapperLaunch{
+
+}
+.deleteLine::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 50%;
+  width: calc(100% - 42px);
+  height: 2px;
+  background-color: #1c1c1c;
+}
+.allLine {
   background-color: #F4F7FC;
+}
+
+.newLine {
+  background-color: #FFE1E1;
 }

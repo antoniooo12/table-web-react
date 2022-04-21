@@ -22,13 +22,31 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel'| 'checkbox'
+type InputAdditionalParams = {
+    number: InputAdditionalParamsNumber
+    tel: InputAdditionalParamsTel
+}
+export type InputAdditionalParamsTel = {
+    format: string
+}
+export type InputAdditionalParamsNumber = {
+    min: number
+    max: number
+    step: number
+}
+// export type InputAdditionalAttributes = { tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
+export type InputAdditionalAttributes =  InputAdditionalParamsTel | InputAdditionalParamsNumber
+
 export type Column = {
-    name: string
-    type: HTMLInputTypeAttribute
+    title: string
+    type: InputType
     default?: number | string | boolean
     position: keyof typeof position
     width: number | 'inherit'
-    visible: boolean
+    additionalParams?: InputAdditionalAttributes
+    hidden?: boolean
+    selectListOptions?: { text: string, value: string }[]
     subColumns?: {
         type: 'Array' | 'Map',
         data: Map<string, Column>
@@ -38,7 +56,12 @@ export type Column = {
 }
 export type Columns = Map<string, Column>
 export type SectionTableStructure = {
-    sectionName: string
+    sectionNameParams: {
+        hidden?: boolean
+        title: string
+        weight: number
+        fontSize: number
+    }
     sectionInner?: SectionTable
     columns?: Columns
 }

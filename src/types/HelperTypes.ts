@@ -1,0 +1,1 @@
+ export type SNB =string | number | boolean

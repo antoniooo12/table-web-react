@@ -1,7 +1,7 @@
 import React from 'react';
-import {PanelButton} from "../buttons/PanelButton/PanelButton";
 import {useActionsTable} from "../../hooks/useActionsTable";
 import {Columns} from "../../types/TableStructure";
+import {Button} from "../buttons/Button/Button";
 
 type BottomTablePanel = {
     columnStructure: Columns
@@ -10,9 +10,12 @@ const BottomTablePanel: React.FC<BottomTablePanel> = React.memo(({columnStructur
     const {tableCreateLine} = useActionsTable()
     return (
         <div>
-            <PanelButton onClick={() => {
+            <Button
+                style={'blue'}
+                onClick={() => {
+                    console.log('redux')
                 tableCreateLine(columnStructure)
-            }}>Add</PanelButton>
+            }}>Add</Button>
         </div>
     );
 },);

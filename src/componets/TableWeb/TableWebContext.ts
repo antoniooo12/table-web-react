@@ -1,8 +1,9 @@
 import {createContext} from "react";
-import {Columns} from "../../types/TableStructure";
+import {Column, TShieldStructure} from "../../types/TableStructure";
 
 type TableWebContext = {
-    columnParams: Columns
+    columns: Map<string, Column>
+    shield: TShieldStructure
 }
 
 export const TableWebContext = createContext<TableWebContext>({} as TableWebContext)

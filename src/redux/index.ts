@@ -11,7 +11,7 @@ const rootTableReducer = combineReducers({
 
 export type RootTableReducer = ReturnType<typeof rootTableReducer>
 
-const composeEnhancers = composeWithDevTools({name: 'table processor', serialize: true});
+const composeEnhancers = composeWithDevTools({name: 'table processor', serialize: true,});
 
 export const tableStore = createStore(rootTableReducer, composeEnhancers(applyMiddleware(thunk)))
 

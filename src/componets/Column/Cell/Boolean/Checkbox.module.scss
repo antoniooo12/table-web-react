@@ -1,0 +1,18 @@
+.checkbox{
+  cursor: pointer;
+  user-select: none;
+  background-color: #F4F7FC;
+  position: relative;
+  width: 80%;
+  max-width: 40px;
+  border-radius: 5px;
+  height: 80%;
+}
+.icon{
+  transform: translate(-50%, -50%);
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
