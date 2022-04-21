@@ -30,7 +30,7 @@ import {
 //         }],
 //         ['number', {
 //             title: "номер",
-//             type: 'tel',
+//             type: 'Tel',
 //             position: 'full',
 //             width: 100,
 //             placeholder: "номер",
@@ -167,6 +167,9 @@ const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes
     min: 1,
     step: 0.25,
 }
+const clientPhoneColumnAdditionalInformation:  Extract<InputAdditionalAttributes, InputAdditionalParamsTel>={
+    format: '[+38]_xxx_xxx_xx_xx_'
+}
 const clientRatingColumn: Column = {
     title: 'рейтинг',
     type: 'number',
@@ -180,9 +183,15 @@ const clientActiveColumn: Column = {
     type: 'checkbox',
     position: 'full',
     width: 90,
-    additionalParams: clientRatingColumnAdditionalInformation
 }
-
+const clientPhoneColumn:Column ={
+    title: 'номер',
+    type: 'tel',
+    position: 'full',
+    width: 120,
+    additionalParams:clientPhoneColumnAdditionalInformation
+}
+const clientPhoneTuple: [string, Column] = ['clientPhone', clientPhoneColumn]
 const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
 const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
 export const testTable: TableStructure = {
@@ -203,6 +212,7 @@ export const testTable: TableStructure = {
                     }],
                     clientRatingTuple,
                     clientActiveTuple,
+                    clientPhoneTuple,
                 ])
 
             }]

@@ -35,7 +35,7 @@ export type InputAdditionalParamsNumber = {
     max: number
     step: number
 }
-// export type InputAdditionalAttributes = { tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
+// export type InputAdditionalAttributes = { Tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
 export type InputAdditionalAttributes =  InputAdditionalParamsTel | InputAdditionalParamsNumber
 
 export type Column = {

@@ -8,6 +8,7 @@ import {LineContext} from "../../Line/LineContext";
 import {CellNumber} from "./Number/CellNumber";
 import {CellBoolean} from "./Boolean/CellBoolean";
 import {SNB} from "../../../types/HelperTypes";
+import {CellTel} from "./Tel/CellTel";
 
 export type TCellAggregator = {
     nameInput: string
@@ -20,7 +21,7 @@ const cells: { [key in InputType]: { cell: React.FC<TCell>, initialState: string
     text: {cell: CellText, initialState: ''},
     number: {cell: CellNumber, initialState: 0},
     checkbox: {cell: CellBoolean, initialState: false},
-    tel: {cell: CellText, initialState: ''},
+    tel: {cell: CellTel, initialState: ''},
     textarea: {cell: CellText, initialState: ''},
     select: {cell: CellText, initialState: ''},
 }
