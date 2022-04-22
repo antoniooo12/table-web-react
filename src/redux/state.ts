@@ -1,6 +1,8 @@
 import {EnumStatus, EnumTableReducer, Item, TableReducerActions, TableState, TStatus} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
 import {v4 as uuidv4} from 'uuid';
+import {selectCellType, selectType} from "../hellpers/helpers";
+import {CellParam, Column} from "../types/TableStructure";
 
 
 const defaultState: TableState = {
@@ -15,21 +17,20 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
     switch (action.type) {
         case EnumTableReducer.createLine: {
             const structure = action.payload
-            const defaultItem = (name: string): Item => {
+            const defaultItem = (name: string, cellParam: CellParam): Item => {
                 return {
                     id: uuidv4(),
                     nameColumn: name,
                     wasEdit: false,
-                    value: '',
-
+                    value: selectCellType(cellParam.type, cellParam?.default),
                 }
             }
             const columns = [...structure.entries()].reduce((accum, item) => {
                 const subColumns = item[1].subColumns
                 accum.set(item[0], {
-                    ...defaultItem(item[0]),
+                    ...defaultItem(item[0], item[1].cellParam),
                     subData: subColumns && [...subColumns.data.entries()].reduce((subAccum, subCell) => {
-                        subAccum.set(subCell[0], defaultItem(subCell[0]))
+                        subAccum.set(subCell[0], defaultItem(subCell[0], subCell[1].cellParam))
                         return subAccum
                     }, new Map<string, Item>())
                 })

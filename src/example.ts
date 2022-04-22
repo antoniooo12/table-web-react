@@ -167,51 +167,60 @@ const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes
     min: 1,
     step: 0.25,
 }
-const clientPhoneColumnAdditionalInformation:  Extract<InputAdditionalAttributes, InputAdditionalParamsTel>={
-    format: '[+38]_xxx_xxx_xx_xx_'
+const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsTel> = {
+    format: 'xxx_xxx_xx_xx_'
 }
 const clientRatingColumn: Column = {
     title: 'рейтинг',
-    type: 'number',
-    position: 'full',
     width: 90,
-    additionalParams: clientRatingColumnAdditionalInformation
+    cellParam: {
+        type: 'number',
+        default: 5,
+        additionalParams: clientRatingColumnAdditionalInformation
+    },
+
 }
 
 const clientActiveColumn: Column = {
     title: 'активний',
-    type: 'checkbox',
-    position: 'full',
+    cellParam:{
+        type:'checkbox'
+    },
     width: 90,
 }
-const clientPhoneColumn:Column ={
+const clientPhoneColumn: Column = {
     title: 'номер',
-    type: 'tel',
-    position: 'full',
-    width: 120,
-    additionalParams:clientPhoneColumnAdditionalInformation
+    cellParam:{
+        type: 'tel',
+        additionalParams: clientPhoneColumnAdditionalInformation,
+    },
+    width: 180,
 }
 const clientPhoneTuple: [string, Column] = ['clientPhone', clientPhoneColumn]
 const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
 const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
+const clientNameTuple: [string, Column] = ['clientName', {
+    title: 'Імʼя клієнта',
+    cellParam: {
+        type: 'text',
+        placeholder: 'імʼя'
+    },
+    width: 100,
+
+}]
 export const testTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
             ['orderInformation', {
                 sectionNameParams: {
-                    title: 'побажання до квартири',
+                    title: 'інформація про клієнта',
                     weight: 100,
                     fontSize: 12
                 },
                 columns: new Map<string, Column>([
-                    ['clientName', {
-                        title: 'Імʼя клієнта',
-                        type: 'text',
-                        position: 'full',
-                        width: 100,
-                    }],
+                    clientNameTuple,
                     clientRatingTuple,
-                    clientActiveTuple,
+                    // clientActiveTuple,
                     clientPhoneTuple,
                 ])
 

@@ -8,7 +8,7 @@ export type TButton=  React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLBut
     style ?:'default' | 'blue'
 }
 
-const Button:React.FC<TButton> = ({style, children,...props}) => {
+const Button:React.FC<TButton> = React.memo(({style, children,...props}) => {
     return (
         <button
             className={clsx({[cl.wrapper]: true, [cl.blue]: style === "blue"})}
@@ -17,6 +17,8 @@ const Button:React.FC<TButton> = ({style, children,...props}) => {
             {children}
         </button>
     );
-};
-
+},assertParams);
+function assertParams(){
+    return true
+}
 export {Button};

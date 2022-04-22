@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Button, TButton} from "../../../buttons/Button/Button";
 import {SvgTrash} from "../../../SVG/SvgTrash";
 import {useActionsTable} from "../../../../hooks/useActionsTable";
@@ -10,12 +10,12 @@ type LineDeleteButton = TButton & {
 }
 const LineDeleteButton: React.FC<LineDeleteButton> = ({lineId, status}) => {
     const {tableDeleteLine} = useActionsTable()
-    console.log(lineId, status)
+    const onClick = useCallback(() => {
+        tableDeleteLine({lineId, status})
+    },[])
     return (
         <Button
-            onClick={() => {
-                tableDeleteLine({lineId, status})
-            }}
+            onClick={onClick}
         >
             <SvgTrash/>
         </Button>

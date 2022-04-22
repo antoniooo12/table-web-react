@@ -1,19 +1,20 @@
-import React, {PropsWithChildren, useContext, useEffect, useState} from 'react';
+import React, {PropsWithChildren, useContext, useEffect, useMemo, useState} from 'react';
 import {Item} from "../../../redux/reduxTypes";
-import {Column, InputType} from "../../../types/TableStructure";
+import {CellParam, Column, InputType} from "../../../types/TableStructure";
 import {CellText} from "./Text/CellText";
 import {TCell} from "./cellTypes";
 import {useActionsTable} from "../../../hooks/useActionsTable";
 import {LineContext} from "../../Line/LineContext";
 import {CellNumber} from "./Number/CellNumber";
 import {CellBoolean} from "./Boolean/CellBoolean";
-import {SNB} from "../../../types/HelperTypes";
 import {CellTel} from "./Tel/CellTel";
+import {selectType} from "../../../hellpers/helpers";
+import {useEffectSkipMount} from "../../../hooks/utils";
 
 export type TCellAggregator = {
     nameInput: string
     cellData: Item
-    columnParam: Column
+    columnParam: CellParam
     parentCell?: string
 }
 
@@ -25,27 +26,22 @@ const cells: { [key in InputType]: { cell: React.FC<TCell>, initialState: string
     textarea: {cell: CellText, initialState: ''},
     select: {cell: CellText, initialState: ''},
 }
+// function prepareInitialState()
 const CellAggregator: React.FC<TCellAggregator> = React.memo(({columnParam, nameInput, cellData}) => {
     const selectedCell = cells[columnParam.type]
-    const [value, setValue] = useState<typeof selectedCell.initialState>(selectedCell.initialState)
+    const [value, setValue] = useState<typeof selectedCell.initialState>(columnParam.default || selectedCell.initialState)
     const {tableChangeCell} = useActionsTable()
     const lineData = useContext(LineContext)
-
+    const Component = selectedCell.cell
     const test: PropsWithChildren<TCell> = {
         children: null,
         setExternalValue: setValue,
         externalValue: cellData.value,
         additionalParams: columnParam.additionalParams,
+        cellParam: columnParam,
     }
-    const selectType = (initialValue: SNB, value: SNB) => {
-        if (initialValue === 0) {
-            return Number(value)
-        } else if (initialValue === false || initialValue === true) {
-            return Boolean(value)
-        }
-        return value
-    }
-    useEffect(() => {
+
+    useEffectSkipMount(() => {
         tableChangeCell({
             status: lineData.status,
             lineId: lineData.id,
@@ -56,9 +52,11 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({columnParam, name
 
     return (
         <>
-            {selectedCell.cell.call({}, test)}
-        </>
-    );
-},);
+            < Component setExternalValue={setValue} externalValue={value} additionalParams={columnParam.additionalParams} cellParam={columnParam}/>
+            {/*{selectedCell.cell.call({}, test)}*/}
+                </>
+                );
+            },);
 
-export {CellAggregator}
+
+            export {CellAggregator}

@@ -4,7 +4,6 @@ import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {TShieldStructure} from "../../types/TableStructure";
 import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {DivideByStatus} from "./DivideByStatus";
 
 export type ComponentShield = {
     shieldStructure: TShieldStructure
@@ -20,7 +19,6 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
             {[...storage.entries()].map(([key, map]) => {
                 const data = storage.get(key)
                 return data?.data.map(line => {
-                    // const {columns, ...lineData} = line
                     return (<Line
                         status={key}
                         lineIdt={line.lineInformation.id}
@@ -32,18 +30,6 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
                     />)
                 })
             })}
-            {/*{*/}
-            {/*    list.map((line) => {*/}
-            {/*        return (*/}
-
-            {/*< Line*/}
-            {/*    lineData={line.lineData}*/}
-            {/*    columnsData={line.columnsData}*/}
-            {/*    key={line.lineData.id.toString()}*/}
-            {/*/>*/}
-            {/*        )*/}
-            {/*    })*/}
-            {/*}*/}
             <BottomTablePanel columnStructure={columns}/>
 
         </div>

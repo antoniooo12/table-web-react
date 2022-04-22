@@ -25,10 +25,8 @@ export type TLine = {
 }
 type Line = TLine
 const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
-    const [launch, setLaunch] = useState(false)
-    useEffect(() => {
-        setLaunch(true)
-    }, [])
+    const [launch, setLaunch] = useState(true)
+
 
     return (
         <LineContext.Provider

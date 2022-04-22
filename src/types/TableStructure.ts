@@ -1,4 +1,5 @@
 import {HTMLInputTypeAttribute} from "react";
+import {SNB} from "./HelperTypes";
 
 export type HeaderParam = {
     name: string
@@ -37,22 +38,29 @@ export type InputAdditionalParamsNumber = {
 }
 // export type InputAdditionalAttributes = { Tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
 export type InputAdditionalAttributes =  InputAdditionalParamsTel | InputAdditionalParamsNumber
-
+export type CellParam={
+    default?: SNB
+    additionalParams?: InputAdditionalAttributes
+    type: InputType
+    hidden?: boolean
+    fontSize?: number
+    placeholder?: string
+}
 export type Column = {
     title: string
-    type: InputType
-    default?: number | string | boolean
-    position: keyof typeof position
+    cellParam: CellParam
+    // type: InputType
+    // default?: SNB
     width: number | 'inherit'
-    additionalParams?: InputAdditionalAttributes
+    // additionalParams?: InputAdditionalAttributes
     hidden?: boolean
-    selectListOptions?: { text: string, value: string }[]
+    // selectListOptions?: { text: string, value: string }[]
     subColumns?: {
         type: 'Array' | 'Map',
         data: Map<string, Column>
     }
-    placeholder?: string
-    fontSize?: number
+    // placeholder?: string
+    // fontSize?: number
 }
 export type Columns = Map<string, Column>
 export type SectionTableStructure = {

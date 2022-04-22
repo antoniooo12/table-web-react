@@ -4,7 +4,6 @@ import cl from './Column.module.scss'
 import React, {useContext} from 'react';
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {Item} from "../../redux/reduxTypes";
-import {Input} from "./Cell/Input/Input";
 import clsx from "clsx";
 import {CellAggregator} from "./Cell/CellAggregator";
 
@@ -18,8 +17,8 @@ const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
     if (!columnParam) {
         throw new Error('error columnParam')
     }
-    const position = columnParam.position || 'full'
-    const subColumns = columnParam.subColumns
+    // const position = columnParam.position || 'full'
+    // const subColumns = columnParam.subColumns
 
     return (
         <div>
@@ -31,14 +30,14 @@ const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
                     className={
                         clsx({
                             [cl.wrapper]: true,
-                            [cl.small]: subColumns,
+                            // [cl.small]: subColumns,
                         })
                     }
                 >
                     <CellAggregator
                         nameInput={columnName}
                         cellData={cellData}
-                        columnParam={columnParam}
+                        columnParam={columnParam.cellParam}
                     />
 
 
