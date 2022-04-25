@@ -1,7 +1,7 @@
 import {SNB} from "../types/HelperTypes";
 import {InputType} from "../types/TableStructure";
 
-export const selectType = (initialValue: SNB, value: SNB) => {
+export const selectType = <T>(initialValue: T | number | boolean, value: T | number | boolean) => {
     if (initialValue === 0) {
         return Number(value)
     } else if (initialValue === false || initialValue === true) {
@@ -10,11 +10,11 @@ export const selectType = (initialValue: SNB, value: SNB) => {
     return value
 }
 
-export const selectCellType = (type: InputType,value?: SNB | undefined): SNB => {
+export const selectCellType = (type: InputType, value?: SNB | undefined): SNB => {
     if (type === 'checkbox') {
         return value ? Boolean(value) : false
     } else if (type === 'number') {
-        return value ?Number(value): 0
+        return value ? Number(value) : 0
     }
     return value || ''
 }

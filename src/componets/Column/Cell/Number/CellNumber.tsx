@@ -1,35 +1,23 @@
-// @ts-ignore
 import cl from '../Input.module.scss'
 
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import React from 'react';
 
 import {TCell} from "../cellTypes";
 import {InputAdditionalAttributes, InputAdditionalParamsNumber} from "../../../../types/TableStructure";
-import {useCellState, useTest} from "../cellHooks";
-import {useEffectSkipMount} from "../../../../hooks/utils";
+import {useTest} from "../cellHooks";
+import {numberMiddleware} from "./numberMiddleware";
 
 
-const CellNumber: React.FC<TCell> = ({setExternalValue, externalValue, additionalParams, cellParam}) => {
+const CellNumber: React.FC<TCell<number>> = ({setExternalValue, externalValue, additionalParams, cellParam}) => {
     if (additionalParams && !isInputAdditionalParamsNumber(additionalParams)) {
         throw new Error('Error in additional params CellNumber')
     }
-
-    const [innerValue, setValueHtml] = useTest(setExternalValue, externalValue)
-
-
-    useEffectSkipMount(() => {
-        if (additionalParams) {
-            if (externalValue > additionalParams.max) {
-                setExternalValue(additionalParams.max)
-            } else if (externalValue < additionalParams.min) {
-                setExternalValue(additionalParams.min)
-            }
-        }
-    }, [additionalParams && (externalValue > additionalParams?.max || externalValue < additionalParams?.min)])
+    const setter = setExternalValue(additionalParams? numberMiddleware(additionalParams) : (v)=>v)
+    const [innerValue, setValue, setValueHtml] = useTest<number>(setter, externalValue)
 
     return (
         <input
-            value={innerValue as number}
+            value={externalValue as number}
             onChange={setValueHtml}
             max={additionalParams?.max}
             step={additionalParams?.step}

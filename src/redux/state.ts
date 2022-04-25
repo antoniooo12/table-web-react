@@ -12,7 +12,7 @@ const defaultState: TableState = {
     ])
 }
 
-export function tableStoreReducer(state: TableState = defaultState, action: TableReducerActions) {
+export function tableStoreReducer(state: TableState = defaultState, action: TableReducerActions<any>) {
     enableMapSet()
     switch (action.type) {
         case EnumTableReducer.createLine: {

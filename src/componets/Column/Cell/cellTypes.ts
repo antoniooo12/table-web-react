@@ -1,10 +1,9 @@
-import {CellParam, Column, InputAdditionalAttributes} from "../../../types/TableStructure";
+import {CellParam, InputAdditionalAttributes} from "../../../types/TableStructure";
 import React from "react";
-import {SNB} from "../../../types/HelperTypes";
 
-export type TCell = {
-    externalValue: string | number | boolean
-    setExternalValue: React.Dispatch<React.SetStateAction<string | number | boolean>>
+export type TCell<N> = {
+    externalValue: N
+    setExternalValue: (middleware: (str: N) => N) => (value: N) => void
     cellParam: CellParam,
     additionalParams?: InputAdditionalAttributes
 }

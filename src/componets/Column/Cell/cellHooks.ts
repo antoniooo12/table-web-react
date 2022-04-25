@@ -1,31 +1,30 @@
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
-import {SNB} from "../../../types/HelperTypes";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import {InputAdditionalAttributes, InputAdditionalParamsTel} from "../../../types/TableStructure";
 
 type targetType = 'checked' | 'value'
 export const setInnerValueHtmlR = (e: ChangeEvent<HTMLInputElement>) => {
     return e.target.value
 }
-export const useSetInnerValueHtml = <N extends SNB>(setInnerValue: React.Dispatch<React.SetStateAction<N>>, type?: targetType) => useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setInnerValue(e.target.value as N)
+type numberOrString = string
+export const useSetInnerValueHtml = <N>(setInnerValue: React.Dispatch<React.SetStateAction<N>>) => useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setInnerValue(value as unknown as N)
 }, [])
 
+function isNumber(params: InputAdditionalAttributes): params is InputAdditionalParamsTel {
+    return (params as InputAdditionalParamsTel).format !== undefined
+}
 
-export function useTest<N extends SNB>(setEternalValue: React.Dispatch<React.SetStateAction<SNB>>, externalValue: N):
-    [N, (e: ChangeEvent<HTMLInputElement>) => void, React.Dispatch<React.SetStateAction<N>>] {
+// React.Dispatch<React.SetStateAction<typeof externalValue>>
+export function useTest<N>(setEternalValue: (value: N) => void, externalValue: N):
+    [N, React.Dispatch<React.SetStateAction<N>>, (e: ChangeEvent<HTMLInputElement>) => void] | [N, React.Dispatch<React.SetStateAction<N>>] {
     const [innerValue, setValue] = useState<N>(externalValue)
     useEffect(() => {
+
         setEternalValue(innerValue)
+
     }, [innerValue])
     const setInnerValueHtml = useSetInnerValueHtml<N>(setValue)
-    return [innerValue, setInnerValueHtml, setValue]
+    return [innerValue, setValue, setInnerValueHtml]
 }
 
-export const useCellState = (setEternalValue: React.Dispatch<React.SetStateAction<SNB>>, externalValue: SNB):
-    [SNB, (e: ChangeEvent<HTMLInputElement>) => void, React.Dispatch<React.SetStateAction<SNB>>] => {
-    const [innerValue, setValue] = useState<SNB>(externalValue)
-    useEffect(() => {
-        setEternalValue(innerValue)
-    }, [externalValue])
-    const setInnerValueHtml = useSetInnerValueHtml(setValue)
-    return [innerValue, setInnerValueHtml, setValue]
-}

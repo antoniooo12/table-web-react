@@ -6,7 +6,7 @@ export const tableCreateLine = (columnsStructure: Columns) => ({
     type: EnumTableReducer.createLine,
     payload: columnsStructure
 })
-export const tableChangeCell = (information: IOnChangeCell) => ({
+export const tableChangeCell = <T>(information: IOnChangeCell<T>) => ({
     type: EnumTableReducer.changeCell,
     payload: information,
 })

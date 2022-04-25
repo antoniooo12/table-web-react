@@ -41,9 +41,9 @@ export enum EnumTableReducer {
     deleteLine = 'deleteLine'
 }
 
-export interface IOnChangeCell {
-    lineId: number | string,
-    value: number | string | boolean | HTMLInputTypeAttribute,
+export interface IOnChangeCell<T> {
+    lineId: string| number
+    value: T| number | string | boolean | HTMLInputTypeAttribute,
     nameCell: string,
     status: TStatus
     TypeSubData?: "Array" | "Map" | "default"
@@ -59,12 +59,12 @@ type CreateLine = {
     type: EnumTableReducer.createLine
     payload: Columns
 }
-type ChangeCell = {
+type ChangeCell<T> = {
     type: EnumTableReducer.changeCell
-    payload: IOnChangeCell
+    payload: IOnChangeCell<T>
 }
 type DeleteLine = {
     type: EnumTableReducer.deleteLine
     payload: TOnDeleteLine
 }
-export type TableReducerActions = CreateLine | ChangeCell | DeleteLine
+export type TableReducerActions<T> = CreateLine | ChangeCell<T>| DeleteLine
