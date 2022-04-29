@@ -1,38 +1,43 @@
-// @ts-ignore
 import cl from './TableWeb.module.scss'
-import React from 'react';
+import React, {useState} from 'react';
 import {Shield} from "../Shield/Shield";
 import {TableStructure} from "../../types/TableStructure";
 import {Header} from "../Header/Header";
-import {Provider} from "react-redux";
-import {tableStore} from "../../redux";
 import {TableWebContext} from "./TableWebContext";
 import {useWebTable} from "../../hooks/useWebTable";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
+import {setterPreviousValues} from "./TableWebUtils";
 
-const TableWeb: React.FC<{ tableStructure: TableStructure }> = ({tableStructure}) => {
+
+export type TTableWeb = {
+    tableStructure: TableStructure
+}
+
+
+const TableWeb: React.FC<TTableWeb> = ({tableStructure}) => {
     const {shield} = tableStructure
-const {columns}= useWebTable(tableStructure)
+
+    const {columns} = useWebTable(tableStructure)
+    const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     return (
         <TableWebContext.Provider
             value={{
                 columns,
-                shield: shield
+                shield: shield,
+                previous: [previousValues, setterPreviousValues(setPreviousValues)]
             }}
         >
-            <Provider store={tableStore}>
 
-                <div
+            <div
                 className={cl.wrapper}
-                >
-                    <BottomTablePanel columnStructure={columns}/>
+            >
+                <BottomTablePanel columnStructure={columns}/>
 
-                    <Header/>
-                    <Shield shieldStructure={shield}/>
+                <Header/>
+                <Shield shieldStructure={shield}/>
+            </div>
+        </TableWebContext.Provider>
 
-                </div>
-            </Provider>
-        // </TableWebContext.Provider>
     );
 };
 

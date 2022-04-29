@@ -1,10 +1,11 @@
 import {
     Column,
     Columns,
-    InputAdditionalAttributes, InputAdditionalParamsNumber, InputAdditionalParamsTel,
+    InputAdditionalAttributes, InputAdditionalParamsNumber, InputAdditionalParamsSelect, InputAdditionalParamsTel,
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
+import {boolean} from "fp-ts";
 
 // const clientInformation: SectionTableStructure = {
 //     sectionNameParams: {
@@ -175,7 +176,7 @@ const clientRatingColumn: Column = {
     width: 90,
     cellParam: {
         type: 'number',
-        default: 5,
+        default: {value: 3, type: 'Default'},
         additionalParams: clientRatingColumnAdditionalInformation
     },
 
@@ -183,14 +184,16 @@ const clientRatingColumn: Column = {
 
 const clientActiveColumn: Column = {
     title: 'активний',
-    cellParam:{
-        type:'checkbox'
+    cellParam: {
+        default: {value: true, type: 'Default'},
+        type: 'checkbox'
     },
     width: 90,
 }
 const clientPhoneColumn: Column = {
     title: 'номер',
-    cellParam:{
+    cellParam: {
+        default: {type: 'Previous', orNotPrevious: ''},
         type: 'tel',
         additionalParams: clientPhoneColumnAdditionalInformation,
     },
@@ -202,11 +205,40 @@ const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
 const clientNameTuple: [string, Column] = ['clientName', {
     title: 'Імʼя клієнта',
     cellParam: {
+        default: {type: 'Default', value: 'Asya'},
         type: 'text',
         placeholder: 'імʼя'
     },
     width: 100,
 
+}]
+const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
+    variants: [{
+        text: 'Усі',
+        value: '1',
+        disabled: false,
+        selected: true,
+    }, {
+        text: 'Новобудови',
+        value: '2',
+        disabled: false,
+        selected: false,
+    }, {
+        text: 'Вториний ринок',
+        value: '3',
+        disabled: false,
+        selected: false,
+    },
+    ]
+}
+const houseTypeTuple: [string, Column] = ['houseType', {
+    title: 'тип нерухомосты',
+    cellParam: {
+        default: {type: 'Previous', orNotPrevious: ''},
+        type: 'select',
+        additionalParams: houseTypeColumnAdditionalInformation,
+    },
+    width: 110,
 }]
 export const testTable: TableStructure = {
     shield: {
@@ -220,10 +252,21 @@ export const testTable: TableStructure = {
                 columns: new Map<string, Column>([
                     clientNameTuple,
                     clientRatingTuple,
-                    // clientActiveTuple,
+                    clientActiveTuple,
                     clientPhoneTuple,
+
                 ])
 
+            }],
+            ['houseInformation', {
+                sectionNameParams: {
+                    title: 'інформація про будинок',
+                    weight: 100,
+                    fontSize: 12
+                },
+                columns: new Map([
+                    houseTypeTuple
+                ])
             }]
         ])
     }

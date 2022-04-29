@@ -1,8 +1,7 @@
-import {EnumStatus, EnumTableReducer, Item, TableReducerActions, TableState, TStatus} from "./reduxTypes";
+import {EnumStatus, EnumTableReducer, Item, TableReducerActions, TableState} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
 import {v4 as uuidv4} from 'uuid';
-import {selectCellType, selectType} from "../hellpers/helpers";
-import {CellParam, Column} from "../types/TableStructure";
+import {CellParam} from "../types/TableStructure";
 
 
 const defaultState: TableState = {
@@ -16,26 +15,28 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
     enableMapSet()
     switch (action.type) {
         case EnumTableReducer.createLine: {
-            const structure = action.payload
-            const defaultItem = (name: string, cellParam: CellParam): Item => {
+            console.log('12345678')
+            const {columnsStructure, initialValue } = action.payload
+            console.log()
+            const defaultItem = (name: string, cellParam: CellParam<unknown>): Item<unknown> => {
                 return {
                     id: uuidv4(),
                     nameColumn: name,
                     wasEdit: false,
-                    value: selectCellType(cellParam.type, cellParam?.default),
+                    value: initialValue.get(name),
                 }
             }
-            const columns = [...structure.entries()].reduce((accum, item) => {
+            const columns = [...columnsStructure.entries()].reduce((accum, item) => {
                 const subColumns = item[1].subColumns
                 accum.set(item[0], {
                     ...defaultItem(item[0], item[1].cellParam),
                     subData: subColumns && [...subColumns.data.entries()].reduce((subAccum, subCell) => {
                         subAccum.set(subCell[0], defaultItem(subCell[0], subCell[1].cellParam))
                         return subAccum
-                    }, new Map<string, Item>())
+                    }, new Map<string, Item<unknown>>())
                 })
                 return accum
-            }, new Map<string, Item>())
+            }, new Map<string, Item<unknown>>())
 
             return produce(state, draft => {
                 draft.storage.get(EnumStatus.isNew)?.data.push({

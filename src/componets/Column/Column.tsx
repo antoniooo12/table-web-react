@@ -9,7 +9,7 @@ import {CellAggregator} from "./Cell/CellAggregator";
 
 type TColumn = {
     columnName: string
-    cellData: Item
+    cellData: Item<unknown>
 }
 const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
     const {columns} = useContext(TableWebContext)
@@ -37,7 +37,7 @@ const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
                     <CellAggregator
                         nameInput={columnName}
                         cellData={cellData}
-                        columnParam={columnParam.cellParam}
+                        cellParam={columnParam.cellParam}
                     />
 
 

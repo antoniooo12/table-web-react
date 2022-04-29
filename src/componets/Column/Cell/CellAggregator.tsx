@@ -1,57 +1,40 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Item} from "../../../redux/reduxTypes";
-import {CellParam, InputType} from "../../../types/TableStructure";
-import {CellText} from "./Text/CellText";
-import {TCell} from "./cellTypes";
+import {CellParam} from "../../../types/TableStructure";
 import {useActionsTable} from "../../../hooks/useActionsTable";
 import {LineContext} from "../../Line/LineContext";
-import {CellNumber} from "./Number/CellNumber";
-import {CellBoolean} from "./Boolean/CellBoolean";
-import {CellTel} from "./Tel/CellTel";
 import {selectType} from "../../../hellpers/helpers";
 import {useEffectSkipMount} from "../../../hooks/utils";
 import {customSetExternalCell} from "./Tel/validateNumber";
+import {cells, initialCells} from "./cellCompose";
+import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
+import {TableWebContext} from "../../TableWeb/TableWebContext";
 
 export type TCellAggregator = {
     nameInput: string
-    cellData: Item
-    columnParam: CellParam
+    cellData: Item<unknown>
+    cellParam: CellParam<unknown>
     parentCell?: string
 }
 
-const cells = {
-    text: {cell: CellText, initialState: ''},
-    number: {cell: CellNumber, initialState: 0},
-    checkbox: {cell: CellBoolean, initialState: false},
-    tel: {cell: CellTel, initialState: ''},
-    textarea: {cell: CellText, initialState: ''},
-    select: {cell: CellText, initialState: ''},
-
-}
-type initialCells= { [key in InputType]: { cell: React.FC<TCell<any>>, initialState: unknown } }
-export const initialCells = (outerCells: initialCells) => {
-    const cells = outerCells
-    const getCells = (key: InputType) => {
-        return cells[key]
-    }
-    return {
-        getCells: getCells
-    }
+const useSetPreviousValue = (column: string) => {
+    const array = useTableTypedSelector(state => state.tableStore.storage!.get('isNew'))
+    const value = array?.data[array.data.length - 2]
+    return value?.columns?.get(column)?.value
 }
 
 
-const CellAggregator: React.FC<TCellAggregator> = React.memo(({columnParam, nameInput, cellData}) => {
+const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameInput, cellData}) => {
+    const {previous:[previousValues, setPreviousValue]} = useContext(TableWebContext)
     const {getCells} = initialCells(cells)
-    const selectedCell = getCells(columnParam.type)
+    const selectedCell = getCells(cellParam.type)
     type initialType = typeof selectedCell.initialState
-    const [value, setValue] = useState<initialType>(columnParam.default || selectedCell.initialState)
+    const [value, setValue] = useState<initialType>(cellData.value)
     const {tableChangeCell} = useActionsTable()
     const lineData = useContext(LineContext)
     const Component = selectedCell.cell
-
-    const test = getCells(columnParam.type)
-
-
+    useEffect(() => {
+    }, [])
     useEffectSkipMount(() => {
         tableChangeCell({
             status: lineData.status,
@@ -59,14 +42,17 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({columnParam, name
             nameCell: nameInput,
             value: selectType(selectedCell.initialState, value)
         })
+        setPreviousValue(nameInput, value)
     }, [value])
 
     return (
         <>
-            < Component setExternalValue={customSetExternalCell<typeof selectedCell.initialState>(setValue)}
-                        externalValue={value}
-                        additionalParams={columnParam.additionalParams}
-                        cellParam={columnParam}/>
+            < Component
+                setExternalValue={customSetExternalCell<typeof selectedCell.initialState>(setValue)}
+                externalValue={value}
+                additionalParams={cellParam.additionalParams}
+                cellParam={cellParam}
+            />
         </>
     );
 },);

@@ -20,7 +20,7 @@ export type TLine = {
     lineIdt: number |string
     wasEditt: boolean
     toDeletet: boolean
-    columnsData: Map<string, Item>
+    columnsData: Map<string, Item<unknown>>
     lineData: TLineData
 }
 type Line = TLine

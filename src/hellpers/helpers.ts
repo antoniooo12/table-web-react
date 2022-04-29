@@ -18,3 +18,4 @@ export const selectCellType = (type: InputType, value?: SNB | undefined): SNB =>
     }
     return value || ''
 }
+

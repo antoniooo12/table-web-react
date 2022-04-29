@@ -17,12 +17,10 @@ function isNumber(params: InputAdditionalAttributes): params is InputAdditionalP
 
 // React.Dispatch<React.SetStateAction<typeof externalValue>>
 export function useTest<N>(setEternalValue: (value: N) => void, externalValue: N):
-    [N, React.Dispatch<React.SetStateAction<N>>, (e: ChangeEvent<HTMLInputElement>) => void] | [N, React.Dispatch<React.SetStateAction<N>>] {
+    [N, React.Dispatch<React.SetStateAction<N>>, (e: ChangeEvent<HTMLInputElement>) => void] {
     const [innerValue, setValue] = useState<N>(externalValue)
     useEffect(() => {
-
         setEternalValue(innerValue)
-
     }, [innerValue])
     const setInnerValueHtml = useSetInnerValueHtml<N>(setValue)
     return [innerValue, setValue, setInnerValueHtml]

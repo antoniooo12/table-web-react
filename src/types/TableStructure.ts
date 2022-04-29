@@ -1,6 +1,3 @@
-import {HTMLInputTypeAttribute} from "react";
-import {SNB} from "./HelperTypes";
-
 export type HeaderParam = {
     name: string
 }
@@ -23,11 +20,17 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel'| 'checkbox'
-type InputAdditionalParams = {
-    number: InputAdditionalParamsNumber
-    tel: InputAdditionalParamsTel
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox'
+
+export type InputAdditionalParamsSelect = {
+    variants: {
+        disabled: boolean
+        value: number | string
+        selected: boolean
+        text: string
+    }[]
 }
+
 export type InputAdditionalParamsTel = {
     format: string
 }
@@ -37,30 +40,27 @@ export type InputAdditionalParamsNumber = {
     step: number
 }
 // export type InputAdditionalAttributes = { Tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
-export type InputAdditionalAttributes =  InputAdditionalParamsTel | InputAdditionalParamsNumber
-export type CellParam={
-    default?: SNB
-    additionalParams?: InputAdditionalAttributes
-    type: InputType
-    hidden?: boolean
-    fontSize?: number
-    placeholder?: string
+export type InputAdditionalAttributes =
+    InputAdditionalParamsTel
+    | InputAdditionalParamsNumber
+    | InputAdditionalParamsSelect
+export type CellParam<T> = {
+    readonly default:   { readonly value: T, readonly type: 'Default'}| {  readonly type: 'Previous', readonly orNotPrevious:T}
+    readonly  additionalParams?: InputAdditionalAttributes
+    readonly  type: InputType
+    readonly  hidden?: boolean
+    readonly  fontSize?: number
+    readonly  placeholder?: string
 }
 export type Column = {
     title: string
-    cellParam: CellParam
-    // type: InputType
-    // default?: SNB
+    cellParam: CellParam<unknown>
     width: number | 'inherit'
-    // additionalParams?: InputAdditionalAttributes
     hidden?: boolean
-    // selectListOptions?: { text: string, value: string }[]
     subColumns?: {
         type: 'Array' | 'Map',
         data: Map<string, Column>
     }
-    // placeholder?: string
-    // fontSize?: number
 }
 export type Columns = Map<string, Column>
 export type SectionTableStructure = {

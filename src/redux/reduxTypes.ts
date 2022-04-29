@@ -20,13 +20,13 @@ export type TTableLine = {
     }
     columns: TableColumn
 }
-export type TableColumn = Map<string, Item>
-export type Item = {
+export type TableColumn = Map<string, Item<unknown>>
+export type Item<T> = {
     id: number | string;
     nameColumn: string;
-    value: string | number | boolean;
+    value: T
     wasEdit: boolean;
-    subData?: Map<string, Item>
+    subData?: Map<string, Item<T>>
     dependencyId?: Record<string, number>
 }
 
@@ -57,7 +57,7 @@ export type TOnDeleteLine = {
 }
 type CreateLine = {
     type: EnumTableReducer.createLine
-    payload: Columns
+    payload: {columnsStructure: Columns, initialValue: Map<string, unknown>}
 }
 type ChangeCell<T> = {
     type: EnumTableReducer.changeCell

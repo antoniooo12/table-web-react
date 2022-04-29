@@ -1,16 +1,12 @@
 import React from "react";
 
 export const validateNumber = (innerValue: string): string => {
-    const template = innerValue.split('').filter(str => Number(str) || str === '+' || str === ' ' || str === '0').join('')
-    const example = ['xxx','xxx','xx','xx']
-    let cleaned = ('' + template).replace(/\D/g, '')
-    const regex = new RegExp(`^(2|)(\\d{${example[0].length}})(\\d{${example[1].length}})(\\d{${example[2].length}})(\\d{${example[2].length}})`)
-    let match = cleaned.match(regex);
+    let cleaned = ('' + innerValue).replace(/\D/g, '');
+    let match = cleaned.match(/^(2|)?(\d{3})(\d{3})(\d{4})$/);
     if (match) {
-        console.log(match)
-        return [match[2], ' ', match[3], ' ', match[4],'-',match[5]].join('');
+        return [match[2], ' ', match[3], '-', match[4]].join('')
     }
-    return template
+    return innerValue
 }
 
 
@@ -18,5 +14,9 @@ export const setTest = <N>(middleware: (str: N) => N, setExternal: React.Dispatc
     setExternal(middleware(value))
 }
 export const customSetExternalCell = <N>(setExternal: React.Dispatch<React.SetStateAction<N>>) =>
-    (middleware: (str: N) => N) => (value: N) =>
+    (middleware: (str: N) => N) => (value: N) => {
         setExternal(middleware(value))
+    }
+export const ccTest = <N>( middleware: (str: N) => N, value: N) => {
+    console.log(middleware(value))
+}

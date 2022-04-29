@@ -4,6 +4,6 @@ import React from "react";
 export type TCell<N> = {
     externalValue: N
     setExternalValue: (middleware: (str: N) => N) => (value: N) => void
-    cellParam: CellParam,
+    cellParam: CellParam<N>,
     additionalParams?: InputAdditionalAttributes
 }

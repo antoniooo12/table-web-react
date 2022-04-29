@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {Line} from "../Line/Line";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {TShieldStructure} from "../../types/TableStructure";
@@ -11,9 +11,6 @@ export type ComponentShield = {
 const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
     const {storage} = useTableTypedSelector(state => state.tableStore)
     const {columns} = useContext(TableWebContext)
-    // const list = useMemo(()=>{
-    //   return   structureShieldToArray(storage)
-    // },[storage])
     return (
         <div>
             {[...storage.entries()].map(([key, map]) => {
