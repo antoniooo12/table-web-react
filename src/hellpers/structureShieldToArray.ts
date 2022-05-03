@@ -1,4 +1,4 @@
-import {TableStructure, TTableLine} from "../redux/reduxTypes";
+import {TableReduxStructure, TTableLine} from "../redux/reduxTypes";
 import {Line, TLine} from "../componets/Line/Line";
 import React from "react";
 

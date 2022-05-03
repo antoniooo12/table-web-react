@@ -2,10 +2,10 @@ import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 
 export type TableState = {
-    storage: TableStructure
+    storage: TableReduxStructure
 
 }
-export type TableStructure = Map<TStatus, TableDataStructure>
+export type TableReduxStructure = Map<TStatus, TableDataStructure>
 
 type TableDataStructure = {
     data: TTableLine[]

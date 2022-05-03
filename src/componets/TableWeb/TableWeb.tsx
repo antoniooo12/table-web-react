@@ -1,22 +1,26 @@
 import cl from './TableWeb.module.scss'
 import React, {useState} from 'react';
 import {Shield} from "../Shield/Shield";
-import {TableStructure} from "../../types/TableStructure";
 import {Header} from "../Header/Header";
 import {TableWebContext} from "./TableWebContext";
 import {useWebTable} from "../../hooks/useWebTable";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
+import {TTableConnect} from "../../API/TableWebAPITypes";
+import {TableReduxStructure} from "../../redux/reduxTypes";
 
 
 export type TTableWeb = {
-    tableStructure: TableStructure
+    api?: {
+        setExternalValue?: TableReduxStructure
+    }
+    tableConnect: TTableConnect,
 }
 
 
-const TableWeb: React.FC<TTableWeb> = ({tableStructure}) => {
+const TableWeb: React.FC<TTableWeb> = ({tableConnect}) => {
+    const {tableStructure} = tableConnect
     const {shield} = tableStructure
-
     const {columns} = useWebTable(tableStructure)
     const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     return (
@@ -24,7 +28,8 @@ const TableWeb: React.FC<TTableWeb> = ({tableStructure}) => {
             value={{
                 columns,
                 shield: shield,
-                previous: [previousValues, setterPreviousValues(setPreviousValues)]
+                previous: [previousValues, setterPreviousValues(setPreviousValues)],
+                tableConnect: tableConnect,
             }}
         >
 

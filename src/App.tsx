@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
-import {TableWeb} from "./componets/TableWeb/TableWeb";
-import {Column, ColumnParam, TableStructure} from "./types/TableStructure";
-import {testTable} from "./example";
+import React from 'react';
 import {TableWebProviderComponent} from "./componets/TableWeb/TableWebProviderComponent";
+import {testTable} from "./example";
+import {TestTable} from "./test/components/TestTable";
 
 function App() {
 
-
-  return (
-      <div className="App">
-        <TableWebProviderComponent tableStructure={testTable}/>
-      </div>
-  );
+    return (
+        <div className="App">
+            <TestTable/>
+            <button onClick={() => {
+                // console.log(ss)
+            }}>
+                temp
+            </button>
+        </div>
+    );
 }
 
 export {App};

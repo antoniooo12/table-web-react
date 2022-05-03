@@ -252,22 +252,22 @@ export const testTable: TableStructure = {
                 columns: new Map<string, Column>([
                     clientNameTuple,
                     clientRatingTuple,
-                    clientActiveTuple,
-                    clientPhoneTuple,
+                    // clientActiveTuple,
+                    // clientPhoneTuple,
 
                 ])
 
             }],
-            ['houseInformation', {
-                sectionNameParams: {
-                    title: 'інформація про будинок',
-                    weight: 100,
-                    fontSize: 12
-                },
-                columns: new Map([
-                    houseTypeTuple
-                ])
-            }]
+            // ['houseInformation', {
+            //     sectionNameParams: {
+            //         title: 'інформація про будинок',
+            //         weight: 100,
+            //         fontSize: 12
+            //     },
+            //     columns: new Map([
+            //         houseTypeTuple
+            //     ])
+            // }]
         ])
     }
 }
