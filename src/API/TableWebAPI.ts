@@ -12,6 +12,6 @@ import {TableStructure} from "../types/TableStructure";
 */
 
 export const useConnectWebTableState = (tableStructure:TableStructure) => {
-    const [tableEternalState, settableEternalState] = useState<TableReduxStructure>(new Map())
+    const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
     return {tableEternalState, settableEternalState,tableStructure}
 }

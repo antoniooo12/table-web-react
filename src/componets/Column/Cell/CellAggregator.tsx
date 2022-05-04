@@ -7,7 +7,6 @@ import {selectType} from "../../../hellpers/helpers";
 import {useEffectSkipMount} from "../../../hooks/utils";
 import {customSetExternalCell} from "./Tel/validateNumber";
 import {cells, initialCells} from "./cellCompose";
-import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
 import {TableWebContext} from "../../TableWeb/TableWebContext";
 
 export type TCellAggregator = {
@@ -15,12 +14,6 @@ export type TCellAggregator = {
     cellData: Item<unknown>
     cellParam: CellParam<unknown>
     parentCell?: string
-}
-
-const useSetPreviousValue = (column: string) => {
-    const array = useTableTypedSelector(state => state.tableStore.storage!.get('isNew'))
-    const value = array?.data[array.data.length - 2]
-    return value?.columns?.get(column)?.value
 }
 
 
