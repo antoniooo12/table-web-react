@@ -1,12 +1,8 @@
 import {createContext} from "react";
 import {EnumStatus} from "../../redux/reduxTypes";
+import {TLine, TLineData} from "./Line";
 
-type LineContext = {
-    lineId: number | string
-    status: keyof typeof EnumStatus
-}
+type LineContext = TLineData
 
 export const LineContext = createContext<LineContext>({
-    lineId: 0,
-    status: 'isNew',
-})
+} as TLineData)

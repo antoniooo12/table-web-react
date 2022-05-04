@@ -1,5 +1,3 @@
-import {HTMLInputTypeAttribute} from "react";
-
 export type HeaderParam = {
     name: string
 }
@@ -22,23 +20,56 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox'
+
+export type InputAdditionalParamsSelect = {
+    variants: {
+        disabled: boolean
+        value: number | string
+        selected: boolean
+        text: string
+    }[]
+}
+
+export type InputAdditionalParamsTel = {
+    format: string
+}
+export type InputAdditionalParamsNumber = {
+    min: number
+    max: number
+    step: number
+}
+// export type InputAdditionalAttributes = { Tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
+export type InputAdditionalAttributes =
+    InputAdditionalParamsTel
+    | InputAdditionalParamsNumber
+    | InputAdditionalParamsSelect
+export type CellParam<T> = {
+    readonly default:   { readonly value: T, readonly type: 'Default'}| {  readonly type: 'Previous', readonly orNotPrevious:T}
+    readonly  additionalParams?: InputAdditionalAttributes
+    readonly  type: InputType
+    readonly  hidden?: boolean
+    readonly  fontSize?: number
+    readonly  placeholder?: string
+}
 export type Column = {
-    name: string
-    type: HTMLInputTypeAttribute
-    default?: number | string | boolean
-    position: keyof typeof position
+    title: string
+    cellParam: CellParam<unknown>
     width: number | 'inherit'
-    visible: boolean
+    hidden?: boolean
     subColumns?: {
         type: 'Array' | 'Map',
         data: Map<string, Column>
     }
-    placeholder?: string
-    fontSize?: number
 }
 export type Columns = Map<string, Column>
 export type SectionTableStructure = {
-    sectionName: string
+    sectionNameParams: {
+        hidden?: boolean
+        title: string
+        weight: number
+        fontSize: number
+    }
     sectionInner?: SectionTable
     columns?: Columns
 }

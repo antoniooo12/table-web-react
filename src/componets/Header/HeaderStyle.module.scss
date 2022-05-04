@@ -1,0 +1,27 @@
+.wrapper {
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: end;
+  height: fit-content;
+}
+.wrapper  *{
+  font-family: "Inter", sans-serif;
+  align-items: end;
+
+}
+
+.column {
+  margin-right: 5px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+}
+.inner{
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: column;
+}

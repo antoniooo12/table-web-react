@@ -2,27 +2,31 @@ import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 
 export type TableState = {
-    storage: TableStructure
+    storage: TableReduxStructure
 
 }
-export type TableStructure = Map<keyof typeof EnumStatus, TableDataStructure>
+export type TableReduxStructure = Map<TStatus, TableDataStructure>
 
 type TableDataStructure = {
     data: TTableLine[]
 }
+export type TStatus = keyof typeof EnumStatus
 export type TTableLine = {
-    id: number | string
-    toDelete: boolean
-    wasEdit: boolean
+    lineInformation: {
+        id: number | string
+        toDelete: boolean
+        wasEdit: boolean
+        status: TStatus
+    }
     columns: TableColumn
 }
-export type TableColumn = Map<string, Item>
-export type Item = {
+export type TableColumn = Map<string, Item<unknown>>
+export type Item<T> = {
     id: number | string;
     nameColumn: string;
-    value: string | number | boolean;
+    value: T
     wasEdit: boolean;
-    subData?: Map<string, Item>
+    subData?: Map<string, Item<T>>
     dependencyId?: Record<string, number>
 }
 
@@ -34,24 +38,33 @@ export enum EnumStatus {
 export enum EnumTableReducer {
     createLine = 'createLine',
     changeCell = 'changeCell',
+    deleteLine = 'deleteLine'
 }
 
-export interface IOnChangeCell {
-    lineId: number | string,
-    value: number | string | boolean | HTMLInputTypeAttribute,
+export interface IOnChangeCell<T> {
+    lineId: string| number
+    value: T| number | string | boolean | HTMLInputTypeAttribute,
     nameCell: string,
-    status: keyof typeof EnumStatus
-    TypeSubData: "Array" | "Map" | "default"
+    status: TStatus
+    TypeSubData?: "Array" | "Map" | "default"
     parentCell?: string
     // dependentColumns?: DependentColumn[]
 }
 
+export type TOnDeleteLine = {
+    lineId: number | string
+    status: TStatus
+}
 type CreateLine = {
     type: EnumTableReducer.createLine
-    payload: Columns
+    payload: {columnsStructure: Columns, initialValue: Map<string, unknown>}
 }
-type ChangeCell = {
+type ChangeCell<T> = {
     type: EnumTableReducer.changeCell
-    payload: IOnChangeCell
+    payload: IOnChangeCell<T>
 }
-export type TableReducerActions = CreateLine | ChangeCell
+type DeleteLine = {
+    type: EnumTableReducer.deleteLine
+    payload: TOnDeleteLine
+}
+export type TableReducerActions<T> = CreateLine | ChangeCell<T>| DeleteLine

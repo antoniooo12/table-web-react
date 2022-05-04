@@ -1,33 +1,48 @@
-// @ts-ignore
 import cl from './TableWeb.module.scss'
-import React from 'react';
+import React, {useState} from 'react';
 import {Shield} from "../Shield/Shield";
-import {TableStructure} from "../../types/TableStructure";
 import {Header} from "../Header/Header";
-import {Provider} from "react-redux";
-import {tableStore} from "../../redux";
 import {TableWebContext} from "./TableWebContext";
+import {useWebTable} from "../../hooks/useWebTable";
+import {BottomTablePanel} from "../Panels/BottomTablePanel";
+import {setterPreviousValues} from "./TableWebUtils";
+import {TTableConnect} from "../../API/TableWebAPITypes";
+import {TableReduxStructure} from "../../redux/reduxTypes";
 
-const TableWeb: React.FC<{ tableStructure: TableStructure }> = ({tableStructure}) => {
+
+export type TTableWeb = {
+    api?: {
+        setExternalValue?: TableReduxStructure
+    }
+    tableConnect: TTableConnect,
+}
+
+
+const TableWeb: React.FC<TTableWeb> = ({tableConnect}) => {
+    const {tableStructure} = tableConnect
     const {shield} = tableStructure
-
+    const {columns} = useWebTable(tableStructure)
+    const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     return (
         <TableWebContext.Provider
             value={{
-                columnParams: shield.columns
+                columns,
+                shield: shield,
+                previous: [previousValues, setterPreviousValues(setPreviousValues)],
+                tableConnect: tableConnect,
             }}
         >
-            <Provider store={tableStore}>
 
-                <div
+            <div
                 className={cl.wrapper}
-                >
-                    <Header/>
-                    <Shield shieldStructure={shield}/>
+            >
+                <BottomTablePanel columnStructure={columns}/>
 
-                </div>
-            </Provider>
+                <Header/>
+                <Shield shieldStructure={shield}/>
+            </div>
         </TableWebContext.Provider>
+
     );
 };
 
