@@ -5,11 +5,13 @@ export type TableState = {
     storage: TableReduxStructure
 
 }
-export type TableReduxStructure = Map<TStatus, TableDataStructure>
-
-type TableDataStructure = {
+export type TableReduxStructure = {
     data: TTableLine[]
 }
+
+// type TableDataStructure = {
+//
+// }
 export type TStatus = keyof typeof EnumStatus
 export type TTableLine = {
     lineInformation: {

@@ -5,10 +5,7 @@ import {CellParam} from "../types/TableStructure";
 
 
 const defaultState: TableState = {
-    storage: new Map([
-        [EnumStatus.isAll, {data: []}],
-        [EnumStatus.isNew, {data: []}]
-    ])
+    storage:{data: []}
 }
 
 export function tableStoreReducer(state: TableState = defaultState, action: TableReducerActions<any>) {
@@ -39,7 +36,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
             }, new Map<string, Item<unknown>>())
 
             return produce(state, draft => {
-                draft.storage.get(EnumStatus.isNew)?.data.push({
+                draft.storage.data.push({
                     lineInformation: {
                         status: EnumStatus.isNew,
                         toDelete: false,
@@ -52,16 +49,13 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
         }
         case EnumTableReducer.changeCell: {
             const {status, value, nameCell, lineId, TypeSubData, parentCell} = action.payload
-
-            // console.log(typeof status === TStatus)
-            // if()
             return produce(state, draft => {
-                const lineIndex = draft.storage.get(status)!.data
+                const lineIndex = draft.storage!.data
                     .findIndex(line => line.lineInformation.id === lineId)
-                const line = draft.storage.get(status)!.data[lineIndex]
-                const cell = line?.columns.get(nameCell)
+                const line = draft.storage!.data[lineIndex]
+                const cell = line.columns.get(nameCell)
                 if (cell) {
-                    line?.columns.set(nameCell, {...cell, value: value})
+                    line.columns.set(nameCell, {...cell, value: value})
                 }
 
 
@@ -70,22 +64,18 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
         case EnumTableReducer.deleteLine: {
             const {status, lineId} = action.payload
             return produce(state, draft => {
-                const lineIndex = state.storage.get(status)!.data.findIndex(el => {
+                const lineIndex = state.storage!.data.findIndex(el => {
                     console.log(el.lineInformation.id, lineId)
                     if (el.lineInformation.id === lineId) {
                         return el
                     }
                 })
-                // console.log(lineIndex)
-                // console.log(state.storage.get(status)?.data)
-                const line = draft.storage.get(status)!.data[lineIndex]
-                // console.log(line)
-                draft.storage.get(status)?.data.splice(lineIndex, 1, {
+                const line = draft.storage!.data[lineIndex]
+                draft.storage.data.splice(lineIndex, 1, {
                     ...line, lineInformation: {
                         ...line.lineInformation, toDelete: !line.lineInformation.toDelete
                     }
                 })
-                // draft.storage.get(status)?.data.splice(lineIndex,1,{ ...line, toDelete: !line.toDelete})
             })
         }
         default:

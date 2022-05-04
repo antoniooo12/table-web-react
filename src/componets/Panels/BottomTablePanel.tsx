@@ -16,7 +16,7 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
     const downloadTxtFile = () => {
         // todo finish after changing the data structure
         const element = document.createElement("a");
-        const toFile =JSON.stringify( [...stateTable])
+        const toFile =JSON.stringify( [...stateTable.data])
         const file = new Blob([toFile], {
             type: "text/plain"
         });

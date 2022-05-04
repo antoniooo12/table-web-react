@@ -13,11 +13,9 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
     const {columns} = useContext(TableWebContext)
     return (
         <div>
-            {[...storage.entries()].map(([key, map]) => {
-                const data = storage.get(key)
-                return data?.data.map(line => {
+            {storage.data.map((line) => {
                     return (<Line
-                        status={key}
+                        status={line.lineInformation.status}
                         lineIdt={line.lineInformation.id}
                         toDeletet={line.lineInformation.toDelete}
                         wasEditt={line.lineInformation.wasEdit}
@@ -25,7 +23,6 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
                         columnsData={line.columns}
                         key={line.lineInformation.id.toString()}
                     />)
-                })
             })}
             <BottomTablePanel columnStructure={columns}/>
 
