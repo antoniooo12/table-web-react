@@ -13,13 +13,14 @@ export type TableReduxStructure = {
 //
 // }
 export type TStatus = keyof typeof EnumStatus
+export type TLineInformation = {
+    id: number | string
+    toDelete: boolean
+    wasEdit: boolean
+    status: TStatus
+}
 export type TTableLine = {
-    lineInformation: {
-        id: number | string
-        toDelete: boolean
-        wasEdit: boolean
-        status: TStatus
-    }
+    lineInformation: TLineInformation
     columns: TableColumn
 }
 export type TableColumn = Map<string, Item<unknown>>
@@ -44,8 +45,8 @@ export enum EnumTableReducer {
 }
 
 export interface IOnChangeCell<T> {
-    lineId: string| number
-    value: T| number | string | boolean | HTMLInputTypeAttribute,
+    lineId: string | number
+    value: T | number | string | boolean | HTMLInputTypeAttribute,
     nameCell: string,
     status: TStatus
     TypeSubData?: "Array" | "Map" | "default"
@@ -59,7 +60,7 @@ export type TOnDeleteLine = {
 }
 type CreateLine = {
     type: EnumTableReducer.createLine
-    payload: {columnsStructure: Columns, initialValue: Map<string, unknown>}
+    payload: { columnsStructure: Columns, initialValue: Map<string, unknown> }
 }
 type ChangeCell<T> = {
     type: EnumTableReducer.changeCell
@@ -69,4 +70,4 @@ type DeleteLine = {
     type: EnumTableReducer.deleteLine
     payload: TOnDeleteLine
 }
-export type TableReducerActions<T> = CreateLine | ChangeCell<T>| DeleteLine
+export type TableReducerActions<T> = CreateLine | ChangeCell<T> | DeleteLine

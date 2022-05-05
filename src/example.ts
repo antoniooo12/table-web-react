@@ -253,7 +253,7 @@ export const testTable: TableStructure = {
                     clientNameTuple,
                     clientRatingTuple,
                     // clientActiveTuple,
-                    // clientPhoneTuple,
+                    clientPhoneTuple,
 
                 ])
 
