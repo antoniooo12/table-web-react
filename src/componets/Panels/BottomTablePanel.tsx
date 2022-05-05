@@ -5,7 +5,7 @@ import {Columns} from "../../types/TableStructure";
 import {Button} from "../buttons/Button/Button";
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
-import {downloadTxtFile} from "../../API/downloadTxtFile";
+import {downloadTxtFile, EnumOptionsDownloadTxtFile} from "../../API/downloadTxtFile";
 
 type BottomTablePanel = {
     columnStructure: Columns
@@ -39,7 +39,7 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
     }
 
     const onDownload = useCallback(()=>{
-        downloadTxtFile(stateTable.data)
+        downloadTxtFile(stateTable.data, {type:EnumOptionsDownloadTxtFile.toSave, fields:['clientPhone']} )
     }, [stateTable.data])
 
     return (

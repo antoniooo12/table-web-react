@@ -7,11 +7,13 @@ import {TableStructure} from "../types/TableStructure";
    loading a external data
    saving table to state
    saving data to PC
-   <textarea id="text-val" rows="4">This is the content of my file</textarea><br/>
-
 */
 
-export const useConnectWebTableState = (tableStructure:TableStructure) => {
+export const useConnectWebTableState = (tableStructure: TableStructure) => {
     const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
-    return {tableEternalState, settableEternalState,tableStructure}
+    return {tableEternalState, settableEternalState, tableStructure}
 }
+
+export type OptionsFlags<Type> = {
+    [Property in keyof Type]: boolean;
+};
