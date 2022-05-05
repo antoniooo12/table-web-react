@@ -1,10 +1,11 @@
-import {TableColumn, TTableLine} from "../redux/reduxTypes";
+import {TTableLine} from "../redux/reduxTypes";
 
 export enum EnumOptionsDownloadTxtFile {
-    toSave = 'toSave'
+    toSave = 'toSave',
+    toSaveExcept ='toSaveExcept',
 }
 
-type TTableOptions = { type: EnumOptionsDownloadTxtFile.toSave, fields: string[] }
+type TTableOptions = { type:  EnumOptionsDownloadTxtFile.toSave | EnumOptionsDownloadTxtFile.toSaveExcept, fields: string[] }
 
 export const downloadTxtFile = (data: TTableLine[], options?: TTableOptions) => {
 
@@ -16,6 +17,9 @@ export const downloadTxtFile = (data: TTableLine[], options?: TTableOptions) => 
                 switch (options.type) {
                     case EnumOptionsDownloadTxtFile.toSave: {
                         return convertedLines.filter(item => options.fields.includes(item.nameColumn))
+                    }
+                    case EnumOptionsDownloadTxtFile.toSaveExcept:{
+                        return convertedLines.filter(item => !options.fields.includes(item.nameColumn))
                     }
                     default:
                         return convertedLines
