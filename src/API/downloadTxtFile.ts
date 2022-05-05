@@ -1,29 +1,43 @@
-import {TTableLine} from "../redux/reduxTypes";
+import {Item, TTableLine} from "../redux/reduxTypes";
+import {debug, filterParams, filterR} from "../hellpers/helpers";
+import {pipe} from "fp-ts/function";
 
 export enum EnumOptionsDownloadTxtFile {
     toSave = 'toSave',
-    toSaveExcept ='toSaveExcept',
+    toSaveExcept = 'toSaveExcept',
 }
 
-type TTableOptions = { type:  EnumOptionsDownloadTxtFile.toSave | EnumOptionsDownloadTxtFile.toSaveExcept, fields: string[] }
+type TColumnsToDownload = { type: EnumOptionsDownloadTxtFile.toSave | EnumOptionsDownloadTxtFile.toSaveExcept, fields: string[] }
 
-export const downloadTxtFile = (data: TTableLine[], options?: TTableOptions) => {
+type TTDownloadParams = {
+    propertyToSave?: Array<keyof Item<unknown>>
+}
 
+
+export const downloadTxtFile = (data: TTableLine[], options?: { params?: TTDownloadParams, columns?: TColumnsToDownload }) => {
     const element = document.createElement("a");
     const tableData = data
         .map(line => {
-            const convertedLines = [...line.columns.values()].map(item => item)
-            if (options)
-                switch (options.type) {
-                    case EnumOptionsDownloadTxtFile.toSave: {
-                        return convertedLines.filter(item => options.fields.includes(item.nameColumn))
+            const convertedLine = [...line.columns.values()]
+            if (options) {
+                if (options.columns) {
+                    const items = filterR(convertedLine)
+                    const fields = options.columns.fields
+                    switch (options.columns.type) {
+                        case EnumOptionsDownloadTxtFile.toSave: {
+                            return pipe(items((item) => fields.includes(item.nameColumn)), filterParams(options.params?.propertyToSave), debug())
+                        }
+                        case EnumOptionsDownloadTxtFile.toSaveExcept: {
+                            return items((item) => fields.includes(item.nameColumn))
+                        }
+                        default:
+                            return convertedLine
                     }
-                    case EnumOptionsDownloadTxtFile.toSaveExcept:{
-                        return convertedLines.filter(item => !options.fields.includes(item.nameColumn))
-                    }
-                    default:
-                        return convertedLines
+                } else if (options.params) {
+                    return filterParams<Item<unknown>>(options.params.propertyToSave)(convertedLine)
                 }
+            }
+            return convertedLine
         })
     const toFile = JSON.stringify(tableData)
     const file = new Blob([toFile], {

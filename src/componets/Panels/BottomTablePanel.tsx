@@ -38,8 +38,11 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
         tableConnect.settableEternalState(stateTable)
     }
 
-    const onDownload = useCallback(()=>{
-        downloadTxtFile(stateTable.data, {type:EnumOptionsDownloadTxtFile.toSave, fields:['clientPhone']} )
+    const onDownload = useCallback(() => {
+        downloadTxtFile(stateTable.data, {
+            params: {propertyToSave: ['nameColumn', 'value']},
+            columns: {type: EnumOptionsDownloadTxtFile.toSave, fields: ['clientPhone']}
+        })
     }, [stateTable.data])
 
     return (
