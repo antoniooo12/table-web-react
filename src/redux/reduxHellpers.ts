@@ -2,8 +2,9 @@ import {Item, TExternalData, TStatus, TTableLine} from "./reduxTypes";
 import {v4 as uuidv4} from "uuid";
 import {Columns} from "../types/TableStructure";
 import {pipe} from "fp-ts/function";
+import {ExternalDataColumn} from "../API/TableWebAPITypes";
 
-export const createDefaultItem = <T>(name: string, initialValue: T, id?:string): Item<unknown> => {
+export const createDefaultItem = <T>(name: string, initialValue: T, id?: string): Item<unknown> => {
     return {
         id: id || uuidv4(),
         nameColumn: name,
@@ -22,7 +23,7 @@ export const createLine = (status: TStatus) => (id?: string) => (columns: Map<st
         columns: columns,
     }
 }
-export const createColumns = (columnsStructure: Columns, initialValue: Map<string, unknown>) => {
+export const createColumns = (columnsStructure: Columns) => (initialValue: Map<string, unknown>) => {
     return [...columnsStructure.keys()].reduce((accum, item) => {
         accum.set(item, {
             ...createDefaultItem(item, initialValue.get(item)),
@@ -32,7 +33,7 @@ export const createColumns = (columnsStructure: Columns, initialValue: Map<strin
 }
 
 export const createColumnsFromExternalData = (columnsStructure: Columns) =>
-    (externalValues: TExternalData<unknown>): Map<string, Item<unknown>> => {
+    (externalValues:  Map<string, ExternalDataColumn<unknown>>): Map<string, Item<unknown>> => {
         return [...columnsStructure.keys()].reduce((accum: Map<string, Item<unknown>>, column) => {
             const columnName = externalValues.get(column)?.nameColumn
             const columnValue = externalValues.get(column)?.value
@@ -44,5 +45,5 @@ export const createColumnsFromExternalData = (columnsStructure: Columns) =>
     }
 
 export const createLineToTable = (columnsStructure: Columns, initialValue: Map<string, unknown>, status: TStatus, id?: string) => {
-    return pipe(createColumns(columnsStructure, initialValue), createLine(status)(id))
+    return pipe(createColumns(columnsStructure)(initialValue), createLine(status)(id))
 }

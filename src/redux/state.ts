@@ -1,7 +1,6 @@
 import {EnumStatus, EnumTableReducer, TableReducerActions, TableState} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
-import {createColumnsFromExternalData, createLine, createLineToTable} from './reduxHellpers'
-import {arrayOfObjectsToMap} from "../hellpers/helpers";
+import {createColumns, createColumnsFromExternalData, createLine, createLineToTable} from './reduxHellpers'
 
 const defaultState: TableState = {
     storage: {data: []}

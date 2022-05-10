@@ -17,19 +17,34 @@ type TTDownloadParams = {
 
 export const downloadTxtFile = (data: TTableLine[], options?: { params?: TTDownloadParams, columns?: TColumnsToDownload }) => {
     const element = document.createElement("a");
+
     const tableData = data
         .map(line => {
-            const convertedLine = [...line.columns.values()]
+            return {
+                lineInformation: line.lineInformation,
+                columns: [...line.columns.values()],
+            }
+        })
+        .map(line => {
+            const convertedLine = line.columns
             if (options) {
                 if (options.columns) {
                     const items = filterR(convertedLine)
                     const fields = options.columns.fields
                     switch (options.columns.type) {
                         case EnumOptionsDownloadTxtFile.toSave: {
-                            return items((item) => fields.includes(item.nameColumn))
+                            const filteredColumns = items((item) => fields.includes(item.nameColumn))
+                            return {
+                                ...line,
+                                columns: filteredColumns,
+                            }
                         }
                         case EnumOptionsDownloadTxtFile.toSaveExcept: {
-                            return items((item) => fields.includes(item.nameColumn))
+                            const filteredColumns = items((item) => !fields.includes(item.nameColumn))
+                            return {
+                                ...line,
+                                columns: filteredColumns,
+                            }
                         }
                         default: {
                             absurd(options.columns.type)
@@ -37,13 +52,19 @@ export const downloadTxtFile = (data: TTableLine[], options?: { params?: TTDownl
                     }
                 }
             }
-            return convertedLine
-        }).map(line => {
+
+            return line
+        })
+        .map(line => {
             if (options) {
                 if (options.params && options.params.propertyToSave) {
                     switch (options.params.propertyToSave.type) {
                         case "options": {
-                            return filterParams<Item<unknown>>(options.params.propertyToSave.params)(line)
+                            const filteredColumns = filterParams<Item<unknown>>(options.params.propertyToSave.params)(line.columns)
+                            return {
+                                ...line,
+                                columns: filteredColumns,
+                            }
                         }
                         case "all": {
                             return line
