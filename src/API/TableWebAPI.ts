@@ -11,12 +11,6 @@ import {
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap, findDefaultValue} from "../hellpers/helpers";
 
-/* todo create union object which gather fiches:
-   loading table structure +-
-   loading a external data +-
-   saving table to state
-   saving data to PC +-
-*/
 
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure): ExternalDataTable => {
     const columns = executeColumns(tableStructure)

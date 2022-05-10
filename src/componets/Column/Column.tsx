@@ -1,6 +1,4 @@
-// @ts-ignore
 import cl from './Column.module.scss'
-
 import React, {useContext} from 'react';
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {Item} from "../../redux/reduxTypes";
@@ -17,8 +15,6 @@ const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
     if (!columnParam) {
         throw new Error('error columnParam')
     }
-    // const position = columnParam.position || 'full'
-    // const subColumns = columnParam.subColumns
 
     return (
         <div>

@@ -8,11 +8,6 @@ function App() {
     return (
         <div className="App">
             <TestTable/>
-            <button onClick={() => {
-                // console.log(ss)
-            }}>
-                temp
-            </button>
         </div>
     );
 }
