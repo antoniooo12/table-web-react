@@ -17,8 +17,8 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
                     return (<Line
                         status={line.lineInformation.status}
                         lineIdt={line.lineInformation.id}
-                        toDeletet={line.lineInformation.toDelete}
-                        wasEditt={line.lineInformation.wasEdit}
+                        toDelete={line.lineInformation.toDelete}
+                        wasEdit={line.lineInformation.wasEdit}
                         lineData={line.lineInformation}
                         columnsData={line.columns}
                         key={line.lineInformation.id.toString()}

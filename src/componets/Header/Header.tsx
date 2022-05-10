@@ -6,14 +6,10 @@ import {Column, HeaderParam, SectionTableStructure, TShieldStructure} from "../.
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {THeader} from "./THedaer";
 
-export type ComponentHeader = {
-    // header: THeader[]
-}
+export type ComponentHeader = {}
 
 const Header: React.FC<ComponentHeader> = (
-    {
-        // header
-    }) => {
+    {}) => {
     const {shield} = useContext(TableWebContext)
     const getColumns = (columns: Column[]) => {
         return columns.flatMap(((column, numColumn) => {
