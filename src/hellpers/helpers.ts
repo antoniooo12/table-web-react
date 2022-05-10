@@ -1,6 +1,7 @@
 import {SNB} from "../types/HelperTypes";
-import {InputType} from "../types/TableStructure";
+import {DefaultValue, InputType} from "../types/TableStructure";
 import {Predicate} from "fp-ts/Predicate";
+import {absurd} from "fp-ts/function";
 
 
 export const filterR = <A>(arr: Array<A>) => (predicate: Predicate<A>) => {
@@ -48,3 +49,21 @@ export const selectCellType = (type: InputType, value?: SNB | undefined): SNB =>
     return value || ''
 }
 
+export const arrayOfObjectsToMap = <T>(objs: T[], key: keyof T): Map<T[keyof T], T> => {
+    return objs.reduce((accum, obj) => {
+        return accum.set(obj[key], obj)
+    }, new Map<T[keyof T], T>())
+}
+
+export const findDefaultValue = <T>(defaultValue: DefaultValue<T>) => {
+    switch (defaultValue.type) {
+        case "Default": {
+            return defaultValue.value
+        }
+        case "Previous": {
+            return defaultValue.orNotPrevious
+        }
+        default:
+            absurd(defaultValue)
+    }
+}

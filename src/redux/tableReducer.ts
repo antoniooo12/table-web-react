@@ -1,4 +1,4 @@
-import {EnumTableReducer, IOnChangeCell, TOnDeleteLine} from "./reduxTypes";
+import {EnumTableReducer, IOnChangeCell, TOnDeleteLine, TOnLoadExternalData} from "./reduxTypes";
 import {Columns} from "../types/TableStructure";
 
 
@@ -12,5 +12,9 @@ export const tableChangeCell = <T>(information: IOnChangeCell<T>) => ({
 })
 export const tableDeleteLine = (information: TOnDeleteLine) => ({
     type: EnumTableReducer.deleteLine,
+    payload: information,
+})
+export const tableLoadExternalData = (information: TOnLoadExternalData)=>({
+    type: EnumTableReducer.loadExternalData,
     payload: information,
 })

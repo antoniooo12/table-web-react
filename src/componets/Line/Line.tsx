@@ -35,9 +35,8 @@ const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
             <div
                 className={clsx({
                     [cl.wrapper]: true,
-                    [cl.newLine]: lineData.status === 'isAll',
+                    [cl.allLine]: lineData.status === 'isAll',
                     [cl.newLine]: lineData.status === 'isNew',
-                    [cl.newLine]: launch,
                     [cl.deleteLine]: lineData.toDelete,
                 })}
             >
@@ -62,6 +61,7 @@ const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
     );
 })
 
+// todo refactoring
 function areEqual(prev: TLine, next: TLine) {
     // console.log(isEqual(prev.lineData, next.lineData))
     // console.log(Object.is(prev.lineData, prev.lineData))
@@ -70,7 +70,7 @@ function areEqual(prev: TLine, next: TLine) {
 }
 
 export {Line};
-
+// todo refactoring
 function isEqual(obj1: any, obj2: any) {
     var props1 = Object.getOwnPropertyNames(obj1);
     var props2 = Object.getOwnPropertyNames(obj2);

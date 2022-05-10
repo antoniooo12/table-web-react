@@ -44,8 +44,11 @@ export type InputAdditionalAttributes =
     InputAdditionalParamsTel
     | InputAdditionalParamsNumber
     | InputAdditionalParamsSelect
+export type DefaultValue<T> =
+    { readonly value: T, readonly type: 'Default' }
+    | { readonly type: 'Previous', readonly orNotPrevious: T }
 export type CellParam<T> = {
-    readonly default:   { readonly value: T, readonly type: 'Default'}| {  readonly type: 'Previous', readonly orNotPrevious:T}
+    readonly default: DefaultValue<T>
     readonly  additionalParams?: InputAdditionalAttributes
     readonly  type: InputType
     readonly  hidden?: boolean
