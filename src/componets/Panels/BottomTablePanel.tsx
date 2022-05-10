@@ -27,7 +27,7 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
                     type: 'all'
                 }
             },
-            columns: {type: EnumOptionsDownloadTxtFile.toSave, fields: ['clientPhone']}
+            columns: {type: EnumOptionsDownloadTxtFile.toSaveExcept, fields: []}
         })
     }, [stateTable.data])
 

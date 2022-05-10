@@ -16,7 +16,7 @@ const transformExternalData = (tableExternalData: TableExternalShieldData) => (t
     const columns = executeColumns(tableStructure)
 
     return tableExternalData.map(line => {
-        const temp = arrayOfObjectsToMap(line, "nameColumn")
+        const temp = arrayOfObjectsToMap(line.columns, "nameColumn")
         console.log(temp)
         return [...columns.entries()].reduce((accum, [key, columnParams]) => {
             const te: ExternalDataColumn<unknown> | undefined = temp.get(key)
