@@ -1,28 +1,31 @@
 import cl from './TableWeb.module.scss'
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Shield} from "../Shield/Shield";
 import {Header} from "../Header/Header";
 import {TableWebContext} from "./TableWebContext";
-import {useWebTable} from "../../hooks/useWebTable";
+import {executeColumns} from "../../hooks/executeColumns";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
 import {TTableConnect} from "../../API/TableWebAPITypes";
-import {TableReduxStructure} from "../../redux/reduxTypes";
+import {useActionsTable} from "../../hooks/useActionsTable";
 
 
 export type TTableWeb = {
-    api?: {
-        setExternalValue?: TableReduxStructure
-    }
     tableConnect: TTableConnect,
 }
 
 
 const TableWeb: React.FC<TTableWeb> = ({tableConnect}) => {
     const {tableStructure} = tableConnect
+    const {tableLoadExternalData}= useActionsTable()
     const {shield} = tableStructure
-    const {columns} = useWebTable(tableStructure)
+    const columns = executeColumns(tableStructure)
     const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
+    useEffect(()=>{
+        if( tableConnect.tableExternalData) {
+            tableLoadExternalData({externalData: tableConnect.tableExternalData, columnsStructure: columns})
+        }
+    },[])
     return (
         <TableWebContext.Provider
             value={{

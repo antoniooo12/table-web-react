@@ -1,20 +1,19 @@
 import {Column, SectionTableStructure, TableStructure} from "../types/TableStructure";
 
 
-
-export const useWebTable = (table: TableStructure) => {
-    function findColumns(sections: SectionTableStructure[],isVisible?: boolean) {
-        return sections.reduce((accum, current)=>{
+export const executeColumns = (table: TableStructure) => {
+    function findColumns(sections: SectionTableStructure[], isVisible?: boolean) {
+        return sections.reduce((accum, current) => {
             const visibilitySection = current.sectionNameParams.hidden || isVisible
             console.log(visibilitySection)
-            if(current.sectionInner){
+            if (current.sectionInner) {
                 [...findColumns([...current.sectionInner.values()], visibilitySection).entries()].forEach((newColumn) => {
                     accum.set(newColumn[0], newColumn[1])
                 })
             }
-            if(current.columns) {
+            if (current.columns) {
                 [...current.columns.entries()].forEach((newColumn) => {
-                 accum.set(newColumn[0], {...newColumn[1], hidden: visibilitySection })
+                    accum.set(newColumn[0], {...newColumn[1], hidden: visibilitySection})
                     // accum  .set(newColumn[0], {...newColumn[1], visible : visibilitySection})
                 })
             }
@@ -22,10 +21,9 @@ export const useWebTable = (table: TableStructure) => {
         }, new Map<string, Column>())
     }
 
-    const columns =  findColumns([...table.shield.section.values()])
+    const columns = findColumns([...table.shield.section.values()])
 
     console.log(columns)
-    return {
-        columns
-    }
+    return columns
+
 }

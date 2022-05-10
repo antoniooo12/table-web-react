@@ -1,5 +1,6 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
+import {ExternalDataTable, TableExternalShieldData} from "../API/TableWebAPITypes";
 
 export type TableState = {
     storage: TableReduxStructure
@@ -32,6 +33,7 @@ export type Item<T> = {
     subData?: Map<string, Item<T>>
     dependencyId?: Record<string, number>
 }
+export type TExternalData<T> =  Map<string, {nameColumn: string, value: T}>
 
 export enum EnumStatus {
     isAll = "isAll",
@@ -41,7 +43,8 @@ export enum EnumStatus {
 export enum EnumTableReducer {
     createLine = 'createLine',
     changeCell = 'changeCell',
-    deleteLine = 'deleteLine'
+    deleteLine = 'deleteLine',
+    loadExternalData = 'loadExternalData',
 }
 
 export interface IOnChangeCell<T> {
@@ -53,10 +56,13 @@ export interface IOnChangeCell<T> {
     parentCell?: string
     // dependentColumns?: DependentColumn[]
 }
-
 export type TOnDeleteLine = {
     lineId: number | string
     status: TStatus
+}
+export type TOnLoadExternalData = {
+    externalData: ExternalDataTable
+    columnsStructure: Columns
 }
 type CreateLine = {
     type: EnumTableReducer.createLine
@@ -70,4 +76,8 @@ type DeleteLine = {
     type: EnumTableReducer.deleteLine
     payload: TOnDeleteLine
 }
-export type TableReducerActions<T> = CreateLine | ChangeCell<T> | DeleteLine
+type LoadExternalData = {
+    type: EnumTableReducer.loadExternalData
+    payload: TOnLoadExternalData
+}
+export type TableReducerActions<T> = CreateLine | ChangeCell<T> | DeleteLine | LoadExternalData

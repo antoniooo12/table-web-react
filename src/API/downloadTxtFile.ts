@@ -1,6 +1,6 @@
 import {Item, TTableLine} from "../redux/reduxTypes";
-import {debug, filterParams, filterR} from "../hellpers/helpers";
-import {pipe} from "fp-ts/function";
+import {filterParams, filterR} from "../hellpers/helpers";
+import {absurd} from "fp-ts/function";
 
 export enum EnumOptionsDownloadTxtFile {
     toSave = 'toSave',
@@ -9,8 +9,9 @@ export enum EnumOptionsDownloadTxtFile {
 
 type TColumnsToDownload = { type: EnumOptionsDownloadTxtFile.toSave | EnumOptionsDownloadTxtFile.toSaveExcept, fields: string[] }
 
+export type PropertyToSave = { type: 'options', params: Array<keyof Item<unknown>> } | { type: 'all' }
 type TTDownloadParams = {
-    propertyToSave?: Array<keyof Item<unknown>>
+    propertyToSave?: PropertyToSave
 }
 
 
@@ -25,19 +26,33 @@ export const downloadTxtFile = (data: TTableLine[], options?: { params?: TTDownl
                     const fields = options.columns.fields
                     switch (options.columns.type) {
                         case EnumOptionsDownloadTxtFile.toSave: {
-                            return pipe(items((item) => fields.includes(item.nameColumn)), filterParams(options.params?.propertyToSave), debug())
+                            return items((item) => fields.includes(item.nameColumn))
                         }
                         case EnumOptionsDownloadTxtFile.toSaveExcept: {
                             return items((item) => fields.includes(item.nameColumn))
                         }
-                        default:
-                            return convertedLine
+                        default: {
+                            absurd(options.columns.type)
+                        }
                     }
-                } else if (options.params) {
-                    return filterParams<Item<unknown>>(options.params.propertyToSave)(convertedLine)
                 }
             }
             return convertedLine
+        }).map(line => {
+            if (options) {
+                if (options.params && options.params.propertyToSave) {
+                    switch (options.params.propertyToSave.type) {
+                        case "options": {
+                            return filterParams<Item<unknown>>(options.params.propertyToSave.params)(line)
+                        }
+                        case "all": {
+                            return line
+                        }
+                        default:
+                            absurd(options.params.propertyToSave)
+                    }
+                }
+            }
         })
     const toFile = JSON.stringify(tableData)
     const file = new Blob([toFile], {
