@@ -1,6 +1,6 @@
 import cl from '../Input.module.scss'
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {TCell} from "../cellTypes";
 import {InputAdditionalAttributes, InputAdditionalParamsNumber} from "../../../../types/TableStructure";
@@ -12,7 +12,7 @@ const CellNumber: React.FC<TCell<number>> = ({setExternalValue, externalValue, a
     if (additionalParams && !isInputAdditionalParamsNumber(additionalParams)) {
         throw new Error('Error in additional params CellNumber')
     }
-    const setter = setExternalValue(additionalParams? numberMiddleware(additionalParams) : (v)=>v)
+    const setter = setExternalValue(additionalParams ? numberMiddleware(additionalParams) : (v) => v)
     const [innerValue, setValue, setValueHtml] = useTest<number>(setter, externalValue)
 
     return (

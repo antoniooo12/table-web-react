@@ -18,7 +18,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
             })
         }
         case EnumTableReducer.changeCell: {
-            const {status, value, nameCell, lineId, TypeSubData, parentCell} = action.payload
+            const {status, value, nameCell, lineId} = action.payload
             return produce(state, draft => {
                 const lineIndex = draft.storage!.data
                     .findIndex(line => line.lineInformation.id === lineId)
@@ -48,7 +48,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
         case EnumTableReducer.loadExternalData: {
             const {externalData, columnsStructure} = action.payload
             const table = externalData.map(externalLine => {
-                return createLine(EnumStatus.isAll)()(createColumnsFromExternalData(columnsStructure)(externalLine))
+                return createLine(EnumStatus.isAll)()(createColumns(columnsStructure)(externalLine))
             })
             return produce(state, draft => {
                 draft.storage.data.push(...table)

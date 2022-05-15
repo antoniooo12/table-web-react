@@ -1,8 +1,9 @@
-import {Item, TExternalData, TStatus, TTableLine} from "./reduxTypes";
+import {Item, TStatus, TTableLine} from "./reduxTypes";
 import {v4 as uuidv4} from "uuid";
 import {Columns} from "../types/TableStructure";
 import {pipe} from "fp-ts/function";
 import {ExternalDataColumn} from "../API/TableWebAPITypes";
+import {TInitialValue} from "../componets/Panels/onCreateLine";
 
 export const createDefaultItem = <T>(name: string, initialValue: T, id?: string): Item<unknown> => {
     return {
@@ -12,7 +13,22 @@ export const createDefaultItem = <T>(name: string, initialValue: T, id?: string)
         value: initialValue,
     }
 }
+export const createColumns = (columnsStructure: Columns) => (initialValue: TInitialValue) => {
+    return [...columnsStructure.entries()].reduce((accum, [key, columnStructure]) => {
+        const value = initialValue.get(key)
+        const item: Item<unknown> = {
+            ...createDefaultItem(key, value?.value),
+            subColumns: columnStructure.subColumns && value && value.subData &&
+                createColumns(columnStructure.subColumns)(value.subData)
+        }
+
+        accum.set(key, item)
+        return accum
+    }, new Map<string, Item<unknown>>())
+}
+
 export const createLine = (status: TStatus) => (id?: string) => (columns: Map<string, Item<unknown>>): TTableLine => {
+
     return {
         lineInformation: {
             status: status,
@@ -23,17 +39,9 @@ export const createLine = (status: TStatus) => (id?: string) => (columns: Map<st
         columns: columns,
     }
 }
-export const createColumns = (columnsStructure: Columns) => (initialValue: Map<string, unknown>) => {
-    return [...columnsStructure.keys()].reduce((accum, item) => {
-        accum.set(item, {
-            ...createDefaultItem(item, initialValue.get(item)),
-        })
-        return accum
-    }, new Map<string, Item<unknown>>())
-}
 
 export const createColumnsFromExternalData = (columnsStructure: Columns) =>
-    (externalValues:  Map<string, ExternalDataColumn<unknown>>): Map<string, Item<unknown>> => {
+    (externalValues: Map<string, ExternalDataColumn<unknown>>): Map<string, Item<unknown>> => {
         return [...columnsStructure.keys()].reduce((accum: Map<string, Item<unknown>>, column) => {
             const columnName = externalValues.get(column)?.nameColumn
             const columnValue = externalValues.get(column)?.value
@@ -44,6 +52,6 @@ export const createColumnsFromExternalData = (columnsStructure: Columns) =>
         }, new Map())
     }
 
-export const createLineToTable = (columnsStructure: Columns, initialValue: Map<string, unknown>, status: TStatus, id?: string) => {
+export const createLineToTable = (columnsStructure: Columns, initialValue: TInitialValue, status: TStatus, id?: string) => {
     return pipe(createColumns(columnsStructure)(initialValue), createLine(status)(id))
 }

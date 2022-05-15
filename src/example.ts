@@ -205,10 +205,23 @@ const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
 const clientNameTuple: [string, Column] = ['clientName', {
     title: 'Імʼя клієнта',
     cellParam: {
-        default: {type: 'Default', value: 'Asya'},
+        default: {type: 'Default', value: ''},
         type: 'text',
         placeholder: 'імʼя'
     },
+    subColumns:
+        new Map<string, Column>([
+            ['id', {
+                title: 'id',
+                width: "all",
+                cellParam: {
+                    default: {type: 'Default', value: 'sdsw'},
+                    type: 'text',
+                    placeholder: 'id'
+                },
+            }]
+        ]),
+
     width: 100,
 
 }]
@@ -240,6 +253,7 @@ const houseTypeTuple: [string, Column] = ['houseType', {
     },
     width: 110,
 }]
+
 export const testTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
