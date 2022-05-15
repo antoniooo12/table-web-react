@@ -5,6 +5,7 @@ import {TableExternalShieldData, TTableConnect} from "./TableWebAPITypes";
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap} from "../hellpers/helpers";
 import {findInitialValueToCreateLine, TInitialValue} from "../componets/Panels/onCreateLine";
+import {string} from "fp-ts";
 
 
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure): TInitialValue[] => {
@@ -35,5 +36,7 @@ const transformExternalData = (tableExternalData: TableExternalShieldData) => (t
 export const useConnectWebTableState = (tableStructure: TableStructure, tableExternalData?: TableExternalShieldData): TTableConnect => {
     const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
     const data: TInitialValue[] | undefined = tableExternalData && transformExternalData(tableExternalData)(tableStructure)
-    return {tableEternalState, settableEternalState, tableStructure, tableExternalData: data}
+    console.log(data)
+    const [] = useState(data)
+    return {tableEternalState, settableEternalState, tableStructure, tableExternalData: data, }
 }

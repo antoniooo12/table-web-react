@@ -265,7 +265,7 @@ export const testTable: TableStructure = {
                 },
                 columns: new Map<string, Column>([
                     clientNameTuple,
-                    clientRatingTuple,
+                    // clientRatingTuple,
                     // clientActiveTuple,
                     clientPhoneTuple,
 

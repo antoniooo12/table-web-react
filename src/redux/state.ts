@@ -1,6 +1,7 @@
 import {EnumStatus, EnumTableReducer, TableReducerActions, TableState} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
 import {createColumns, createColumnsFromExternalData, createLine, createLineToTable} from './reduxHellpers'
+import {date} from "fp-ts";
 
 const defaultState: TableState = {
     storage: {data: []}
@@ -51,7 +52,10 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
                 return createLine(EnumStatus.isAll)()(createColumns(columnsStructure)(externalLine))
             })
             return produce(state, draft => {
-                draft.storage.data.push(...table)
+                const filteredTable = draft.storage.data
+                    .filter(line => line.lineInformation.status === EnumStatus.isNew)
+                table.push(...filteredTable)
+                draft.storage.data = table
             })
         }
         default:

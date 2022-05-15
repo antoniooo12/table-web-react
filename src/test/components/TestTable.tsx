@@ -1,19 +1,34 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {testTable} from "../../example";
 import {TableWebProviderComponent} from "../../componets/TableWeb/TableWebProviderComponent";
 import {useConnectWebTableState} from "../../API/TableWebAPI";
 import {exampleExternalData} from "../../exampleExternalData";
+import {Button} from "../../componets/buttons/Button/Button";
 
 const TestTable = () => {
-    const tableConnect = useConnectWebTableState(testTable, exampleExternalData)
+    const [exampleExternalDataTemp, setExampleExternalDataTemp] = useState(exampleExternalData)
+    const tableConnect = useConnectWebTableState(testTable, exampleExternalDataTemp)
+
     useEffect(() => {
-        console.log('===')
-        console.log(tableConnect.tableEternalState)
+        console.log('--------')
+        console.log(exampleExternalDataTemp)
+        console.log('--------')
     }, [tableConnect])
     return (
-        <TableWebProviderComponent
-            tableConnect={tableConnect}
-        />
+        <>
+            <Button
+                onClick={() => {
+                    if (exampleExternalData.length > 1) {
+                        setExampleExternalDataTemp([...exampleExternalData.slice(0, 2)])
+                    }
+                }}
+            >
+                up
+            </Button>
+            <TableWebProviderComponent
+                tableConnect={tableConnect}
+            />
+        </>
     );
 };
 
