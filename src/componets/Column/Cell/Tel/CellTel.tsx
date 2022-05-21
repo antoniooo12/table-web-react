@@ -12,7 +12,7 @@ const CellTel: React.FC<TCell<string>> = ({setExternalValue, externalValue, addi
     }
     const setter = setExternalValue(telMiddleware)
     const [innerValue, setValue, setValueHtml] = useTest<string>(setter, externalValue)
-    const innerTelModify = validateNumber(innerValue)
+    const innerTelModify = validateNumber(externalValue)
     return (
         <input
             onChange={setValueHtml}

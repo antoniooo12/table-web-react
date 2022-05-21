@@ -16,16 +16,16 @@ export type TTableWeb = {
 
 
 const TableWeb: React.FC<TTableWeb> = ({tableConnect}) => {
-    const {tableStructure} = tableConnect
+    const {tableStructure, tableExternalData} = tableConnect
     const {tableLoadExternalData}= useActionsTable()
     const {shield} = tableStructure
     const columns = executeColumns(tableStructure)
     const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     useEffect(()=>{
-        if( tableConnect.tableExternalData) {
-            tableLoadExternalData({externalData: tableConnect.tableExternalData, columnsStructure: columns})
+        if( tableExternalData) {
+            tableLoadExternalData({externalData: tableExternalData, columnsStructure: columns})
         }
-    },[])
+    },[tableExternalData])
     return (
         <TableWebContext.Provider
             value={{

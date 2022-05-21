@@ -1,6 +1,7 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 import {ExternalDataTable, TableExternalShieldData} from "../API/TableWebAPITypes";
+import {TInitialValue} from "../componets/Panels/onCreateLine";
 
 export type TableState = {
     storage: TableReduxStructure
@@ -10,9 +11,6 @@ export type TableReduxStructure = {
     data: TTableLine[]
 }
 
-// type TableDataStructure = {
-//
-// }
 export type TStatus = keyof typeof EnumStatus
 export type TLineInformation = {
     id: number | string
@@ -30,10 +28,11 @@ export type Item<T> = {
     nameColumn: string;
     value: T
     wasEdit: boolean;
-    subData?: Map<string, Item<T>>
+    subColumns?: Map<string, Item<T>>
     dependencyId?: Record<string, number>
 }
-export type TExternalData<T> =  Map<string, {nameColumn: string, value: T}>
+export type TExternalData<T> = Map<string, { nameColumn: string, value: T }>
+
 
 export enum EnumStatus {
     isAll = "isAll",
@@ -52,21 +51,19 @@ export interface IOnChangeCell<T> {
     value: T | number | string | boolean | HTMLInputTypeAttribute,
     nameCell: string,
     status: TStatus
-    TypeSubData?: "Array" | "Map" | "default"
-    parentCell?: string
-    // dependentColumns?: DependentColumn[]
 }
+
 export type TOnDeleteLine = {
     lineId: number | string
     status: TStatus
 }
 export type TOnLoadExternalData = {
-    externalData: ExternalDataTable
+    externalData: TInitialValue[]
     columnsStructure: Columns
 }
 type CreateLine = {
     type: EnumTableReducer.createLine
-    payload: { columnsStructure: Columns, initialValue: Map<string, unknown> }
+    payload: { columnsStructure: Columns, initialValue: TInitialValue }
 }
 type ChangeCell<T> = {
     type: EnumTableReducer.changeCell

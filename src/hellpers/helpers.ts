@@ -1,5 +1,5 @@
 import {SNB} from "../types/HelperTypes";
-import {DefaultValue, InputType} from "../types/TableStructure";
+import {Columns, DefaultValue, InputType} from "../types/TableStructure";
 import {Predicate} from "fp-ts/Predicate";
 import {absurd} from "fp-ts/function";
 
@@ -7,6 +7,7 @@ import {absurd} from "fp-ts/function";
 export const filterR = <A>(arr: Array<A>) => (predicate: Predicate<A>) => {
     return arr.filter(predicate)
 }
+
 export const debug = <T>(key?: string | 'spread') => (value: T): T => {
     if (key) {
         console.log(`DEBUG:${key}: ${value}`)
@@ -24,6 +25,7 @@ export const copyParams = <A>(propertyToSave: Array<keyof A>) => (obj: A) => {
         }
     }, {})
 }
+
 export const filterParams = <A>(propertyToSave?: Array<keyof A>) => (arr: Array<A>): Array<Partial<A>> => {
     if (propertyToSave) {
         return arr.map(copyParams(propertyToSave))

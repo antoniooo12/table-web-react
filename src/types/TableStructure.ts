@@ -58,12 +58,10 @@ export type CellParam<T> = {
 export type Column = {
     title: string
     cellParam: CellParam<unknown>
-    width: number | 'inherit'
+    width: number | 'inherit' | 'all'
     hidden?: boolean
-    subColumns?: {
-        type: 'Array' | 'Map',
-        data: Map<string, Column>
-    }
+    subColumns?: Map<string, Column>
+
 }
 export type Columns = Map<string, Column>
 export type SectionTableStructure = {

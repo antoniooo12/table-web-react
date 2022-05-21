@@ -1,12 +1,13 @@
 import {ReactDispSetter, WithOptional} from "../types/HelperTypes";
 import {Item, TableColumn, TableReduxStructure, TLineInformation} from "../redux/reduxTypes";
 import {TableStructure} from "../types/TableStructure";
+import {TInitialValue} from "../componets/Panels/onCreateLine";
 
 export type TTableConnect = {
     tableEternalState: TableReduxStructure
     settableEternalState: ReactDispSetter<TableReduxStructure>
     tableStructure: TableStructure
-    tableExternalData?: ExternalDataTable
+    tableExternalData?: TInitialValue[]
 }
 
 export type CellExternalData<T> = { nameColumn: string, value: T }

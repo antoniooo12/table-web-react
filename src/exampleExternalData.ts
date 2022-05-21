@@ -1,116 +1,91 @@
 import {TableExternalShieldData} from "./API/TableWebAPITypes";
 
-export const exampleExternalData: TableExternalShieldData = [
-    {
+export const exampleExternalData: TableExternalShieldData =
+    [{
         "lineInformation": {
             "status": "isAll",
             "toDelete": false,
-            "id": "0678cdec-2c11-4194-8d11-e25395bc248c",
+            "id": "455273b6-6a5c-4477-b909-600f85ceb770",
             "wasEdit": false
         },
-        "columns": [
-            {
-                "id": "55e382b5-ba02-46a1-9710-e2b2d3e7da99",
-                // "nameColumn": "clientName",
-                // "wasEdit": false,
-                "value": "Asya"
-            },
-            {
-                "id": "21102db9-1dcb-40e8-950c-100ce7ce130d",
-                "nameColumn": "clientRating",
-                "wasEdit": false,
-                "value": 3
-            },
-            {
-                "id": "f41dce49-43d7-43e6-ad92-64aae4a3af28",
-                "nameColumn": "clientPhone",
-                "wasEdit": false,
-                "value": "23"
-            }
-        ]
-    },
-    {
+        "columns": [{
+            "id": "e5cb81a3-0ab5-403c-a52e-3afb66319251",
+            "nameColumn": "clientName",
+            "wasEdit": false,
+            "value": "as"
+        }, {
+            "id": "207a8efd-4ac3-4dd0-98ce-b62e3de8efcc",
+            "nameColumn": "clientRating",
+            "wasEdit": false,
+            "value": 3
+        }, {
+            "id": "cc9a4a86-e388-44d3-b69b-4fb9fcd2791c",
+            "nameColumn": "clientPhone",
+            "wasEdit": false,
+            "value": "23"
+        }]
+    }, {
         "lineInformation": {
             "status": "isAll",
             "toDelete": false,
-            "id": "f216b388-369d-4410-af68-2d0455edc4f7",
+            "id": "0c7f1f03-f357-45ea-805e-d2aec70fb780",
             "wasEdit": false
         },
-        "columns": [
-            {
-                "id": "aeeab7ff-a109-4990-80c5-cf580bbe1fcc",
-                "nameColumn": "clientName",
-                "wasEdit": false,
-                "value": "Asya"
-            },
-            {
-                "id": "49d5fc29-43a0-4b5a-937c-7ba72f3d7b6b",
-                "nameColumn": "clientRating",
-                "wasEdit": false,
-                "value": 3
-            },
-            {
-                "id": "d7c6a537-2198-4a33-8664-136765af385d",
-                "nameColumn": "clientPhone",
-                "wasEdit": false,
-                "value": "12"
-            }
-        ]
-    },
-    {
+        "columns": [{
+            "id": "988fbe13-0eaf-4412-92b7-102e57262283",
+            "nameColumn": "clientName",
+            "wasEdit": false,
+            "value": "Mas"
+        }, {
+            "id": "9fc2da9c-631d-407b-8a45-095da234d763",
+            "nameColumn": "clientRating",
+            "wasEdit": false,
+            "value": 3
+        }, {"id": "d06c9452-f9d4-4b2d-8540-86bb269772a5", "nameColumn": "clientPhone", "wasEdit": false, "value": "12"}]
+    }, {
         "lineInformation": {
             "status": "isAll",
             "toDelete": false,
-            "id": "d70b0cef-4bd6-4416-aa06-62648dc18813",
+            "id": "2503db43-f548-4229-96c4-00fd99e9d2b9",
             "wasEdit": false
         },
-        "columns": [
-            {
-                "id": "abeda3fb-c321-4fc5-8910-1aef8ca41895",
-                "nameColumn": "clientName",
-                "wasEdit": false,
-                "value": "Asya"
-            },
-            {
-                "id": "18bc6901-4d5b-4387-97f8-8915f4763fe3",
-                "nameColumn": "clientRating",
-                "wasEdit": false,
-                "value": 3
-            },
-            {
-                "id": "040d3f0e-c09a-45bc-8d4e-edb2dbae6f0e",
-                "nameColumn": "clientPhone",
-                "wasEdit": false,
-                "value": "0503095858"
-            }
-        ]
-    },
-    {
+        "columns": [{
+            "id": "48f53876-3ce3-4226-a78c-8684d36f7c57",
+            "nameColumn": "clientName",
+            "wasEdit": false,
+            "value": "Asya"
+        }, {
+            "id": "00c17924-f647-4066-b7d8-47ff4a713fc6",
+            "nameColumn": "clientRating",
+            "wasEdit": false,
+            "value": 3
+        }, {
+            "id": "7fc6efd5-5315-49cc-9811-75c0f35a544d",
+            "nameColumn": "clientPhone",
+            "wasEdit": false,
+            "value": "0503095858"
+        }]
+    }, {
         "lineInformation": {
             "status": "isAll",
             "toDelete": false,
-            "id": "ca4e5d59-52b4-4a4d-ae5a-15a189ecc767",
+            "id": "2dc17a26-e9f6-41cb-b558-6dbffcadeb99",
             "wasEdit": false
         },
-        "columns": [
-            {
-                "id": "55e5d2c3-2160-42d3-9a0a-fb77827be254",
-                "nameColumn": "clientName",
-                "wasEdit": false,
-                "value": "Asya"
-            },
-            {
-                "id": "f61a99e7-f49a-4984-8a4c-959c2446a8ee",
-                "nameColumn": "clientRating",
-                "wasEdit": false,
-                "value": 3
-            },
-            {
-                "id": "905f3359-ce66-4a0c-8630-49b701818823",
-                "nameColumn": "clientPhone",
-                "wasEdit": false,
-                "value": "0233134231"
-            }
-        ]
-    }
-]
+        "columns": [{
+            "id": "aa3a2183-7f09-4446-9f36-0b61115c0b99",
+            "nameColumn": "clientName",
+            "wasEdit": false,
+            "value": "Asya"
+        }, {
+            "id": "3791f9ea-da66-4f6a-b858-d16710ab82e3",
+            "nameColumn": "clientRating",
+            "wasEdit": false,
+            "value": 3
+        }, {
+            "id": "11c55ae3-9c12-4462-b652-144c6b8e218f",
+            "nameColumn": "clientPhone",
+            "wasEdit": false,
+            "value": "0233134231"
+        }]
+    }]
