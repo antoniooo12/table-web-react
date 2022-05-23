@@ -3,22 +3,23 @@ import {CellNumber} from "./Number/CellNumber";
 import {CellBoolean} from "./Boolean/CellBoolean";
 import {CellTel} from "./Tel/CellTel";
 import {CellSelect} from "./Select/CellSelect";
-import {CellParam, InputType} from "../../../types/TableStructure";
+import {InputType} from "../../../types/TableStructure";
 import React from "react";
 import {TCell} from "./cellTypes";
-import {absurd} from "fp-ts/function";
+import {CellTextSelect} from "./Text/TextSelect/CellTextSelect";
 
-export const cells = {
-    text: {cell: CellText, initialState: ''},
-    number: {cell: CellNumber, initialState: 0},
-    checkbox: {cell: CellBoolean, initialState: false},
-    tel: {cell: CellTel, initialState: ''},
-    textarea: {cell: CellText, initialState: ''},
-    select: {cell: CellSelect, initialState: ''},
-
+type TInitialCells = { [key in InputType]: { cell: React.FC<TCell<any>> } }
+export const cells: TInitialCells = {
+    text: {cell: CellText},
+    number: {cell: CellNumber},
+    checkbox: {cell: CellBoolean},
+    tel: {cell: CellTel},
+    textarea: {cell: CellText},
+    select: {cell: CellSelect},
+    textSelect: {cell: CellTextSelect}
 }
-type initialCells= { [key in InputType]: { cell: React.FC<TCell<any>>, initialState: unknown } }
-export const initialCells = (outerCells: initialCells) => {
+
+export const initialCells = (outerCells: TInitialCells) => {
     const cells = outerCells
     const getCells = (key: InputType) => {
         return cells[key]

@@ -9,9 +9,9 @@ const CellSelect: React.FC<TCell<string>> = ({cellParam, additionalParams, setEx
     if (additionalParams && !isInputAdditionalParamsSelect(additionalParams)) {
         throw new Error('Error in additional params CellTel')
     }
-    const setter = setExternalValue((v)=>v)
+    // const setter = setExternalValue((v)=>v)
 
-    const [innerValue, setValue, setInnerValueHtml] = useTest(setter, externalValue)
+    const [innerValue, setValue, setInnerValueHtml] = useTest(setExternalValue, externalValue)
     const setHtml = useOnChangeSelect(setValue)
     return (
         <select

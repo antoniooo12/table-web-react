@@ -20,9 +20,10 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox'
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect'
 
 export type InputAdditionalParamsSelect = {
+    type: 'InputAdditionalParamsSelect'
     variants: {
         disabled: boolean
         value: number | string
@@ -30,11 +31,23 @@ export type InputAdditionalParamsSelect = {
         text: string
     }[]
 }
+export type InputAdditionalParamsSelectV2 = {
+    type: 'InputAdditionalParamsSelectV2'
+    defaultSelected: number
+    variants: InputAdditionalParamsSelectVariantV2[]
+}
+export type InputAdditionalParamsSelectVariantV2 = {
+    disabled: boolean
+    value: string
+    text: string
+}
 
 export type InputAdditionalParamsTel = {
+    type: 'InputAdditionalParamsTel'
     format: string
 }
 export type InputAdditionalParamsNumber = {
+    type: 'InputAdditionalParamsNumber'
     min: number
     max: number
     step: number
@@ -44,6 +57,8 @@ export type InputAdditionalAttributes =
     InputAdditionalParamsTel
     | InputAdditionalParamsNumber
     | InputAdditionalParamsSelect
+    | InputAdditionalParamsSelectV2
+
 export type DefaultValue<T> =
     { readonly value: T, readonly type: 'Default' }
     | { readonly type: 'Previous', readonly orNotPrevious: T }

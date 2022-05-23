@@ -164,12 +164,14 @@ import {boolean} from "fp-ts";
 // }
 
 const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
+    type: 'InputAdditionalParamsNumber',
     max: 10,
     min: 1,
     step: 0.25,
 }
 const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsTel> = {
-    format: 'xxx_xxx_xx_xx_'
+    type: 'InputAdditionalParamsTel',
+    format: 'xxx_xxx_xx_xx_',
 }
 const clientRatingColumn: Column = {
     title: 'рейтинг',
@@ -226,6 +228,7 @@ const clientNameTuple: [string, Column] = ['clientName', {
 
 }]
 const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
+    type: 'InputAdditionalParamsSelect',
     variants: [{
         text: 'Усі',
         value: '1',
@@ -253,7 +256,33 @@ const houseTypeTuple: [string, Column] = ['houseType', {
     },
     width: 110,
 }]
-
+const houseAddressTuple: [string, Column]=['houseAddress',{
+    title: 'адреса',
+    cellParam: {
+        default: {type: 'Previous', orNotPrevious: ''},
+        type: 'textSelect',
+        additionalParams: {
+            type: "InputAdditionalParamsSelectV2",
+            defaultSelected: 0,
+            variants:[
+                {
+                text: '1',
+                value: '1',
+                disabled: false,
+            } ,{
+                text: '2',
+                value: '2',
+                disabled: false,
+            } ,{
+                text: '33',
+                value: '3',
+                disabled: false,
+            }
+            ]
+        },
+    },
+    width: 110,
+}]
 export const testTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
@@ -266,22 +295,23 @@ export const testTable: TableStructure = {
                 columns: new Map<string, Column>([
                     clientNameTuple,
                     clientRatingTuple,
-                    // clientActiveTuple,
+                    clientActiveTuple,
                     clientPhoneTuple,
 
                 ])
 
             }],
-            // ['houseInformation', {
-            //     sectionNameParams: {
-            //         title: 'інформація про будинок',
-            //         weight: 100,
-            //         fontSize: 12
-            //     },
-            //     columns: new Map([
-            //         houseTypeTuple
-            //     ])
-            // }]
+            ['houseInformation', {
+                sectionNameParams: {
+                    title: 'інформація про будинок',
+                    weight: 100,
+                    fontSize: 12
+                },
+                columns: new Map([
+                    houseTypeTuple,
+                    houseAddressTuple,
+                ])
+            }]
         ])
     }
 }
