@@ -5,9 +5,9 @@ import {useTest} from "../cellHooks";
 import clsx from "clsx";
 
 const CellBoolean: React.FC<TCell<boolean>> = ({setExternalValue, externalValue, additionalParams}) => {
-    const setter = setExternalValue((v) => v)
+    // const setter = setExternalValue((v) => v)
 
-    const [innerValue, setValue] = useTest<boolean>(setter, externalValue)
+    const [innerValue, setValue] = useTest<boolean>(setExternalValue, externalValue)
 
 
     return (

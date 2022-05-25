@@ -10,8 +10,8 @@ const CellTel: React.FC<TCell<string>> = ({setExternalValue, externalValue, addi
     if (additionalParams && !isInputAdditionalParamsTel(additionalParams)) {
         throw new Error('Error in additional params CellTel')
     }
-    const setter = setExternalValue(telMiddleware)
-    const [innerValue, setValue, setValueHtml] = useTest<string>(setter, externalValue)
+    // const setter = setExternalValue(telMiddleware)
+    const [innerValue, setValue, setValueHtml] = useTest<string>(setExternalValue, externalValue)
     const innerTelModify = validateNumber(externalValue)
     return (
         <input

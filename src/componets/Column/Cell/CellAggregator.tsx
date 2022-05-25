@@ -3,7 +3,6 @@ import {Item} from "../../../redux/reduxTypes";
 import {CellParam} from "../../../types/TableStructure";
 import {useActionsTable} from "../../../hooks/useActionsTable";
 import {LineContext} from "../../Line/LineContext";
-import {selectType} from "../../../hellpers/helpers";
 import {useEffectSkipMount} from "../../../hooks/utils";
 import {customSetExternalCell} from "./Tel/validateNumber";
 import {cells, initialCells} from "./cellCompose";
@@ -21,19 +20,17 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameIn
     const {previous:[previousValues, setPreviousValue]} = useContext(TableWebContext)
     const {getCells} = initialCells(cells)
     const selectedCell = getCells(cellParam.type)
-    type initialType = typeof selectedCell.initialState
-    const [value, setValue] = useState<initialType>(cellData.value)
+    const [value, setValue] = useState(cellData.value)
     const {tableChangeCell} = useActionsTable()
     const lineData = useContext(LineContext)
     const Component = selectedCell.cell
-    useEffect(() => {
-    }, [])
+
     useEffectSkipMount(() => {
         tableChangeCell({
             status: lineData.status,
             lineId: lineData.id,
             nameCell: nameInput,
-            value: selectType(selectedCell.initialState, value)
+            value: value
         })
         setPreviousValue(nameInput, value)
     }, [value])
@@ -41,7 +38,7 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameIn
     return (
         <>
             < Component
-                setExternalValue={customSetExternalCell<typeof selectedCell.initialState>(setValue)}
+                setExternalValue={customSetExternalCell(setValue)}
                 externalValue={value}
                 additionalParams={cellParam.additionalParams}
                 cellParam={cellParam}

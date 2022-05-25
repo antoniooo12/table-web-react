@@ -14,9 +14,9 @@ export const setTest = <N>(middleware: (str: N) => N, setExternal: React.Dispatc
     setExternal(middleware(value))
 }
 export const customSetExternalCell = <N>(setExternal: React.Dispatch<React.SetStateAction<N>>) =>
-    (middleware: (str: N) => N) => (value: N) => {
-        setExternal(middleware(value))
+    (value: N) => {
+        setExternal(value)
     }
-export const ccTest = <N>( middleware: (str: N) => N, value: N) => {
+export const ccTest = <N>(middleware: (str: N) => N, value: N) => {
     console.log(middleware(value))
 }

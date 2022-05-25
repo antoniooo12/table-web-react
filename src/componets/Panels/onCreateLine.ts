@@ -13,6 +13,7 @@ export const findInitialValueToCreateLine = (columnStructure: Columns, previousV
                 const subColumns = column.subColumns && findInitialValueToCreateLine(column.subColumns)
                 accum.set(key, {value: initialValue.value, subData: subColumns})
             } else if (typeOfInitialValue === 'Previous' && previousValues) {
+                // console.log(initialValue)
                 if (previousValues.get(key)) {
                     accum.set(key, {value: previousValues.get(key)})
                 } else {

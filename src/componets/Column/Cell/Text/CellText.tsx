@@ -3,18 +3,27 @@ import cl from '../Input.module.scss'
 import React from 'react';
 import {TCell} from "../cellTypes";
 import {useTest} from "../cellHooks";
+import {BaseInput, TBaseInput} from "../BaseInput/BaseInput";
 
-const CellText: React.FC<TCell<string>> & {} = ({setExternalValue, externalValue, additionalParams, cellParam}) => {
-    const setter = setExternalValue((v)=>v)
-    const [innerValue,setValue, setValueHtml] = useTest<string>(setter, externalValue)
+const CellText: React.FC<TCell<string> & { baseInputProps?: TBaseInput }>
+    = ({
+           setExternalValue,
+           externalValue,
+           additionalParams,
+           cellParam,
+           baseInputProps
+       }) => {
+    const [innerValue, setValue, setValueHtml] = useTest<string>(setExternalValue, externalValue)
 
     return (
         <>
-            <input
+            <BaseInput
                 placeholder={cellParam.placeholder}
-                value={externalValue as string}
+                value={externalValue}
                 onChange={setValueHtml}
-                className={cl.wrapper}/>
+                className={cl.wrapper}
+                {...baseInputProps}
+            />
         </>
     );
 };

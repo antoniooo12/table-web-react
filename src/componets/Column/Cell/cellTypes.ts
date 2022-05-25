@@ -1,9 +1,10 @@
 import {CellParam, InputAdditionalAttributes} from "../../../types/TableStructure";
 import React from "react";
+import {BaseInput} from "./BaseInput/BaseInput";
 
 export type TCell<N> = {
     externalValue: N
-    setExternalValue: (middleware: (str: N) => N) => (value: N) => void
+    setExternalValue: (value: N) => void
     cellParam: CellParam<N>,
     additionalParams?: InputAdditionalAttributes
 }

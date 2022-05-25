@@ -20,9 +20,15 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox'
-
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect'
+export enum EnumTypeAdditionalParamsSelect {
+    InputAdditionalParamsSelect='InputAdditionalParamsSelect',
+    InputAdditionalParamsSelectV2='InputAdditionalParamsSelectV2',
+    InputAdditionalParamsTel='InputAdditionalParamsTel',
+    InputAdditionalParamsNumber='InputAdditionalParamsNumber',
+}
 export type InputAdditionalParamsSelect = {
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect
     variants: {
         disabled: boolean
         value: number | string
@@ -30,11 +36,23 @@ export type InputAdditionalParamsSelect = {
         text: string
     }[]
 }
+export type InputAdditionalParamsSelectV2 = {
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2
+    defaultSelected: number
+    variants: InputAdditionalParamsSelectVariantV2[]
+}
+export type InputAdditionalParamsSelectVariantV2 = {
+    disabled: boolean
+    value: string
+    text: string
+}
 
 export type InputAdditionalParamsTel = {
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel
     format: string
 }
 export type InputAdditionalParamsNumber = {
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber
     min: number
     max: number
     step: number
@@ -44,6 +62,8 @@ export type InputAdditionalAttributes =
     InputAdditionalParamsTel
     | InputAdditionalParamsNumber
     | InputAdditionalParamsSelect
+    | InputAdditionalParamsSelectV2
+
 export type DefaultValue<T> =
     { readonly value: T, readonly type: 'Default' }
     | { readonly type: 'Previous', readonly orNotPrevious: T }
