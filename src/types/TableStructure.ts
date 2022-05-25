@@ -39,9 +39,9 @@ export type InputAdditionalParamsSelect = {
 export type InputAdditionalParamsSelectV2 = {
     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2
     defaultSelected: number
-    variants: InputAdditionalParamsSelectVariantV2[]
+    variants: TSelectOptions[]
 }
-export type InputAdditionalParamsSelectVariantV2 = {
+export type TSelectOptions = {
     disabled: boolean
     value: string
     text: string
@@ -71,6 +71,7 @@ export type CellParam<T> = {
     readonly default: DefaultValue<T>
     readonly  additionalParams?: InputAdditionalAttributes
     readonly  type: InputType
+    readonly name: string
     readonly  hidden?: boolean
     readonly  fontSize?: number
     readonly  placeholder?: string

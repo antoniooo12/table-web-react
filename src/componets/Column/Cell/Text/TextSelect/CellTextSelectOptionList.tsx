@@ -1,11 +1,11 @@
 import React from 'react';
-import {InputAdditionalParamsSelectVariantV2} from "../../../../../types/TableStructure";
+import {TSelectOptions} from "../../../../../types/TableStructure";
 import cl from "./CellTextSelectOptionList.module.scss";
 import {CellTextSelectOption} from "./CellTextSelectOption";
 import clsx from "clsx";
 import {Button} from "../../../../buttons/Button/Button";
 
-const CellTextSelectOptionList: React.FC<{ variants: InputAdditionalParamsSelectVariantV2[], setSelected: (str: string) => void }>
+const CellTextSelectOptionList: React.FC<{ variants: TSelectOptions[], setSelected: (str: string) => void }>
     = ({variants, setSelected}) => {
 
     const style = clsx({[cl.wrapper]: true})

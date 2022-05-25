@@ -1,42 +1,55 @@
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {TableReduxStructure} from "../redux/reduxTypes";
-import {TableStructure} from "../types/TableStructure";
+import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
 import {TableExternalShieldData, TTableConnect} from "./TableWebAPITypes";
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap} from "../hellpers/helpers";
-import {findInitialValueToCreateLine, TInitialValue} from "../componets/Panels/onCreateLine";
-import {string} from "fp-ts";
+import {TInitialValue} from "../componets/Panels/onCreateLine";
+import {MReactDispSetter} from "../types/HelperTypes";
 
 
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure): TInitialValue[] => {
     const columns = executeColumns(tableStructure)
-    const s = findInitialValueToCreateLine(columns,)
     return tableExternalData.map(line => {
         const temp = arrayOfObjectsToMap(line.columns, "nameColumn")
         return [...columns.entries()].reduce((accum: TInitialValue, [key, columnParams]) => {
-            // columnParams.
             return accum.set(key, {value: temp.get(key)?.value})
         }, new Map())
     })
-    // return tableExternalData.map(line => {
-    //     const temp = arrayOfObjectsToMap(line.columns, "nameColumn")
-    //     console.log(temp)
-    //     return [...columns.entries()].reduce((accum, [key, columnParams]) => {
-    //         const te: ExternalDataColumn<unknown> | undefined = temp.get(key)
-    //         const te2: ExternalDataColumn<unknown> = {
-    //             value: findDefaultValue(columnParams.cellParam.default),
-    //             nameColumn: key
-    //         }
-    //         const property = te || te2
-    //         return accum.set(key, property)
-    //     }, new Map<string, ExternalDataColumn<unknown>>())
-    // })
+}
+const useUploadOptions = (columns: Map<string, Column>, externalOptionsMap: Map<string, TSelectOptions[]> = new Map<string, TSelectOptions[]>()) => useMemo(() => {
+    const newOptionsMap = new Map<string, TSelectOptions[]>()
+    for (const [columnKey, column] of columns) {
+        if (column?.cellParam.type === 'textSelect') {
+            const additionalParams = column.cellParam.additionalParams
+            if (additionalParams?.type === 'InputAdditionalParamsSelectV2') {
+                const externalOptions = externalOptionsMap.get(column.cellParam.name) || []
+                newOptionsMap.set(column.cellParam.name, [...additionalParams.variants, ...externalOptions])
+            }
+        }
+    }
+    return newOptionsMap
+}, [])
+
+type TUseConnectWebTableState = {
+    connector: TTableConnect
+    api: {
+        setTableExternalData: MReactDispSetter<TableExternalShieldData>
+        setOptionsMap: React.Dispatch<React.SetStateAction<Map<string, TSelectOptions[]>>>
+    }
+}
+export const useConnectWebTableState = (tableStructure: TableStructure, externalData: TableExternalShieldData, externalOptionsMap: Map<string, TSelectOptions[]>): TUseConnectWebTableState => {
+    const [tableExternalData, setTableExternalData] = useState(externalData)
+    const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
+    const columns = executeColumns(tableStructure)
+    const [optionsMap, setOptionsMap] = useState<Map<string, TSelectOptions[]>>(useUploadOptions(columns, externalOptionsMap))
+    const data: TInitialValue[] | undefined = tableExternalData && transformExternalData(tableExternalData)(tableStructure)
+    return {
+        connector: {tableEternalState, settableEternalState, tableStructure, tableExternalData: data, optionsMap},
+        api: {
+            setTableExternalData,
+            setOptionsMap,
+        }
+    }
 }
 
-export const useConnectWebTableState = (tableStructure: TableStructure, tableExternalData?: TableExternalShieldData): TTableConnect => {
-    const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
-    const data: TInitialValue[] | undefined = tableExternalData && transformExternalData(tableExternalData)(tableStructure)
-    console.log(data)
-    const [] = useState(data)
-    return {tableEternalState, settableEternalState, tableStructure, tableExternalData: data, }
-}

@@ -1,8 +1,8 @@
 import React from 'react';
 import cl from './CellTextSelectOption.module.scss'
-import {InputAdditionalParamsSelectVariantV2} from "../../../../../types/TableStructure";
+import {TSelectOptions} from "../../../../../types/TableStructure";
 
-type CellTextSelectOption = InputAdditionalParamsSelectVariantV2 & {
+type CellTextSelectOption = TSelectOptions & {
     setValue: (str: string) => void
 }
 const CellTextSelectOption: React.FC<CellTextSelectOption>
