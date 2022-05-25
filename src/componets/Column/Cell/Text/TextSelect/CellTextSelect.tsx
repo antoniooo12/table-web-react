@@ -1,41 +1,26 @@
-import React, {useMemo} from 'react';
-import cl from './TextSelect.module.scss'
-
+import React from 'react';
 import {CellText} from "../CellText";
 import {TCell} from "../../cellTypes";
-import {useControlOptionList} from "./useControlsOption";
 import {CellTextSelectOptionList} from "./CellTextSelectOptionList";
-import {onBtnRemoveF} from "../../../../../hellpers/keyboardEvents/onBtnRemove";
+import {useServiceCellTextSelect} from "./hellpers/helpers";
+
 
 const CellTextSelect: React.FC<TCell<string>> = (params) => {
-    const {additionalParams, setExternalValue, externalValue, cellParam} = params
-    if (additionalParams?.type !== 'InputAdditionalParamsSelectV2') {
-        throw new Error('TextSelect additional type is not select')
-    }
-    const {variants} = additionalParams
-    const [isFocus, setIsFocus] = useControlOptionList()
+    const {additionalParams, cellParam} = params
+    if (additionalParams?.type !== 'InputAdditionalParamsSelectV2') throw new Error('TextSelect additional type is not select')
 
-    const filteredVariants = useMemo(() => {
-        return variants.filter(variant => variant.text.includes(externalValue || ''))
-    }, [params.externalValue])
-
-/// bug when option consists of one element (for example 1), then it is impossible to erase it
-    const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        onBtnRemoveF(event.code)(externalValue)(setExternalValue)
-    };
+    const {setText, text, setIsFocus, isFocus, filteredVariants, style} = useServiceCellTextSelect(params)
     return (
-        <span className={cl.wrapper}>
-            <CellText externalValue={externalValue}
-                      setExternalValue={setExternalValue}
+        <span className={style}>
+            <CellText externalValue={text}
+                      setExternalValue={setText}
                       cellParam={cellParam}
-                      baseInputProps={{...setIsFocus, onKeyDown}}
+                      baseInputProps={{...setIsFocus}}
             />
-            {isFocus &&
-                <CellTextSelectOptionList
-                    variants={filteredVariants}
-                    setSelected={setExternalValue}
-                />
-            }
+            {isFocus && <CellTextSelectOptionList
+                variants={filteredVariants}
+                setSelected={setText}
+            />}
         </span>
     );
 };

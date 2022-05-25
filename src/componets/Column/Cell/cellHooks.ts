@@ -20,7 +20,9 @@ export function useTest<N>(setExternalValue: (value: N) => void, externalValue: 
     [N, React.Dispatch<React.SetStateAction<N>>, (e: ChangeEvent<HTMLInputElement>) => void] {
     const [innerValue, setValue] = useState<N>(externalValue)
     useEffect(() => {
-        console.log(innerValue)
+        setValue(externalValue)
+    }, [externalValue])
+    useEffect(() => {
         if (middleware) {
             setExternalValue(middleware(innerValue))
         } else {

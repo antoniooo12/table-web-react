@@ -21,9 +21,14 @@ export type ColumnParam = {
     width: number
 }
 export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect'
-
+export enum EnumTypeAdditionalParamsSelect {
+    InputAdditionalParamsSelect='InputAdditionalParamsSelect',
+    InputAdditionalParamsSelectV2='InputAdditionalParamsSelectV2',
+    InputAdditionalParamsTel='InputAdditionalParamsTel',
+    InputAdditionalParamsNumber='InputAdditionalParamsNumber',
+}
 export type InputAdditionalParamsSelect = {
-    type: 'InputAdditionalParamsSelect'
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect
     variants: {
         disabled: boolean
         value: number | string
@@ -32,7 +37,7 @@ export type InputAdditionalParamsSelect = {
     }[]
 }
 export type InputAdditionalParamsSelectV2 = {
-    type: 'InputAdditionalParamsSelectV2'
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2
     defaultSelected: number
     variants: InputAdditionalParamsSelectVariantV2[]
 }
@@ -43,11 +48,11 @@ export type InputAdditionalParamsSelectVariantV2 = {
 }
 
 export type InputAdditionalParamsTel = {
-    type: 'InputAdditionalParamsTel'
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel
     format: string
 }
 export type InputAdditionalParamsNumber = {
-    type: 'InputAdditionalParamsNumber'
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber
     min: number
     max: number
     step: number

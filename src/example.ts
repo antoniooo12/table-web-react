@@ -1,11 +1,13 @@
 import {
     Column,
-    Columns,
-    InputAdditionalAttributes, InputAdditionalParamsNumber, InputAdditionalParamsSelect, InputAdditionalParamsTel,
+    EnumTypeAdditionalParamsSelect,
+    InputAdditionalAttributes,
+    InputAdditionalParamsNumber,
+    InputAdditionalParamsSelect,
+    InputAdditionalParamsTel,
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
-import {boolean} from "fp-ts";
 
 // const clientInformation: SectionTableStructure = {
 //     sectionNameParams: {
@@ -164,13 +166,13 @@ import {boolean} from "fp-ts";
 // }
 
 const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
-    type: 'InputAdditionalParamsNumber',
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber,
     max: 10,
     min: 1,
     step: 0.25,
 }
 const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsTel> = {
-    type: 'InputAdditionalParamsTel',
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel,
     format: 'xxx_xxx_xx_xx_',
 }
 const clientRatingColumn: Column = {
@@ -228,7 +230,7 @@ const clientNameTuple: [string, Column] = ['clientName', {
 
 }]
 const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
-    type: 'InputAdditionalParamsSelect',
+    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect,
     variants: [{
         text: 'Усі',
         value: '1',
@@ -259,22 +261,34 @@ const houseTypeTuple: [string, Column] = ['houseType', {
 const houseAddressTuple: [string, Column]=['houseAddress',{
     title: 'адреса',
     cellParam: {
-        default: {type: 'Previous', orNotPrevious: ''},
+        default: {type: 'Default', value: ''},
         type: 'textSelect',
         additionalParams: {
-            type: "InputAdditionalParamsSelectV2",
+            type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2,
             defaultSelected: 0,
             variants:[
                 {
-                text: '1',
+                text: '11',
                 value: '1',
                 disabled: false,
             } ,{
-                text: '2',
+                text: '22',
                 value: '2',
                 disabled: false,
             } ,{
                 text: '33',
+                value: '3',
+                disabled: false,
+            }    ,  {
+                text: 'some text',
+                value: '1',
+                disabled: false,
+            } ,{
+                text: 'more text, so many text? and text',
+                value: '2',
+                disabled: false,
+            } ,{
+                text: 'Varinat 220',
                 value: '3',
                 disabled: false,
             }

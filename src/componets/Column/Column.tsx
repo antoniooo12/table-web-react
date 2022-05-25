@@ -9,7 +9,7 @@ type TColumn = {
     columnName: string
     cellData: Item<unknown>
 }
-const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
+const Column: React.FC<TColumn> = ({cellData, columnName}) => {
     const {columns} = useContext(TableWebContext)
     const columnParam = columns.get(columnName)
     if (!columnParam) {
@@ -41,5 +41,5 @@ const Column: React.FC<TColumn> = React.memo(({cellData, columnName}) => {
             }
         </div>
     );
-},)
+}
 export {Column}

@@ -24,8 +24,7 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameIn
     const {tableChangeCell} = useActionsTable()
     const lineData = useContext(LineContext)
     const Component = selectedCell.cell
-    useEffect(() => {
-    }, [])
+
     useEffectSkipMount(() => {
         tableChangeCell({
             status: lineData.status,

@@ -1,7 +1,6 @@
 import React from 'react';
 import cl from './CellTextSelectOption.module.scss'
 import {InputAdditionalParamsSelectVariantV2} from "../../../../../types/TableStructure";
-import {MReactDispSetter} from "../../../../../types/HelperTypes";
 
 type CellTextSelectOption = InputAdditionalParamsSelectVariantV2 & {
     setValue: (str: string) => void
