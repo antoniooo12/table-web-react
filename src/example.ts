@@ -308,8 +308,7 @@ export const testTable: TableStructure = {
                 },
                 columns: new Map<string, Column>([
                     clientNameTuple,
-                    clientRatingTuple,
-                    clientActiveTuple,
+                    TextSelect,
                     clientPhoneTuple,
 
                 ])
