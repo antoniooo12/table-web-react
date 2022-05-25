@@ -21,7 +21,7 @@ const TestTable = () => {
             },]]
         ]
     ))
-
+const {setOptionsMap, setTableExternalData}=api
     useEffect(() => {
         console.log('--------')
 
@@ -32,7 +32,8 @@ const TestTable = () => {
         <>
             <Button
                 onClick={() => {
-                    api.setOptionsMap(
+                    setTableExternalData(exampleExternalData)
+                    setOptionsMap(
                         new Map<string, TSelectOptions[]>(
                             [
                                 ['адреса', [{

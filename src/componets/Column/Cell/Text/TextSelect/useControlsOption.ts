@@ -1,16 +1,23 @@
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {TBaseInput} from "../../BaseInput/BaseInput";
+import {MReactDispSetter} from "../../../../../types/HelperTypes";
 
-export const useControlOptionList = (): [boolean, TBaseInput] => {
+export const useControlOptionList = (): [boolean, TBaseInput, { setClickByOption: MReactDispSetter<boolean>, setFocus: MReactDispSetter<boolean> }] => {
     const [isFocus, setFocus] = useState(false)
+    const [clickByOption, setClickByOption] = useState(false)
     const onFocus = () => {
         setFocus(true)
     }
-    const onBlur = () => {
-        setTimeout(() => {
+    useEffect(() => {
+        console.log(clickByOption)
+    }, [clickByOption])
+    // const onBlur = () => setFocus(false)
+    const onBlur = useCallback(() => {
+        if (!clickByOption) {
             setFocus(false)
-        }, 220)
-    }
+        }
+    }, [clickByOption])
+
     const setter: TBaseInput = {onBlur, onFocus}
-    return [isFocus, setter]
+    return [isFocus, setter, {setClickByOption, setFocus}]
 }
