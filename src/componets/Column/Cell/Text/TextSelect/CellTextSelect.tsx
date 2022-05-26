@@ -11,16 +11,12 @@ const CellTextSelect: React.FC<TCell<string>> = (params) => {
     if (additionalParams?.type !== 'InputAdditionalParamsSelectV2') throw new Error('TextSelect additional type is not select')
 
     const {
-        setText, text, setIsFocus, isFocus, filteredVariants, style, listController
+        setText, text, setIsFocus, isFocus, filteredVariants, style, listController, value
     } = useServiceCellTextSelect(params)
-
-    const onClickCapture = (e:React.MouseEvent<HTMLDivElement>) => {
-        console.log(e.target)
-    }
 
     return (
         <ContextCellTextSelect.Provider
-            value={{listController}}
+            value={{listController, selected: value}}
         >
 
         <span className={style}>

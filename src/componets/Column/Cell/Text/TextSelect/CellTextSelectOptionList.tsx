@@ -1,9 +1,8 @@
 import React from 'react';
 import {TSelectOptions} from "../../../../../types/TableStructure";
 import cl from "./CellTextSelectOptionList.module.scss";
-import {CellTextSelectOption} from "./CellTextSelectOption";
-import clsx from "clsx";
 import {Button} from "../../../../buttons/Button/Button";
+import {CellTextSelectOption} from "./CellTextSelectOption/CellTextSelectOption";
 
 const CellTextSelectOptionList: React.FC<{ variants: TSelectOptions[], setSelected: (str: string) => void }>
     = ({variants, setSelected}) => {

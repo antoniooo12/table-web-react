@@ -35,5 +35,5 @@ export const useServiceCellTextSelect = ({
         [cl.wrapper]: true,
     })
 
-    return {text, setText, notExist, isFocus, setIsFocus, filteredVariants, style, listController: listController}
+    return {text, setText, notExist, isFocus, setIsFocus, filteredVariants, style, listController, value}
 }
