@@ -179,6 +179,7 @@ const clientRatingColumn: Column = {
     title: 'рейтинг',
     width: 90,
     cellParam: {
+        name: 'рейтинг',
         type: 'number',
         default: {value: 3, type: 'Default'},
         additionalParams: clientRatingColumnAdditionalInformation
@@ -189,6 +190,7 @@ const clientRatingColumn: Column = {
 const clientActiveColumn: Column = {
     title: 'активний',
     cellParam: {
+        name: 'активний',
         default: {value: true, type: 'Default'},
         type: 'checkbox'
     },
@@ -197,6 +199,7 @@ const clientActiveColumn: Column = {
 const clientPhoneColumn: Column = {
     title: 'номер',
     cellParam: {
+        name: 'номер',
         default: {type: 'Previous', orNotPrevious: ''},
         type: 'tel',
         additionalParams: clientPhoneColumnAdditionalInformation,
@@ -209,6 +212,7 @@ const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
 const clientNameTuple: [string, Column] = ['clientName', {
     title: 'Імʼя клієнта',
     cellParam: {
+        name: 'Імʼя клієнта',
         default: {type: 'Default', value: ''},
         type: 'text',
         placeholder: 'імʼя'
@@ -219,6 +223,7 @@ const clientNameTuple: [string, Column] = ['clientName', {
                 title: 'id',
                 width: "all",
                 cellParam: {
+                    name: 'id',
                     default: {type: 'Default', value: 'sdsw'},
                     type: 'text',
                     placeholder: 'id'
@@ -252,46 +257,48 @@ const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, I
 const houseTypeTuple: [string, Column] = ['houseType', {
     title: 'тип нерухомосты',
     cellParam: {
+        name: 'тип нерухомосты',
         default: {type: 'Previous', orNotPrevious: ''},
         type: 'select',
         additionalParams: houseTypeColumnAdditionalInformation,
     },
     width: 110,
 }]
-const houseAddressTuple: [string, Column]=['houseAddress',{
+const houseAddressTuple: [string, Column] = ['houseAddress', {
     title: 'адреса',
     cellParam: {
+        name: 'адреса',
         default: {type: 'Default', value: ''},
         type: 'textSelect',
         additionalParams: {
             type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2,
             defaultSelected: 0,
-            variants:[
+            variants: [
                 {
-                text: '11',
-                value: '1',
-                disabled: false,
-            } ,{
-                text: '22',
-                value: '2',
-                disabled: false,
-            } ,{
-                text: '33',
-                value: '3',
-                disabled: false,
-            }    ,  {
-                text: 'some text',
-                value: '1',
-                disabled: false,
-            } ,{
-                text: 'more text, so many text? and text',
-                value: '2',
-                disabled: false,
-            } ,{
-                text: 'Varinat 220',
-                value: '3',
-                disabled: false,
-            }
+                    text: '11',
+                    value: '1',
+                    disabled: false,
+                }, {
+                    text: '22',
+                    value: '2',
+                    disabled: false,
+                }, {
+                    text: '33',
+                    value: '3',
+                    disabled: false,
+                }, {
+                    text: 'some text',
+                    value: '1',
+                    disabled: false,
+                }, {
+                    text: 'more text, so many text? and text',
+                    value: '2',
+                    disabled: false,
+                }, {
+                    text: 'Varinat 220',
+                    value: '3',
+                    disabled: false,
+                }
             ]
         },
     },
