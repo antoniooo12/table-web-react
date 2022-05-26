@@ -6,7 +6,8 @@ import {Button} from "../buttons/Button/Button";
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
 import {downloadTxtFile, EnumOptionsDownloadTxtFile} from "../../API/downloadTxtFile";
-import {useCreateLine} from "./onCreateLine";
+import {useCreateLine} from "./onActions/onCreateLine";
+import {onSave} from "./onActions/onSave";
 
 type BottomTablePanel = {
     columnStructure: Columns
@@ -16,9 +17,8 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
     const stateTable = useTableTypedSelector(state => state.tableStore.storage)
     const onCreateLine = useCreateLine(columnStructure, previousValues)
 
-    const onSave = () => {
-        tableConnect.settableEternalState(stateTable)
-    }
+    const onSaveMemo = useCallback(() => onSave(tableConnect.setTableExternalState),
+        [stateTable])
 
     const onDownload = useCallback(() => {
         downloadTxtFile(stateTable.data, {
@@ -38,7 +38,7 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
                 style={'blue'}
             >Add</Button>
             <Button
-                onClick={onSave}
+                onClick={onSaveMemo}
             >Save
             </Button>
             <Button

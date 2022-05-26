@@ -1,7 +1,7 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 import {ExternalDataTable, TableExternalShieldData} from "../API/TableWebAPITypes";
-import {TInitialValue} from "../componets/Panels/onCreateLine";
+import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
 export type TableState = {
     storage: TableReduxStructure

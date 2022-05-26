@@ -1,6 +1,6 @@
 import {EnumTableReducer, IOnChangeCell, TOnDeleteLine, TOnLoadExternalData} from "./reduxTypes";
 import {Columns} from "../types/TableStructure";
-import {TInitialValue} from "../componets/Panels/onCreateLine";
+import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
 
 export const tableCreateLine = (columnsStructure: Columns, initialValue: TInitialValue) => ({

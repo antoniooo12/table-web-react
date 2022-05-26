@@ -1,16 +1,20 @@
 import {MReactDispSetter, WithOptional} from "../types/HelperTypes";
-import {Item, TableColumn, TableReduxStructure, TLineInformation} from "../redux/reduxTypes";
+import {Item, TLineInformation, TTableLine} from "../redux/reduxTypes";
 import {TableStructure, TSelectOptions} from "../types/TableStructure";
-import {TInitialValue} from "../componets/Panels/onCreateLine";
+import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
 export type TTableConnect = {
-    tableEternalState: TableReduxStructure
-    settableEternalState: MReactDispSetter<TableReduxStructure>
+    // tableExternalState: TableReduxStructure
+    setTableExternalState: MReactDispSetter<TTableExternalState>
     tableStructure: TableStructure
-    tableExternalData?: TInitialValue[]
+    tableData?: TInitialValue[]
     optionsMap: Map<string, TSelectOptions[]>
 }
-
+export type TTableExternalState ={
+    toUpdate: TTableLine[]
+    toDelete: TTableLine[]
+    toCreate: TTableLine[]
+}
 export type CellExternalData<T> = { nameColumn: string, value: T }
 export type TableExternalLineData = {
     lineInformation: TLineInformation
