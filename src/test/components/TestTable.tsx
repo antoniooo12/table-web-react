@@ -8,7 +8,7 @@ import {TSelectOptions} from "../../types/TableStructure";
 
 const TestTable = () => {
 
-    const {connector, api} = useConnectWebTableState(testTable, exampleExternalData,new Map<string, TSelectOptions[]>(
+    const {api,connector} = useConnectWebTableState(testTable, exampleExternalData, new Map<string, TSelectOptions[]>(
         [
             ['адреса', [{
                 text: 'option',
@@ -21,17 +21,33 @@ const TestTable = () => {
             },]]
         ]
     ))
-const {setOptionsMap, setTableExternalDataJSON}=api
+    // const {api} =base
+    const {setOptionsMap} = api
     useEffect(() => {
         console.log('--------')
         console.log(api.data.tableExternalState)
         console.log('--------')
     }, [api.data.tableExternalState])
+    // useEffect(()=>{
+    //     console.log('connector.tableData')
+    // },[connector.tableData])
+    //    useEffect(()=>{
+    //     console.log('connector.setTableExternalState')
+    // },[connector.setTableExternalState])
+    //    useEffect(()=>{
+    //     console.log('connector.tableStructure')
+    // },[connector.tableStructure])
+    //    useEffect(()=>{
+    //     console.log('connector.optionsMap')
+    // },[connector.optionsMap])
+    useEffect(()=>{
+        console.log('connector')
+    },[connector])
+
     return (
         <>
             <Button
                 onClick={() => {
-                    setTableExternalDataJSON(exampleExternalData)
                     setOptionsMap(
                         new Map<string, TSelectOptions[]>(
                             [
@@ -53,6 +69,10 @@ const {setOptionsMap, setTableExternalDataJSON}=api
             </Button>
             <TableWebProviderComponent
                 tableConnect={connector}
+
+                // tableStructure={connector.tableStructure}
+                // setTableExternalState={connector.setTableExternalState}
+                // optionsMap={connector.optionsMap}
             />
         </>
     );

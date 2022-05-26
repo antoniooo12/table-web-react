@@ -1,5 +1,5 @@
-import {Columns} from "../../types/TableStructure";
-import {useActionsTable} from "../../hooks/useActionsTable";
+import {Columns} from "../../../types/TableStructure";
+import {useActionsTable} from "../../../hooks/useActionsTable";
 import {useCallback} from "react";
 
 export type TInitialValue = Map<string, { value: unknown, subData?: TInitialValue }>

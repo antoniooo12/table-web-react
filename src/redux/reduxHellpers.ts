@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 import {Columns} from "../types/TableStructure";
 import {pipe} from "fp-ts/function";
 import {ExternalDataColumn} from "../API/TableWebAPITypes";
-import {TInitialValue} from "../componets/Panels/onCreateLine";
+import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
 export const createDefaultItem = <T>(name: string, initialValue: T, id?: string): Item<unknown> => {
     return {

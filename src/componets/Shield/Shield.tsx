@@ -8,7 +8,7 @@ import {TableWebContext} from "../TableWeb/TableWebContext";
 export type ComponentShield = {
     shieldStructure: TShieldStructure
 }
-const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
+const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
     const {storage} = useTableTypedSelector(state => state.tableStore)
     const {columns} = useContext(TableWebContext)
     return (
@@ -28,6 +28,6 @@ const Shield: React.FC<ComponentShield> = ({shieldStructure}) => {
 
         </div>
     );
-};
+})
 
 export {Shield};

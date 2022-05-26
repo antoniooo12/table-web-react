@@ -1,11 +1,9 @@
 import {useMemo, useState} from "react";
-import {TableReduxStructure} from "../redux/reduxTypes";
 import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
-import {TableExternalShieldData, TTableConnect} from "./TableWebAPITypes";
+import {TableExternalShieldData, TTableConnect, TTableExternalState} from "./TableWebAPITypes";
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap} from "../hellpers/helpers";
-import {TInitialValue} from "../componets/Panels/onCreateLine";
-import {MReactDispSetter} from "../types/HelperTypes";
+import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
 
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure): TInitialValue[] => {
@@ -34,29 +32,36 @@ const useUploadOptions = (columns: Map<string, Column>, externalOptionsMap: Map<
 type TUseConnectWebTableState = {
     connector: TTableConnect
     api: {
-        setTableExternalDataJSON: MReactDispSetter<TableExternalShieldData>
+        // setTableExternalDataJSON: MReactDispSetter<TableExternalShieldData>
         setOptionsMap: React.Dispatch<React.SetStateAction<Map<string, TSelectOptions[]>>>
         data: {
-            tableExternalState: TableReduxStructure
+            tableExternalState: TTableExternalState
         }
     }
 }
+export const prepareTableExternalState = (): TTableExternalState => ({
+    toUpdate: [],
+    toDelete: [],
+    toCreate: [],
+})
 export const useConnectWebTableState = (tableStructure: TableStructure, externalData: TableExternalShieldData, externalOptionsMap: Map<string, TSelectOptions[]>): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
-    const data: TInitialValue[] | undefined = tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
-    const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data: []})
+    const [tableExternalState, setTableExternalState] = useState<TTableExternalState>(prepareTableExternalState())
+
+    const tableData: TInitialValue[] | undefined = useMemo(() => {
+        return tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
+    }, [])
     const columns = executeColumns(tableStructure)
     const [optionsMap, setOptionsMap] = useState<Map<string, TSelectOptions[]>>(useUploadOptions(columns, externalOptionsMap))
+    const connector = useMemo(() => ({
+        setTableExternalState,
+        tableStructure,
+        optionsMap,
+        tableData,
+    }), [optionsMap,tableStructure,tableData])
     return {
-        connector: {
-            tableExternalState,
-            setTableExternalState,
-            tableStructure,
-            tableExternalData: data,
-            optionsMap
-        },
+        connector,
         api: {
-            setTableExternalDataJSON: setTableExternalDataJSON,
             setOptionsMap,
             data: {
                 tableExternalState
