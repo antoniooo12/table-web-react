@@ -4,8 +4,8 @@ import {TableStructure, TSelectOptions} from "../types/TableStructure";
 import {TInitialValue} from "../componets/Panels/onCreateLine";
 
 export type TTableConnect = {
-    tableEternalState: TableReduxStructure
-    settableEternalState: MReactDispSetter<TableReduxStructure>
+    tableExternalState: TableReduxStructure
+    setTableExternalState: MReactDispSetter<TableReduxStructure>
     tableStructure: TableStructure
     tableExternalData?: TInitialValue[]
     optionsMap: Map<string, TSelectOptions[]>

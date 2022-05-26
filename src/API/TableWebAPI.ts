@@ -34,21 +34,33 @@ const useUploadOptions = (columns: Map<string, Column>, externalOptionsMap: Map<
 type TUseConnectWebTableState = {
     connector: TTableConnect
     api: {
-        setTableExternalData: MReactDispSetter<TableExternalShieldData>
+        setTableExternalDataJSON: MReactDispSetter<TableExternalShieldData>
         setOptionsMap: React.Dispatch<React.SetStateAction<Map<string, TSelectOptions[]>>>
+        data: {
+            tableExternalState: TableReduxStructure
+        }
     }
 }
 export const useConnectWebTableState = (tableStructure: TableStructure, externalData: TableExternalShieldData, externalOptionsMap: Map<string, TSelectOptions[]>): TUseConnectWebTableState => {
-    const [tableExternalData, setTableExternalData] = useState(externalData)
-    const [tableEternalState, settableEternalState] = useState<TableReduxStructure>({data: []})
+    const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
+    const data: TInitialValue[] | undefined = tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
+    const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data: []})
     const columns = executeColumns(tableStructure)
     const [optionsMap, setOptionsMap] = useState<Map<string, TSelectOptions[]>>(useUploadOptions(columns, externalOptionsMap))
-    const data: TInitialValue[] | undefined = tableExternalData && transformExternalData(tableExternalData)(tableStructure)
     return {
-        connector: {tableEternalState, settableEternalState, tableStructure, tableExternalData: data, optionsMap},
+        connector: {
+            tableExternalState,
+            setTableExternalState,
+            tableStructure,
+            tableExternalData: data,
+            optionsMap
+        },
         api: {
-            setTableExternalData,
+            setTableExternalDataJSON: setTableExternalDataJSON,
             setOptionsMap,
+            data: {
+                tableExternalState
+            }
         }
     }
 }

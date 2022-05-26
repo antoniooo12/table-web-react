@@ -17,7 +17,7 @@ const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
     const onCreateLine = useCreateLine(columnStructure, previousValues)
 
     const onSave = () => {
-        tableConnect.settableEternalState(stateTable)
+        tableConnect.setTableExternalState(stateTable)
     }
 
     const onDownload = useCallback(() => {

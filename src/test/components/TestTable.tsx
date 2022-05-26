@@ -21,18 +21,17 @@ const TestTable = () => {
             },]]
         ]
     ))
-const {setOptionsMap, setTableExternalData}=api
+const {setOptionsMap, setTableExternalDataJSON}=api
     useEffect(() => {
         console.log('--------')
-
-        console.log(connector.tableExternalData)
+        console.log(api.data.tableExternalState)
         console.log('--------')
-    }, [connector.tableExternalData])
+    }, [api.data.tableExternalState])
     return (
         <>
             <Button
                 onClick={() => {
-                    setTableExternalData(exampleExternalData)
+                    setTableExternalDataJSON(exampleExternalData)
                     setOptionsMap(
                         new Map<string, TSelectOptions[]>(
                             [
