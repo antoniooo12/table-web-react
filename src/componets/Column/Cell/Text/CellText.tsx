@@ -5,15 +5,18 @@ import {TCell} from "../cellTypes";
 import {useTest} from "../cellHooks";
 import {BaseInput, TBaseInput} from "../BaseInput/BaseInput";
 
-const CellText: React.FC<TCell<string> & { baseInputProps?: TBaseInput }>
-    = ({
-           setExternalValue,
-           externalValue,
-           additionalParams,
-           cellParam,
-           baseInputProps
-       }) => {
-    const [innerValue, setValue, setValueHtml] = useTest<string>(setExternalValue, externalValue)
+export type Middleware<T, N> = (s: T) => N
+type TCellText = TCell<string> & { baseInputProps?: TBaseInput, middleware?: Middleware<any, string> }
+const CellText: React.FC<TCellText> = (
+    {
+        setExternalValue,
+        externalValue,
+        additionalParams,
+        cellParam,
+        baseInputProps,
+        middleware,
+    }) => {
+    const [innerValue, setValue, setValueHtml] = useTest<string>(setExternalValue, externalValue, middleware)
 
     return (
         <>

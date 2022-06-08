@@ -8,71 +8,13 @@ import {TSelectOptions} from "../../types/TableStructure";
 
 const TestTable = () => {
 
-    const {api,connector} = useConnectWebTableState(testTable, exampleExternalData, new Map<string, TSelectOptions[]>(
-        [
-            ['адреса', [{
-                text: 'option',
-                value: '3s',
-                disabled: false,
-            }, {
-                text: 'and options',
-                value: 'we',
-                disabled: false,
-            },]]
-        ]
-    ))
-    // const {api} =base
-    const {setOptionsMap} = api
-    useEffect(() => {
-        console.log('--------')
-        console.log(api.data.tableExternalState)
-        console.log('--------')
-    }, [api.data.tableExternalState])
-    // useEffect(()=>{
-    //     console.log('connector.tableData')
-    // },[connector.tableData])
-    //    useEffect(()=>{
-    //     console.log('connector.setTableExternalState')
-    // },[connector.setTableExternalState])
-    //    useEffect(()=>{
-    //     console.log('connector.tableStructure')
-    // },[connector.tableStructure])
-    //    useEffect(()=>{
-    //     console.log('connector.optionsMap')
-    // },[connector.optionsMap])
-    useEffect(()=>{
-        console.log('connector')
-    },[connector])
+    const {api,connector} = useConnectWebTableState(testTable, exampleExternalData, new Map<string, TSelectOptions[]>())
 
     return (
         <>
-            <Button
-                onClick={() => {
-                    setOptionsMap(
-                        new Map<string, TSelectOptions[]>(
-                            [
-                                ['адреса', [{
-                                    text: 'new',
-                                    value: '22',
-                                    disabled: false,
-                                }, {
-                                    text: 'some',
-                                    value: '32',
-                                    disabled: false,
-                                },]]
-                            ]
-                        ))
 
-                }}
-            >
-                upload new options
-            </Button>
             <TableWebProviderComponent
                 tableConnect={connector}
-
-                // tableStructure={connector.tableStructure}
-                // setTableExternalState={connector.setTableExternalState}
-                // optionsMap={connector.optionsMap}
             />
         </>
     );

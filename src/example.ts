@@ -8,6 +8,8 @@ import {
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
+// import
+import {defaultFunctions} from "./hellpers/defaultFunctions/defaultFunctions";
 
 // const clientInformation: SectionTableStructure = {
 //     sectionNameParams: {
@@ -217,20 +219,6 @@ const clientNameTuple: [string, Column] = ['clientName', {
         type: 'text',
         placeholder: 'імʼя'
     },
-    subColumns:
-        new Map<string, Column>([
-            ['id', {
-                title: 'id',
-                width: "all",
-                cellParam: {
-                    name: 'id',
-                    default: {type: 'Default', value: 'sdsw'},
-                    type: 'text',
-                    placeholder: 'id'
-                },
-            }]
-        ]),
-
     width: 100,
 
 }]
@@ -304,19 +292,45 @@ const houseAddressTuple: [string, Column] = ['houseAddress', {
     },
     width: 110,
 }]
+const deliveryTimeTuple: [string, Column] = ['deliveryDay', {
+    title: 'часові рамки',
+    cellParam: {
+        name: 'deliveryDay',
+        type: 'date',
+        default: {type: 'defaultFunctions', value: 'currentData'},
+    },
+    width: 200,
+    subColumnsStyle: 'line',
+    subColumns: new Map<string, Column>([['afterHour',
+        {
+            // hidden: true,
+            title: '',
+            width: 100,
+            cellParam: {
+                name: 'afterHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}}
+        }],['beforeHour',
+        {
+            // hidden: true,
+            title: '',
+            width: 100,
+            cellParam: {
+                name: 'beforeHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}}
+        }]])
+}]
 export const testTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
             ['orderInformation', {
                 sectionNameParams: {
+                    // hidden: true,
                     title: 'інформація про клієнта',
                     weight: 100,
                     fontSize: 12
                 },
                 columns: new Map<string, Column>([
                     clientNameTuple,
-                    clientPhoneTuple,
-
+                    // clientPhoneTuple,
+                    deliveryTimeTuple,
                 ])
 
             }],

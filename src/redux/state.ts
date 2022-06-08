@@ -2,6 +2,7 @@ import {EnumStatus, EnumTableReducer, TableReducerActions, TableState} from "./r
 import produce, {enableMapSet} from "immer";
 import {createColumns, createColumnsFromExternalData, createLine, createLineToTable} from './reduxHellpers'
 import {date} from "fp-ts";
+import {recursiveMapSearch} from "../hellpers/helpers";
 
 const defaultState: TableState = {
     storage: {data: []}
@@ -20,12 +21,24 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
         }
         case EnumTableReducer.changeCell: {
             const {status, value, nameCell, lineId} = action.payload
+            const lineIndex = state.storage!.data
+                .findIndex(line => line.lineInformation.id === lineId)
+            const line = state.storage!.data[lineIndex]
+            const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
+            console.log(value)
+            console.log('------')
+            console.log(cell)
+
             return produce(state, draft => {
-                const lineIndex = draft.storage!.data
-                    .findIndex(line => line.lineInformation.id === lineId)
                 const line = draft.storage!.data[lineIndex]
-                const cell = line.columns.get(nameCell)
-                if (cell) {
+                const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
+                if (!line.columns.has(nameCell)) {
+                    line.columns.forEach(line => {
+                        if (line.subColumns?.has(nameCell)) {
+                            line.subColumns.set(nameCell, {...cell, value: value})
+                        }
+                    })
+                } else {
                     line.columns.set(nameCell, {...cell, value: value})
                 }
             })

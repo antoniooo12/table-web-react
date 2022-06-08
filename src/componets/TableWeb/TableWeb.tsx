@@ -8,7 +8,6 @@ import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
 import {TTableConnect} from "../../API/TableWebAPITypes";
 import {useActionsTable} from "../../hooks/useActionsTable";
-import {TInitialValue} from "../Panels/onActions/onCreateLine";
 
 
 export type TTableWeb = {
