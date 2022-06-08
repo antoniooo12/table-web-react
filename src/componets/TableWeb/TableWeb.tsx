@@ -40,14 +40,14 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
             }}
         >
 
-            <div
+            <table
                 className={cl.wrapper}
             >
                 <BottomTablePanel columnStructure={columns}/>
 
                 <Header/>
                 <Shield shieldStructure={shield}/>
-            </div>
+            </table>
         </TableWebContext.Provider>
 
     );

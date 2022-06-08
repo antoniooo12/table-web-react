@@ -82,10 +82,11 @@ export type CellParam<T> = {
     readonly  fontSize?: number
     readonly  placeholder?: string
 }
+export type ColumnWidth = number | 'inherit' | 'all'
 export type Column = {
     title: string
     cellParam: CellParam<unknown>
-    width: number | 'inherit' | 'all'
+    width:ColumnWidth
     hidden?: boolean
     subColumns?: Map<string, Column>
     subColumnsStyle?: 'line'

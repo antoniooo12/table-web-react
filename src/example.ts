@@ -336,6 +336,7 @@ export const testTable: TableStructure = {
             }],
             ['houseInformation', {
                 sectionNameParams: {
+                    // hidden: true,
                     title: 'інформація про будинок',
                     weight: 100,
                     fontSize: 12
