@@ -307,14 +307,16 @@ const deliveryTimeTuple: [string, Column] = ['deliveryDay', {
             title: '',
             width: 100,
             cellParam: {
-                name: 'afterHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}}
-        }],['beforeHour',
+                name: 'afterHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
+            }
+        }], ['beforeHour',
         {
             // hidden: true,
             title: '',
             width: 100,
             cellParam: {
-                name: 'beforeHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}}
+                name: 'beforeHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
+            }
         }]])
 }]
 export const testTable: TableStructure = {
@@ -336,11 +338,25 @@ export const testTable: TableStructure = {
             }],
             ['houseInformation', {
                 sectionParams: {
-                    hidden: true,
+                    // hidden: true,
                     title: 'інформація про будинок',
                     width: 100,
                     fontSize: 12
                 },
+                sectionInner: new Map([
+                    ['', {
+                        sectionParams: {
+                            title: 'test',
+                            width: 20,
+                            fontSize: 12,
+                        },
+                        columns: new Map([
+                            houseTypeTuple,
+                            houseAddressTuple,
+                        ])
+                    }]
+                ]),
+
                 columns: new Map([
                     houseTypeTuple,
                     houseAddressTuple,
