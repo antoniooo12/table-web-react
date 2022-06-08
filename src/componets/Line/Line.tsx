@@ -1,12 +1,11 @@
 // @ts-ignore
 import cl from './Line.module.scss'
-import React, {useCallback, useEffect, useState} from 'react';
-import {EnumStatus, Item, TableColumn, TStatus, TTableLine} from "../../redux/reduxTypes";
+import React from 'react';
+import {Item, TStatus} from "../../redux/reduxTypes";
 import {Column} from "../Column/Column";
 import clsx from "clsx";
 import {LineContext} from "./LineContext";
 import {LineDeleteButton} from "./LineButtons/LineDeleteButton/LineDeleteButton";
-import {Columns} from "../../types/TableStructure";
 
 export type TLineData = {
     status: TStatus
@@ -16,7 +15,7 @@ export type TLineData = {
 }
 export type TLine = {
     status: TStatus
-    lineIdt: number |string
+    lineIdt: number | string
     wasEdit: boolean
     toDelete: boolean
     columnsData: Map<string, Item<unknown>>
@@ -36,15 +35,32 @@ const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
                     [cl.deleteLine]: lineData.toDelete,
                 })}
             >
-                {[...columnsData.entries()].map(columns => {
-                    const cellData = columns[1]
-                    const columnName = columns[0]
+                {[...columnsData.entries()].map(([columnName, cellData]) => {
+                    console.log(cellData.subColumns)
                     return (
-                        <Column
-                            columnName={columnName}
-                            cellData={cellData}
-                        />
+                        <>
+                            <Column
+                                key={cellData.id}
+                                columnName={columnName}
+                                cellData={cellData}
+                            />
+                            {/*<div>*/}
+                                {/*{cellData.subColumns &&*/}
+                                {/*    <div>*/}
+                                {/*        {[...cellData.subColumns.entries()].map(([subColumnName, subColumnData]) =>*/}
+                                {/*            // <div>12</div>*/}
+                                {/*            <Column*/}
+                                {/*                key={subColumnData.id}*/}
+                                {/*                columnName={subColumnName}*/}
+                                {/*                cellData={subColumnData}*/}
+                                {/*            />*/}
+                                {/*        )}*/}
+                                {/*    </div>*/}
+                                {/*}*/}
+                            {/*</div>*/}
+                        </>
                     )
+
                 })}
                 <div>
                     <LineDeleteButton

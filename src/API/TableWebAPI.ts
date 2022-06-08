@@ -44,6 +44,7 @@ export const prepareTableExternalState = (): TTableExternalState => ({
     toDelete: [],
     toCreate: [],
 })
+
 export const useConnectWebTableState = (tableStructure: TableStructure, externalData: TableExternalShieldData, externalOptionsMap: Map<string, TSelectOptions[]>): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
     const [tableExternalState, setTableExternalState] = useState<TTableExternalState>(prepareTableExternalState())
@@ -58,7 +59,7 @@ export const useConnectWebTableState = (tableStructure: TableStructure, external
         tableStructure,
         optionsMap,
         tableData,
-    }), [optionsMap,tableStructure,tableData])
+    }), [optionsMap, tableStructure, tableData])
     return {
         connector,
         api: {

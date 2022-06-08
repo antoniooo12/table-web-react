@@ -7,6 +7,8 @@ import {InputType} from "../../../types/TableStructure";
 import React from "react";
 import {TCell} from "./cellTypes";
 import {CellTextSelect} from "./Text/TextSelect/CellTextSelect";
+import {CellData} from "./Data/CellData/CellData";
+import {CellTime} from "./Time/CellTime/CellTime";
 
 type TInitialCells = { [key in InputType]: { cell: React.FC<TCell<any>> } }
 export const cells: TInitialCells = {
@@ -16,7 +18,9 @@ export const cells: TInitialCells = {
     tel: {cell: CellTel},
     textarea: {cell: CellText},
     select: {cell: CellSelect},
-    textSelect: {cell: CellTextSelect}
+    textSelect: {cell: CellTextSelect},
+    date: {cell: CellData},
+    time: {cell: CellTime},
 }
 
 export const initialCells = (outerCells: TInitialCells) => {

@@ -34,7 +34,6 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameIn
         })
         setPreviousValue(nameInput, value)
     }, [value])
-
     return (
         <>
             < Component

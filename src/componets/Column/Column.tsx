@@ -1,23 +1,19 @@
 import cl from './Column.module.scss'
-import React, {useContext} from 'react';
-import {TableWebContext} from "../TableWeb/TableWebContext";
+import React from 'react';
 import {Item} from "../../redux/reduxTypes";
 import clsx from "clsx";
 import {CellAggregator} from "./Cell/CellAggregator";
+import {useGetColumnParam} from "./utils";
 
 type TColumn = {
     columnName: string
     cellData: Item<unknown>
 }
-const Column: React.FC<TColumn> = ({cellData, columnName}) => {
-    const {columns} = useContext(TableWebContext)
-    const columnParam = columns.get(columnName)
-    if (!columnParam) {
-        throw new Error('error columnParam')
-    }
 
+const Column: React.FC<TColumn> = ({cellData, columnName}) => {
+    const columnParam = useGetColumnParam(columnName)
     return (
-        <div>
+        <>
             {!columnParam.hidden &&
                 <div
                     style={{
@@ -26,7 +22,6 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
                     className={
                         clsx({
                             [cl.wrapper]: true,
-                            // [cl.small]: subColumns,
                         })
                     }
                 >
@@ -35,11 +30,29 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
                         cellData={cellData}
                         cellParam={columnParam.cellParam}
                     />
-
+                    {cellData.subColumns && <div
+                        className={clsx({
+                            [cl.line]: columnParam.subColumnsStyle === 'line'
+                        })}
+                    >
+                        {
+                            [...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
+                                <span>
+                                <Column
+                                    columnName={subCellName}
+                                    cellData={subCellDatta}
+                                    key={subCellName}
+                                />
+                                    </span>
+                            )
+                        }
+                    </div>}
 
                 </div>
             }
-        </div>
+        </>
     );
+
+
 }
 export {Column}

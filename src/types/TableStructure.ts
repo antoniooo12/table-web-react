@@ -1,3 +1,5 @@
+import {defaultFunctions} from "../hellpers/defaultFunctions/defaultFunctions";
+
 export type HeaderParam = {
     name: string
 }
@@ -20,13 +22,15 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect'
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' |'time'
+
 export enum EnumTypeAdditionalParamsSelect {
-    InputAdditionalParamsSelect='InputAdditionalParamsSelect',
-    InputAdditionalParamsSelectV2='InputAdditionalParamsSelectV2',
-    InputAdditionalParamsTel='InputAdditionalParamsTel',
-    InputAdditionalParamsNumber='InputAdditionalParamsNumber',
+    InputAdditionalParamsSelect = 'InputAdditionalParamsSelect',
+    InputAdditionalParamsSelectV2 = 'InputAdditionalParamsSelectV2',
+    InputAdditionalParamsTel = 'InputAdditionalParamsTel',
+    InputAdditionalParamsNumber = 'InputAdditionalParamsNumber',
 }
+
 export type InputAdditionalParamsSelect = {
     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect
     variants: {
@@ -64,14 +68,16 @@ export type InputAdditionalAttributes =
     | InputAdditionalParamsSelect
     | InputAdditionalParamsSelectV2
 
+type TDefaultFunctions = keyof typeof defaultFunctions
 export type DefaultValue<T> =
     { readonly value: T, readonly type: 'Default' }
     | { readonly type: 'Previous', readonly orNotPrevious: T }
+    | { readonly type: 'defaultFunctions', value: TDefaultFunctions }
 export type CellParam<T> = {
     readonly default: DefaultValue<T>
-    readonly  additionalParams?: InputAdditionalAttributes
-    readonly  type: InputType
+    readonly type: InputType
     readonly name: string
+    readonly  additionalParams?: InputAdditionalAttributes
     readonly  hidden?: boolean
     readonly  fontSize?: number
     readonly  placeholder?: string
@@ -82,6 +88,7 @@ export type Column = {
     width: number | 'inherit' | 'all'
     hidden?: boolean
     subColumns?: Map<string, Column>
+    subColumnsStyle?: 'line'
 
 }
 export type Columns = Map<string, Column>
@@ -93,7 +100,7 @@ export type SectionTableStructure = {
         fontSize: number
     }
     sectionInner?: SectionTable
-    columns?: Columns
+    columns: Columns
 }
 export type SectionTable = Map<string, SectionTableStructure>
 export type TShieldStructure = {

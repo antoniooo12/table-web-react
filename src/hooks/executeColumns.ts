@@ -1,29 +1,32 @@
-import {Column, SectionTableStructure, TableStructure} from "../types/TableStructure";
+import {Column, Columns, SectionTableStructure, TableStructure} from "../types/TableStructure";
+import {SectionName} from "../types/TableStructureAlias";
 
+// export type TColumnRenderStructure =  Map<string, {column: Column, subColumns?: Map<string, Column> }>
 
 export const executeColumns = (table: TableStructure) => {
-    function findColumns(sections: SectionTableStructure[], isVisible?: boolean) {
-        return sections.reduce((accum, current) => {
-            const visibilitySection = current.sectionNameParams.hidden || isVisible
-            console.log(visibilitySection)
-            if (current.sectionInner) {
-                [...findColumns([...current.sectionInner.values()], visibilitySection).entries()].forEach((newColumn) => {
-                    accum.set(newColumn[0], newColumn[1])
-                })
-            }
-            if (current.columns) {
-                [...current.columns.entries()].forEach((newColumn) => {
-                    accum.set(newColumn[0], {...newColumn[1], hidden: visibilitySection})
-                    // accum  .set(newColumn[0], {...newColumn[1], visible : visibilitySection})
-                })
-            }
-            return accum
-        }, new Map<string, Column>())
+    const newMap = new Map<string, Column>()
+
+    const parseColumns = (sectionTableStructures: SectionTableStructure[], sectionName?: SectionName) => {
+        sectionTableStructures.map((section) => {
+            [...section.columns.entries()].forEach(([key, column]) => {
+                if (section.sectionNameParams.hidden) {
+                    newMap.set(key, {...column, hidden:section.sectionNameParams.hidden })
+                } else {
+                    newMap.set(key, column)
+                }
+            })
+        })
     }
 
-    const columns = findColumns([...table.shield.section.values()])
+    const recurse = (sections: SectionTableStructure[]) => {
 
-    console.log(columns)
-    return columns
+        const columns = sections.map(({columns, sectionNameParams}) => {
+            return columns
+        })
+        parseColumns(sections)
+    }
+    const a = [...table.shield.section.values()]
 
+    recurse(a)
+    return newMap
 }

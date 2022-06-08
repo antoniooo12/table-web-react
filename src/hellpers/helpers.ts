@@ -1,5 +1,5 @@
 import {SNB} from "../types/HelperTypes";
-import {Columns, DefaultValue, InputType} from "../types/TableStructure";
+import {Column, Columns, DefaultValue, InputType} from "../types/TableStructure";
 import {Predicate} from "fp-ts/Predicate";
 import {absurd} from "fp-ts/function";
 
@@ -57,15 +57,54 @@ export const arrayOfObjectsToMap = <T>(objs: T[], key: keyof T): Map<T[keyof T],
     }, new Map<T[keyof T], T>())
 }
 
-export const findDefaultValue = <T>(defaultValue: DefaultValue<T>) => {
-    switch (defaultValue.type) {
-        case "Default": {
-            return defaultValue.value
+export function recursiveColumnSearch(columns: Map<string, Column>, searchingName: string): Column {
+    let column: Column | undefined;
+
+    for (const [colName, columnBody] of columns) {
+        if (colName === searchingName) {
+
+            column = columnBody
+            break
+        } else if (columnBody.subColumns && [...columnBody.subColumns.keys()].includes(searchingName)) {
+            column = recursiveColumnSearch(columnBody.subColumns, searchingName)
         }
-        case "Previous": {
-            return defaultValue.orNotPrevious
-        }
-        default:
-            absurd(defaultValue)
     }
+
+    if (column === undefined) {
+        debugger
+        throw new Error('Column not found')
+    }
+    return column
 }
+
+
+type KeysOfType<T, V> = keyof {
+    [P in keyof T as T[P] extends V ? P : never]: any
+}
+
+type temp<T> = KeysOfType<Required<T>, Map<string, T>>
+
+function returnInner<T>(c: T, b: temp<T>): Map<string, T> | undefined {
+    return c[b] as unknown as Map<string, T> | undefined
+}
+
+export function recursiveMapSearch<T>(columns: Map<string, T>, searchingName: string, searchIn: temp<T>): T {
+    let column: T | undefined;
+    for (const [colName, columnBody] of columns) {
+        let sub = returnInner(columnBody, searchIn)
+        if (colName === searchingName) {
+
+            column = columnBody
+            break
+        } else if (sub && [...sub.keys()].includes(searchingName)) {
+            column = recursiveMapSearch(sub, searchingName, searchIn)
+        }
+    }
+
+    if (column === undefined) {
+        debugger
+        throw new Error('Column not found')
+    }
+    return column
+}
+
