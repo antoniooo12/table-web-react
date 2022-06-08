@@ -1,22 +1,26 @@
 .wrapper {
-  position: relative;
   height: fit-content;
-  display: flex;
-  width: fit-content;
-  transition: .3s ;
-  border: 1px solid #dddddd;
-  border-top:none ;
- & > div:not(:last-child){
-   border-left: none;
- }
-
+  display: grid;
+  //border: 1px solid #dddddd;
+  //border-top: none;
+  //& > div:not(:last-child){
+  //  border-left: none;
+  //}
+  //& > div:last-child{
+  //  border-right: none ;
+  //}
+//  & > div {
+//border-left: ;
+//  }
 
 
 }
-.wrapperLaunch{
+
+.wrapperLaunch {
 
 }
-.deleteLine::before{
+
+.deleteLine::before {
   content: '';
   position: absolute;
   left: 0;
@@ -25,6 +29,7 @@
   height: 2px;
   background-color: #1c1c1c;
 }
+
 .allLine {
   background-color: #F4F7FC;
 }

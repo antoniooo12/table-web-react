@@ -7,12 +7,20 @@
   justify-content: center;
   border: 1px solid #dddddd;
   border-bottom: none;
-
+  &:not(:first-child){
+    border-left: none;
+  }
   input {
     font-size: 18px;
   }
 
   .sub {
+    & > div:not(:last-child){
+      border-left: none;
+    }
+    & > div:not(:first-child){
+      border-right: none;
+    }
     font-size: 12px;
     display: flex;
     color: #2E3B52;

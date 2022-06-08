@@ -1,7 +1,8 @@
 .wrapper {
-  display: flex;
-  justify-content: flex-start;
-  align-items: stretch;
+  display: grid;
+  overflow: hidden;
+  //justify-content: flex-start;
+  //align-items: stretch;
   //height: fit-content;
   & > div:nth-child(even) {
 
@@ -28,9 +29,9 @@
 }
 
 .inner {
-  display: flex;
-  height: 100%;
+  display: grid;
   box-sizing: border-box;
+  //align-items: baseline;
   align-items: stretch;
 
   & > div {
