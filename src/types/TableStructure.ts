@@ -93,13 +93,14 @@ export type Column = {
 
 }
 export type Columns = Map<string, Column>
+export type SectionParam = {
+    hidden?: boolean
+    title: string
+    width: number
+    fontSize: number
+}
 export type SectionTableStructure = {
-    sectionNameParams: {
-        hidden?: boolean
-        title: string
-        weight: number
-        fontSize: number
-    }
+    sectionParams:SectionParam
     sectionInner?: SectionTable
     columns: Columns
 }
