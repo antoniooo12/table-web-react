@@ -9,8 +9,8 @@ export const executeColumns = (table: TableStructure) => {
     const parseColumns = (sectionTableStructures: SectionTableStructure[], sectionName?: SectionName) => {
         sectionTableStructures.map((section) => {
             [...section.columns.entries()].forEach(([key, column]) => {
-                if (section.sectionNameParams.hidden) {
-                    newMap.set(key, {...column, hidden:section.sectionNameParams.hidden })
+                if (section.sectionParams.hidden) {
+                    newMap.set(key, {...column, hidden:section.sectionParams.hidden })
                 } else {
                     newMap.set(key, column)
                 }
@@ -20,7 +20,7 @@ export const executeColumns = (table: TableStructure) => {
 
     const recurse = (sections: SectionTableStructure[]) => {
 
-        const columns = sections.map(({columns, sectionNameParams}) => {
+        const columns = sections.map(({columns, sectionParams}) => {
             return columns
         })
         parseColumns(sections)

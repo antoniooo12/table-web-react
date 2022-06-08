@@ -321,10 +321,10 @@ export const testTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
             ['orderInformation', {
-                sectionNameParams: {
+                sectionParams: {
                     // hidden: true,
                     title: 'інформація про клієнта',
-                    weight: 100,
+                    width: 100,
                     fontSize: 12
                 },
                 columns: new Map<string, Column>([
@@ -335,10 +335,10 @@ export const testTable: TableStructure = {
 
             }],
             ['houseInformation', {
-                sectionNameParams: {
+                sectionParams: {
                     // hidden: true,
                     title: 'інформація про будинок',
-                    weight: 100,
+                    width: 100,
                     fontSize: 12
                 },
                 columns: new Map([
