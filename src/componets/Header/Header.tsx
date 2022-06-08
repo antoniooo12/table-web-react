@@ -22,7 +22,7 @@ const Header: React.FC<ComponentHeader> = (
             },)
         }
         const recurse = (s: SectionTableStructure[]) => {
-            const b = s.flatMap(d => {
+            return  s.flatMap(d => {
                 if (!d.sectionParams.hidden) {
                     const {children, widthGrid} = d.columns && {
                         children: buildColumn([...d.columns.entries()]),
@@ -34,11 +34,8 @@ const Header: React.FC<ComponentHeader> = (
                     return <HeaderBlock title={d.sectionParams.title} children={children} widthGrid={widthGrid}/>
                 }
             })
-            return b
         }
-        let a = [...shield.section.values()]
-        const header = recurse(a)
-        return header
+       return  recurse([...shield.section.values()])
     }, [])
     const sectionParams = [...shield.section.values()].map(el => el.sectionParams)
 

@@ -33,7 +33,7 @@ const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
     })
 
     const widthGrid = calcGridColumnWidth([...columns.values()], 'width')
-    const width = calcWidth([...columns.values()], 'width')
+    const width = calcWidth([...columns.values()])
 
     const styleGrid: CSSProperties = {
         gridTemplateColumns: widthGrid,
