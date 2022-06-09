@@ -1,7 +1,9 @@
 .wrapper {
+  position: relative;
   width: fit-content;
   border-collapse: collapse;
 }
+
 tr, th {
   padding: 0;
   height: 100%;
