@@ -1,6 +1,7 @@
 .wrapper {
   height: fit-content;
   display: grid;
+  position: relative;
 }
 
 .wrapperLaunch {
@@ -12,9 +13,10 @@
   position: absolute;
   left: 0;
   bottom: 50%;
-  width: calc(100% - 42px);
+  width: calc(100%);
   height: 2px;
   background-color: #1c1c1c;
+  //z-index: 1;
 }
 
 .allLine {
