@@ -7,23 +7,23 @@ import {LineContext} from "./LineContext";
 import {LineDeleteButton} from "./LineButtons/LineDeleteButton/LineDeleteButton";
 import {TableWebContext} from "../TableWeb/TableWebContext";
 import {calcGridColumnWidth, calcWidth} from "../../utils/utilsTableView";
+import {LineEditButton} from "./LineButtons/LineEditButton/LineEditButton";
 
 export type TLineData = {
     status: TStatus
-    id: number | string
+    id: string
     toDelete: boolean
     wasEdit: boolean
 }
 export type TLine = {
     status: TStatus
-    lineIdt: number | string
+    lineIdt: string
     wasEdit: boolean
     toDelete: boolean
     columnsData: Map<string, Item<unknown>>
     lineData: TLineData
 }
-type Line = TLine
-const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
+const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
     const {columns} = useContext(TableWebContext)
     const clasName: string = clsx({
         [cl.wrapper]: true,
@@ -69,6 +69,7 @@ const Line: React.FC<Line> = React.memo(({lineData, columnsData}) => {
                         lineId={lineData.id}
                         status={lineData.status}
                     />
+                    <LineEditButton lineId={lineData.id}/>
                 </span>
             </span>
         </LineContext.Provider>

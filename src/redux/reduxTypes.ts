@@ -12,7 +12,7 @@ export type TableReduxStructure = {
 
 export type TStatus = keyof typeof EnumStatus
 export type TLineInformation = {
-    id: number | string
+    id:  string
     toDelete: boolean
     wasEdit: boolean
     status: TStatus
