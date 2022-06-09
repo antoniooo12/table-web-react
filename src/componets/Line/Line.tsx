@@ -6,9 +6,9 @@ import clsx from "clsx";
 import {LineContext} from "./LineContext";
 import {LineDeleteButton} from "./LineButtons/LineDeleteButton/LineDeleteButton";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {calcGridColumnWidth, calcWidth} from "../../utils/utilsTableView";
 import {LineEditButton} from "./LineButtons/LineEditButton/LineEditButton";
 import {useGetWidth} from "./utils/utils";
+import {LineMoreButton} from "./LineButtons/LineMoreButton/LineMoreButton";
 
 export type TLineData = {
     status: TStatus
@@ -74,6 +74,7 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
                         status={lineData.status}
                     />
                     <LineEditButton lineId={lineData.id}/>
+                    <LineMoreButton lineId={lineData.id}/>
                 </span>
             </span>
         </LineContext.Provider>
