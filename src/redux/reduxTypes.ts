@@ -12,7 +12,7 @@ export type TableReduxStructure = {
 
 export type TStatus = keyof typeof EnumStatus
 export type TLineInformation = {
-    id: number | string
+    id:  string
     toDelete: boolean
     wasEdit: boolean
     status: TStatus
@@ -43,6 +43,7 @@ export enum EnumTableReducer {
     changeCell = 'changeCell',
     deleteLine = 'deleteLine',
     loadExternalData = 'loadExternalData',
+    SetEditableLine ='SetEditableLine',
 }
 
 export interface IOnChangeCell<T> {
@@ -60,6 +61,9 @@ export type TOnLoadExternalData = {
     externalData: TInitialValue[]
     columnsStructure: Columns
 }
+export type TOnSetEditableLine ={
+    lineId: string
+}
 type CreateLine = {
     type: EnumTableReducer.createLine
     payload: { columnsStructure: Columns, initialValue: TInitialValue }
@@ -76,4 +80,8 @@ type LoadExternalData = {
     type: EnumTableReducer.loadExternalData
     payload: TOnLoadExternalData
 }
-export type TableReducerActions<T> = CreateLine | ChangeCell<T> | DeleteLine | LoadExternalData
+type SetEditableLine ={
+    type: EnumTableReducer.SetEditableLine
+    payload: TOnSetEditableLine
+}
+export type TableReducerActions<T> = CreateLine | ChangeCell<T> | DeleteLine | LoadExternalData | SetEditableLine
