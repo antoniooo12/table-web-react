@@ -1,14 +1,24 @@
 .wrapper{
-  max-padding: 10px;
+  //width: 100%;
+  //height: 100%;
   //border-radius: 8px;
+
+  padding: 8px 12px;
   cursor: pointer;
   outline: none;
   border: none;
   color: aliceblue;
   background-color: #fff;
-  height: auto;
+  height: 100%;
   width: auto;
   font-size: 14px;
+}
+.inner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //margin: 0 auto;
+  //margin-top: 25%;
 }
 .blue{
   background-color: #539EF8;

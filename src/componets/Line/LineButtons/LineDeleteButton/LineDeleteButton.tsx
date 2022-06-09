@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {Button, TButton} from "../../../buttons/Button/Button";
 import {SvgTrash} from "../../../SVG/SvgTrash";
 import {useActionsTable} from "../../../../hooks/useActionsTable";
-import {EnumStatus, TStatus} from "../../../../redux/reduxTypes";
+import {TStatus} from "../../../../redux/reduxTypes";
 
 type LineDeleteButton = TButton & {
     lineId: string | number,

@@ -16,7 +16,9 @@ const Button: React.FC<TButton> = ({style = 'default', children, ...props}) => {
             className={clsx({[cl.wrapper]: true}, color)}
             {...props}
         >
-            {children}
+            <div className={cl.inner}>
+                {children}
+            </div>
         </button>
     );
 }
