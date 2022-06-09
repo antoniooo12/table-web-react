@@ -1,4 +1,5 @@
 import {SectionParam, SectionTable, TShieldStructure} from "../../../types/TableStructure";
+import {useState} from "react";
 
 const checkSectionSize = (shield: TShieldStructure): TShieldStructure => {
     return {
@@ -13,6 +14,10 @@ const checkSectionSize = (shield: TShieldStructure): TShieldStructure => {
     }
 }
 export const shieldChecker = (shield: TShieldStructure): TShieldStructure => {
-
     return checkSectionSize(shield)
+}
+
+export const useOpenInBigPicture = () => {
+    const [selectedLineIdToBigPicture, setSelectedLineIdToBigPicture] = useState<string>()
+    return {selectedLineIdToBigPicture, setSelectedLineIdToBigPicture}
 }
