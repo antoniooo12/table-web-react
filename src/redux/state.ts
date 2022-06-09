@@ -1,7 +1,6 @@
 import {EnumStatus, EnumTableReducer, TableReducerActions, TableState} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
-import {createColumns, createColumnsFromExternalData, createLine, createLineToTable} from './reduxHellpers'
-import {date} from "fp-ts";
+import {createColumns, createLine, createLineToTable} from './reduxHellpers'
 import {recursiveMapSearch} from "../hellpers/helpers";
 
 const defaultState: TableState = {
@@ -67,6 +66,12 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
                     .filter(line => line.lineInformation.status === EnumStatus.isNew)
                 table.push(...filteredTable)
                 draft.storage.data = table
+            })
+        }
+        case  EnumTableReducer.SetEditableLine : {
+            const {lineId} = action.payload
+            return produce(state, draft => {
+                draft.storage.data.find(line => line.lineInformation.id = lineId)!.lineInformation.wasEdit = true
             })
         }
         default:
