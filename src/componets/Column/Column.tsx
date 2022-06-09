@@ -36,15 +36,19 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
                         })}
                     >
                         {
-                            [...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
-                                <span>
+                            <span
+                                className={cl.sub}
+                            >
+                            {[...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
+
                                 <Column
                                     columnName={subCellName}
                                     cellData={subCellDatta}
                                     key={subCellName}
                                 />
-                                    </span>
-                            )
+                            )}
+                                                                    </span>
+
                         }
                     </div>}
 

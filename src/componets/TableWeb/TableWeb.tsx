@@ -8,6 +8,7 @@ import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
 import {TTableConnect} from "../../API/TableWebAPITypes";
 import {useActionsTable} from "../../hooks/useActionsTable";
+import {shieldChecker} from "./utils/utils";
 
 
 export type TTableWeb = {
@@ -19,6 +20,7 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
     const {tableStructure, optionsMap, tableData} = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
+    const checkedShield = shieldChecker(shield)
     const columns = executeColumns(tableStructure)
     const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     useEffect(() => {
@@ -31,7 +33,7 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
         <TableWebContext.Provider
             value={{
                 columns,
-                shield: shield,
+                shield: checkedShield,
                 previous: [previousValues, setterPreviousValues(setPreviousValues)],
                 tableConnect: {
                     setTableExternalState: tableConnect.setTableExternalState
@@ -40,14 +42,14 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
             }}
         >
 
-            <div
+            <table
                 className={cl.wrapper}
             >
                 <BottomTablePanel columnStructure={columns}/>
 
                 <Header/>
                 <Shield shieldStructure={shield}/>
-            </div>
+            </table>
         </TableWebContext.Provider>
 
     );

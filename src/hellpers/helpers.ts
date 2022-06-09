@@ -1,4 +1,4 @@
-import {SNB} from "../types/HelperTypes";
+import {MapSearcher, SNB} from "../types/HelperTypes";
 import {Column, Columns, DefaultValue, InputType} from "../types/TableStructure";
 import {Predicate} from "fp-ts/Predicate";
 import {absurd} from "fp-ts/function";
@@ -78,17 +78,11 @@ export function recursiveColumnSearch(columns: Map<string, Column>, searchingNam
 }
 
 
-type KeysOfType<T, V> = keyof {
-    [P in keyof T as T[P] extends V ? P : never]: any
-}
-
-type temp<T> = KeysOfType<Required<T>, Map<string, T>>
-
-function returnInner<T>(c: T, b: temp<T>): Map<string, T> | undefined {
+export function returnInner<T>(c: T, b: MapSearcher<T>): Map<string, T> | undefined {
     return c[b] as unknown as Map<string, T> | undefined
 }
 
-export function recursiveMapSearch<T>(columns: Map<string, T>, searchingName: string, searchIn: temp<T>): T {
+export function recursiveMapSearch<T>(columns: Map<string, T>, searchingName: string, searchIn: MapSearcher<T>): T {
     let column: T | undefined;
     for (const [colName, columnBody] of columns) {
         let sub = returnInner(columnBody, searchIn)

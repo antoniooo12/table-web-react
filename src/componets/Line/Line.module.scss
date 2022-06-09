@@ -1,16 +1,13 @@
 .wrapper {
-  position: relative;
-  //padding-left: 5px;
   height: fit-content;
-  display: flex;
-  width: fit-content;
-  transition: .3s ;
-//transform: translate3d(0, -100%,0);
+  display: grid;
 }
-.wrapperLaunch{
+
+.wrapperLaunch {
 
 }
-.deleteLine::before{
+
+.deleteLine::before {
   content: '';
   position: absolute;
   left: 0;
@@ -19,6 +16,7 @@
   height: 2px;
   background-color: #1c1c1c;
 }
+
 .allLine {
   background-color: #F4F7FC;
 }

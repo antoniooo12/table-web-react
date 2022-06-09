@@ -1,87 +1,53 @@
-// @ts-ignore
 import cl from './HeaderStyle.module.scss'
-
-import React, {useContext} from 'react';
-import {Column, HeaderParam, SectionTableStructure, TShieldStructure} from "../../types/TableStructure";
+import React, {CSSProperties, ReactNode, useContext, useMemo} from 'react';
+import {Column, SectionTableStructure} from "../../types/TableStructure";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {THeader} from "./THedaer";
+import clsx from "clsx";
+import {HeaderBlock} from "./HeaderBlock";
+import {calcGridColumnWidth} from "../../utils/utilsTableView";
 
 export type ComponentHeader = {}
 
 const Header: React.FC<ComponentHeader> = (
     {}) => {
     const {shield} = useContext(TableWebContext)
-    const getColumns = (columns: Column[]) => {
-        return columns.flatMap(((column, numColumn) => {
-            if (!column.hidden) {
-                return (
-                    <div
-                        style={{
-                            width: `${column.width}px`,
-                        }}
-                        className={cl.column}
-                        key={column.title}
-                    >
-                        {column.title}
-                    </div>
-                )
-            }
-        }))
-    }
 
-    function recurse(section: SectionTableStructure[], number?: number): JSX.Element {
 
-        return (
-            <
-                div
-                style={{display: 'flex'}}
-                // className={cl.inner}
-            >
-                {section.flatMap((el, index) => {
-                    const columns = el.columns && getColumns([...el.columns.values()])
-                    console.log(number)
-                    if(el.sectionNameParams.hidden !== true) {
-                        return (
-                            <div
-                                key={el.sectionNameParams.title}
-                            >
-                                <div
-                                    key={el.sectionNameParams.title}
-                                >
-                                    <div>{el.sectionNameParams.title}
-                                    </div>
-                                    <div
-                                        style={{display: "flex"}}
-                                    >
-                                        {el.sectionInner && <
-                                            // className={cl.inner}
-                                        >
-                                            {recurse([...el.sectionInner.values()], index)}
-                                        </>}
-                                        {columns && <div
-                                            className={cl.column}
-                                        >
-                                            {columns}
-                                        </div>}
-                                    </div>
-                                </div>
-                            </div>
-                        )
+    const header = useMemo(() => {
+        const buildColumn = (columns: [string, Column][]) => {
+            return columns.flatMap(([colName, col]) => {
+                if (!col.hidden) {
+                    return <HeaderBlock title={col.title} width={col.width}/>
+                }
+            },)
+        }
+        const recurse = (s: SectionTableStructure[]) => {
+            return  s.flatMap(d => {
+                if (!d.sectionParams.hidden) {
+                    const {children, widthGrid} = d.columns && {
+                        children: buildColumn([...d.columns.entries()]),
+                        widthGrid: [...d.columns.values()].reduce((accum, col) => {
+                            accum += `${col.width}px `
+                            return accum
+                        }, ''),
                     }
-                })}
-            </div>
-        )
+                    return <HeaderBlock title={d.sectionParams.title} children={children} widthGrid={widthGrid}/>
+                }
+            })
+        }
+       return  recurse([...shield.section.values()])
+    }, [])
+    const sectionParams = [...shield.section.values()].map(el => el.sectionParams)
+
+    const style: CSSProperties = {
+        gridTemplateColumns: calcGridColumnWidth(sectionParams, 'width')
     }
-
-    const header = recurse([...shield.section.values()])
-    return (
-        <div
-            className={cl.wrapper}
-        >
-            {header}
-        </div>
-
-    );
+    return <div
+        className={clsx(cl.wrapper)}
+        style={style}
+    >
+        {header}
+    </div>
 };
 
 export {Header};

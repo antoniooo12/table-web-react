@@ -25,9 +25,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
                 .findIndex(line => line.lineInformation.id === lineId)
             const line = state.storage!.data[lineIndex]
             const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
-            console.log(value)
-            console.log('------')
-            console.log(cell)
+
 
             return produce(state, draft => {
                 const line = draft.storage!.data[lineIndex]
