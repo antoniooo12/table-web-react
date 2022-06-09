@@ -6,17 +6,17 @@ import {TableWebContext} from "./TableWebContext";
 import {executeColumns} from "../../hooks/executeColumns";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
-import {TTableConnect} from "../../API/TableWebAPITypes";
 import {useActionsTable} from "../../hooks/useActionsTable";
-import {shieldChecker} from "./utils/utils";
+import {BigPicture} from "../BigPicture/BigPicture";
+import {TTableConnect} from "../../API/TableWebAPITypes";
+import {shieldChecker, useOpenInBigPicture} from "./utils/utils";
 
 
 export type TTableWeb = {
     tableConnect: TTableConnect
 }
 
-
-const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
+export const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
     const {tableStructure, optionsMap, tableData} = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
@@ -28,7 +28,7 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
             tableLoadExternalData({externalData: tableData, columnsStructure: columns})
         }
     }, [tableData])
-
+    const bigPictureController = useOpenInBigPicture()
     return (
         <TableWebContext.Provider
             value={{
@@ -39,9 +39,9 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
                     setTableExternalState: tableConnect.setTableExternalState
                 },
                 optionsMap,
+                bigPictureController,
             }}
         >
-
             <table
                 className={cl.wrapper}
             >
@@ -49,10 +49,14 @@ const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
 
                 <Header/>
                 <Shield shieldStructure={shield}/>
+                {bigPictureController.selectedLineIdToBigPicture !== undefined && <BigPicture/>}
+
             </table>
         </TableWebContext.Provider>
 
     );
 })
 
-export {TableWeb};
+
+
+
