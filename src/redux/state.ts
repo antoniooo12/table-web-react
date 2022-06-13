@@ -22,12 +22,11 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
             const {status, value, nameCell, lineId} = action.payload
             const lineIndex = state.storage!.data
                 .findIndex(line => line.lineInformation.id === lineId)
-            const line = state.storage!.data[lineIndex]
-            const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
 
 
             return produce(state, draft => {
                 const line = draft.storage!.data[lineIndex]
+                // debugger
                 const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
                 if (!line.columns.has(nameCell)) {
                     line.columns.forEach(line => {

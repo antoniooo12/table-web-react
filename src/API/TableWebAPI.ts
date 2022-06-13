@@ -1,6 +1,12 @@
 import {useMemo, useState} from "react";
 import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
-import {TableExternalShieldData, TTableConnect, TTableExternalState} from "./TableWebAPITypes";
+import {
+    CustomComponents,
+    TableExternalShieldData,
+    TTableConnect,
+    TTableExternalState,
+    TTableInit
+} from "./TableWebAPITypes";
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap} from "../hellpers/helpers";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
@@ -37,6 +43,9 @@ type TUseConnectWebTableState = {
         data: {
             tableExternalState: TTableExternalState
         }
+        columnsMapped: {
+            columns: Map<string, Column>
+        },
     }
 }
 export const prepareTableExternalState = (): TTableExternalState => ({
@@ -45,7 +54,12 @@ export const prepareTableExternalState = (): TTableExternalState => ({
     toCreate: [],
 })
 
-export const useConnectWebTableState = (tableStructure: TableStructure, externalData: TableExternalShieldData, externalOptionsMap: Map<string, TSelectOptions[]>): TUseConnectWebTableState => {
+export const useConnectWebTableState = ({
+                                            tableStructure,
+                                            externalData,
+                                            externalOptionsMap,
+                                            customComponents
+                                        }: TTableInit): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
     const [tableExternalState, setTableExternalState] = useState<TTableExternalState>(prepareTableExternalState())
 
@@ -54,19 +68,24 @@ export const useConnectWebTableState = (tableStructure: TableStructure, external
     }, [])
     const columns = executeColumns(tableStructure)
     const [optionsMap, setOptionsMap] = useState<Map<string, TSelectOptions[]>>(useUploadOptions(columns, externalOptionsMap))
-    const connector = useMemo(() => ({
+    const connector: TTableConnect = useMemo(() => ({
         setTableExternalState,
         tableStructure,
         optionsMap,
         tableData,
+        customComponents: customComponents ? customComponents : {},
     }), [optionsMap, tableStructure, tableData])
+
     return {
         connector,
         api: {
             setOptionsMap,
             data: {
                 tableExternalState
-            }
+            },
+            columnsMapped: {
+                columns,
+            },
         }
     }
 }

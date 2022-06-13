@@ -1,5 +1,5 @@
 import React from 'react';
-import {TestTable} from "./test/components/TestTable";
+import {TestTable} from "./__test__/components/TestTable";
 
 function App() {
 

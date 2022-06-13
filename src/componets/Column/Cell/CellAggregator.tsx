@@ -10,7 +10,7 @@ import {TableWebContext} from "../../TableWeb/TableWebContext";
 
 export type TCellAggregator = {
     nameInput: string
-    cellData: Item<unknown>
+    cellData: Item
     cellParam: CellParam<unknown>
     parentCell?: string
 }
@@ -24,7 +24,11 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameIn
     const {tableChangeCell} = useActionsTable()
     const lineData = useContext(LineContext)
     const Component = selectedCell.cell
-
+    useEffectSkipMount(()=>{
+        if(cellData.value !== value){
+            setValue(cellData.value)
+        }
+    },[cellData])
     useEffectSkipMount(() => {
         tableChangeCell({
             status: lineData.status,

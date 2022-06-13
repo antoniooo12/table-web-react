@@ -1,6 +1,7 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
+import {section} from "../example";
 
 export type TableState = {
     storage: TableReduxStructure
@@ -21,8 +22,9 @@ export type TTableLine = {
     lineInformation: TLineInformation
     columns: TableColumn
 }
-export type TableColumn = Map<string, Item<unknown>>
-export type Item<T> = {
+
+export type TableColumn = Map<string, Item>
+export type Item<T = unknown> = {
     id: number | string;
     nameColumn: string;
     value: T

@@ -1,14 +1,14 @@
 import cl from './Line.module.scss'
 import React, {CSSProperties, useContext} from 'react';
 import {Item, TStatus} from "../../redux/reduxTypes";
-import {Column} from "../Column/Column";
+import {CellBlock} from "../Column/CellBlock";
 import clsx from "clsx";
 import {LineContext} from "./LineContext";
 import {LineDeleteButton} from "./LineButtons/LineDeleteButton/LineDeleteButton";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {calcGridColumnWidth, calcWidth} from "../../utils/utilsTableView";
 import {LineEditButton} from "./LineButtons/LineEditButton/LineEditButton";
 import {useGetWidth} from "./utils/utils";
+import {LineMoreButton} from "./LineButtons/LineMoreButton/LineMoreButton";
 
 export type TLineData = {
     status: TStatus
@@ -31,7 +31,6 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
         [cl.allLine]: lineData.status === 'isAll',
         [cl.newLine]: lineData.status === 'isNew',
     })
-
     const {width, widthGrid} = useGetWidth(columns)
 
 
@@ -44,7 +43,7 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
             value={lineData}
         >
             <span
-                style={{display: "flex"}}
+                className={cl.line}
             >
 
                 <div
@@ -55,7 +54,8 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
                     {[...columnsData.entries()].map(([columnName, cellData]) => {
                         return (
                             <>
-                                <Column
+                                <CellBlock
+                                    viewType={'line'}
                                     key={cellData.id}
                                     columnName={columnName}
                                     cellData={cellData}
@@ -68,13 +68,14 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
                         className={clsx({[cl.deleteLine]: lineData.toDelete})}
                     />
                 </div>
-                <span>
+                <div className={cl.buttonsSection}>
                     <LineDeleteButton
                         lineId={lineData.id}
                         status={lineData.status}
                     />
                     <LineEditButton lineId={lineData.id}/>
-                </span>
+                    <LineMoreButton lineId={lineData.id}/>
+                </div>
             </span>
         </LineContext.Provider>
     );

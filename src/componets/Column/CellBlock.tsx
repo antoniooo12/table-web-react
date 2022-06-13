@@ -7,10 +7,11 @@ import {useGetColumnParam} from "./utils";
 
 type TColumn = {
     columnName: string
-    cellData: Item<unknown>
+    cellData: Item
+    viewType: 'line' | 'bigPicture'
 }
 
-const Column: React.FC<TColumn> = ({cellData, columnName}) => {
+const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
     const columnParam = useGetColumnParam(columnName)
     return (
         <>
@@ -22,6 +23,7 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
                     className={
                         clsx({
                             [cl.wrapper]: true,
+                            [cl.borderInLine]: viewType === 'line',
                         })
                     }
                 >
@@ -36,18 +38,19 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
                         })}
                     >
                         {
-                            <span
-                                className={cl.sub}
+                            <div
+                                className={cl.subLine}
                             >
-                            {[...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
+                                {[...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
 
-                                <Column
-                                    columnName={subCellName}
-                                    cellData={subCellDatta}
-                                    key={subCellName}
-                                />
-                            )}
-                                                                    </span>
+                                    <CellBlock
+                                        viewType={viewType}
+                                        columnName={subCellName}
+                                        cellData={subCellDatta}
+                                        key={subCellName}
+                                    />
+                                )}
+                            </div>
 
                         }
                     </div>}
@@ -59,4 +62,4 @@ const Column: React.FC<TColumn> = ({cellData, columnName}) => {
 
 
 }
-export {Column}
+export {CellBlock}

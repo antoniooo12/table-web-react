@@ -22,7 +22,7 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' |'time'
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' | 'time'
 
 export enum EnumTypeAdditionalParamsSelect {
     InputAdditionalParamsSelect = 'InputAdditionalParamsSelect',
@@ -83,31 +83,31 @@ export type CellParam<T> = {
     readonly  placeholder?: string
 }
 export type ColumnWidth = number | 'inherit' | 'all'
-export type Column = {
+export type Column<T = string> = {
     title: string
     cellParam: CellParam<unknown>
-    width:ColumnWidth
+    width: ColumnWidth
     hidden?: boolean
-    subColumns?: Map<string, Column>
+    subColumns?: Map<T, Column>
     subColumnsStyle?: 'line'
 
 }
-export type Columns = Map<string, Column>
+export type Columns<T = string> = Map<T, Column>
 export type SectionParam = {
     hidden?: boolean
     title: string
     width: number
     fontSize: number
 }
-export type SectionTableStructure = {
-    sectionParams:SectionParam
+export type SectionTableStructure<T =string> = {
+    sectionParams: SectionParam
     sectionInner?: SectionTable
-    columns: Columns
+    columns: Columns<T>
 }
-export type SectionTable = Map<string, SectionTableStructure>
-export type TShieldStructure = {
-    section: SectionTable
+export type SectionTable<T = string> = Map<T, SectionTableStructure>
+export type TShieldStructure<T= string> = {
+    section: SectionTable<T>
 }
-export type TableStructure = {
-    shield: TShieldStructure
+export type TableStructure<T=string> = {
+    shield: TShieldStructure<T>
 }

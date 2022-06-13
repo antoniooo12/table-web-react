@@ -1,0 +1,53 @@
+@import "src/SASS/VarScreenSize";
+.wrapper {
+
+  @media screen and (max-width: $smallSize720) {
+    left: 0;
+    width: 100%;
+  }
+  @media screen and (max-width: $smallSizePhone420) {
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+  width: 719px;
+  z-index: 2;
+  top: 200px;
+  left: 0;
+  outline: 1px solid #dddddd;
+  border-radius: 12px;
+  position: absolute;
+  background-color: #fdfdfd;
+  padding: 15px;
+  //width: 80vw;
+  min-height: 80vh;
+  height: fit-content;
+
+
+}
+
+.cell {
+  margin: 10px;
+}
+
+.cellBlock {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cellBlockAround {
+  justify-content: space-between;
+}
+
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .buttonsGroup {
+    width: fit-content;
+    height: fit-content;
+  }
+}
+

@@ -17,7 +17,7 @@ const CellText: React.FC<TCellText> = (
         middleware,
     }) => {
     const [innerValue, setValue, setValueHtml] = useTest<string>(setExternalValue, externalValue, middleware)
-
+    console.log(externalValue)
     return (
         <>
             <BaseInput

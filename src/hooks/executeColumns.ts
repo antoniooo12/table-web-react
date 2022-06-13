@@ -10,7 +10,7 @@ export const executeColumns = (table: TableStructure) => {
         sectionTableStructures.map((section) => {
             [...section.columns.entries()].forEach(([key, column]) => {
                 if (section.sectionParams.hidden) {
-                    newMap.set(key, {...column, hidden:section.sectionParams.hidden })
+                    newMap.set(key, {...column, hidden: section.sectionParams.hidden})
                 } else {
                     newMap.set(key, column)
                 }

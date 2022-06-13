@@ -1,7 +1,13 @@
+@import "src/SASS/VarScreenSize";
 .wrapper {
-  width: fit-content;
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-collapse: collapse;
+  overflow-y: scroll;
+
 }
+
 tr, th {
   padding: 0;
   height: 100%;
