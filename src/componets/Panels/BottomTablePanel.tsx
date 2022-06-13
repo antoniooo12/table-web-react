@@ -1,6 +1,5 @@
 import React, {useCallback, useContext} from 'react';
 import cl from './BottomTablePanel.module.scss'
-import {useActionsTable} from "../../hooks/useActionsTable";
 import {Columns} from "../../types/TableStructure";
 import {Button} from "../buttons/Button/Button";
 import {TableWebContext} from "../TableWeb/TableWebContext";

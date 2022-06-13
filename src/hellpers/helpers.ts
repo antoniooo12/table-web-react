@@ -1,7 +1,6 @@
 import {MapSearcher, SNB} from "../types/HelperTypes";
-import {Column, Columns, DefaultValue, InputType} from "../types/TableStructure";
+import {Column, InputType} from "../types/TableStructure";
 import {Predicate} from "fp-ts/Predicate";
-import {absurd} from "fp-ts/function";
 
 
 export const filterR = <A>(arr: Array<A>) => (predicate: Predicate<A>) => {

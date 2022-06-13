@@ -1,6 +1,6 @@
 import {createContext} from "react";
 import {Column, TSelectOptions, TShieldStructure} from "../../types/TableStructure";
-import {TTableExternalState} from "../../API/TableWebAPITypes";
+import {CustomComponents, TTableExternalState} from "../../API/TableWebAPITypes";
 import {MReactDispSetter} from "../../types/HelperTypes";
 
 type TableWebContext = {
@@ -13,6 +13,7 @@ type TableWebContext = {
         selectedLineIdToBigPicture: string | undefined
         setSelectedLineIdToBigPicture: MReactDispSetter<string | undefined>
     }
+    customComponents: CustomComponents
 }
 
 export const TableWebContext = createContext<TableWebContext>({} as TableWebContext)

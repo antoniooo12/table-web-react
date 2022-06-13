@@ -8,6 +8,8 @@ import thunk from "redux-thunk";
 const rootTableReducer = combineReducers({
     tableStore: tableStoreReducer,
 })
+// tableStoreReducer().storage.data.find()
+// tableStoreReducer().storage.data.reduce().columns.
 
 export type RootTableReducer = ReturnType<typeof rootTableReducer>
 

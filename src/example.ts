@@ -4,168 +4,10 @@ import {
     InputAdditionalAttributes,
     InputAdditionalParamsNumber,
     InputAdditionalParamsSelect,
-    InputAdditionalParamsTel,
+    InputAdditionalParamsTel, SectionTable,
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
-// import
-import {defaultFunctions} from "./hellpers/defaultFunctions/defaultFunctions";
-
-// const clientInformation: SectionTableStructure = {
-//     sectionNameParams: {
-//         hidden: true,
-//         title: 'інформація клієнта',
-//         weight: 100,
-//         fontSize: 12
-//     },
-//     columns: new Map([
-//         ['name', {
-//             title: "ім'я",
-//             type: 'text',
-//             position: 'full',
-//             width: 100,
-//             placeholder: "ім'я клієнта",
-//         }],
-//         ['surname', {
-//             title: "фамілія",
-//             type: 'text',
-//             position: 'full',
-//             width: 100,
-//             placeholder: "фамілія",
-//         }],
-//         ['number', {
-//             title: "номер",
-//             type: 'Tel',
-//             position: 'full',
-//             width: 100,
-//             placeholder: "номер",
-//         }],
-//         ['sex', {
-//             title: "стать",
-//             type: 'text',
-//             position: 'full',
-//             width: 100,
-//             placeholder: "стать",
-//         }],
-//         ['cod', {
-//             title: "код",
-//             type: 'text',
-//             position: 'full',
-//             width: 60,
-//             placeholder: "cod",
-//         }],
-//     ])
-// }
-// export const testTable2: TableStructure = {
-//
-//     shield: {
-//         section: new Map([
-//             ['clientInformation', clientInformation],
-//             ['apartmentWishes', {
-//                 sectionNameParams: {
-//                     // hidden: true,
-//                     title: 'побажання до квартири',
-//                     weight: 100,
-//                     fontSize: 12
-//                 },
-//                 sectionInner: new Map([
-//                     ['price', {
-//                         sectionNameParams: {
-//                             hidden: true,
-//                             title: 'ціна',
-//                             weight: 100,
-//                             fontSize: 12
-//                         },
-//                         columns: new Map([
-//                             ['priceFrom', {
-//                                 title: "ціна від",
-//                                 type: 'number',
-//                                 position: 'full',
-//                                 width: 100,
-//                             }],
-//                             ['priceTo', {
-//                                 title: "ціна до ",
-//                                 type: 'number',
-//                                 position: 'full',
-//                                 width: 100,
-//                             }]
-//                         ]),
-//                     }],
-//                     ['houseCharacteristics', {
-//                         sectionNameParams: {
-//                             // hidden: true,
-//                             title: 'Характеристики будинку',
-//                             weight: 100,
-//                             fontSize: 12
-//                         },
-//                         columns: new Map([
-//                             ['specifics', {
-//                                 title: "особливості",
-//                                 placeholder: "особливості",
-//                                 type: 'text',
-//                                 position: 'full',
-//                                 width: 100,
-//                             }],
-//                             ['heatingType', {
-//                                 title: "опалення",
-//                                 placeholder: 'опалення',
-//                                 selectListOptions: [
-//                                     {
-//                                         text: 'poltava',
-//                                         value: 'poltava',
-//                                     }, {
-//                                         text: 'lviv',
-//                                         value: 'lviv',
-//                                     }
-//                                 ],
-//                                 type: 'select',
-//                                 position: 'full',
-//                                 width: 100,
-//                             }],
-//                             ['repair', {
-//                                 title: "ремонт",
-//                                 type: 'text',
-//                                 placeholder: 'ремонт',
-//                                 position: 'full',
-//                                 width: 100,
-//                             }]
-//                         ]),
-//
-//                         sectionInner: new Map([
-//                             ['Location', {
-//                                 sectionNameParams: {
-//                                     hidden: true,
-//                                     title: 'Розташування',
-//                                     weight: 100,
-//                                     fontSize: 16,
-//                                 },
-//                                 columns: new Map([
-//                                     ['city', {
-//                                         title: "місто",
-//                                         type: 'text',
-//                                         position: 'full',
-//                                         width: 100,
-//                                         placeholder: "city",
-//                                         visible: true,
-//                                     }], ['district', {
-//                                         title: "район",
-//                                         type: 'text',
-//                                         position: 'full',
-//                                         width: 100,
-//                                         placeholder: "район",
-//                                         visible: true,
-//                                     }],
-//                                 ])
-//                             }]
-//                         ]),
-//
-//                     }]
-//
-//                 ])
-//             }]
-//         ])
-//     }
-// }
 
 const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber,
@@ -177,6 +19,13 @@ const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes,
     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel,
     format: 'xxx_xxx_xx_xx_',
 }
+
+enum EColumn {
+    clientName = 'clientName',
+    deliveryTimeTuple = 'deliveryTimeTuple',
+    clientPhone = 'clientPhone',
+}
+
 const clientRatingColumn: Column = {
     title: 'рейтинг',
     width: 90,
@@ -201,6 +50,7 @@ const clientActiveColumn: Column = {
 const clientPhoneColumn: Column = {
     title: 'номер',
     cellParam: {
+        placeholder: 'номер клієнта',
         name: 'номер',
         default: {type: 'Previous', orNotPrevious: ''},
         type: 'tel',
@@ -208,10 +58,30 @@ const clientPhoneColumn: Column = {
     },
     width: 180,
 }
-const clientPhoneTuple: [string, Column] = ['clientPhone', clientPhoneColumn]
+const deliveryAddress: Column = {
+    title: 'адресса',
+    cellParam: {
+        placeholder: 'адрес доставки',
+        name: 'адресса',
+        default: {type: 'Default', value: ''},
+        type: 'text',
+    },
+    width: 150,
+}
+const clientPhoneTuple: [EColumn.clientPhone, Column] = [EColumn.clientPhone, clientPhoneColumn]
 const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
 const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
-const clientNameTuple: [string, Column] = ['clientName', {
+const orderSum: Column = {
+    title: 'sum',
+    cellParam: {
+        name: 'sum',
+        default: {type: 'Default', value: 0},
+        type: "number",
+    },
+    width: 85
+}
+
+const clientNameTuple: [EColumn.clientName, Column] = [EColumn.clientName, {
     title: 'Імʼя клієнта',
     cellParam: {
         name: 'Імʼя клієнта',
@@ -242,57 +112,27 @@ const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, I
     },
     ]
 }
-const houseTypeTuple: [string, Column] = ['houseType', {
-    title: 'тип нерухомосты',
+const clientComment : Column={
+    title: 'коментар до клієнта',
     cellParam: {
-        name: 'тип нерухомосты',
-        default: {type: 'Previous', orNotPrevious: ''},
-        type: 'select',
-        additionalParams: houseTypeColumnAdditionalInformation,
-    },
-    width: 110,
-}]
-const houseAddressTuple: [string, Column] = ['houseAddress', {
-    title: 'адреса',
-    cellParam: {
-        name: 'адреса',
+        name: 'коментар до клієнта',
         default: {type: 'Default', value: ''},
-        type: 'textSelect',
-        additionalParams: {
-            type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelectV2,
-            defaultSelected: 0,
-            variants: [
-                {
-                    text: '11',
-                    value: '1',
-                    disabled: false,
-                }, {
-                    text: '22',
-                    value: '2',
-                    disabled: false,
-                }, {
-                    text: '33',
-                    value: '3',
-                    disabled: false,
-                }, {
-                    text: 'some text',
-                    value: '1',
-                    disabled: false,
-                }, {
-                    text: 'more text, so many text? and text',
-                    value: '2',
-                    disabled: false,
-                }, {
-                    text: 'Varinat 220',
-                    value: '3',
-                    disabled: false,
-                }
-            ]
-        },
+        type: 'textarea',
+        placeholder: 'коментар до клієнта'
     },
-    width: 110,
-}]
-const deliveryTimeTuple: [string, Column] = ['deliveryDay', {
+    width: 150,
+}
+const deliveryComment : Column={
+    title: 'коментар до доставки',
+    cellParam: {
+        name: 'коментар до доставки',
+        default: {type: 'Default', value: ''},
+        type: 'textarea',
+        placeholder: 'коментар до доставки'
+    },
+    width: 150,
+}
+const deliveryTimeTuple: [EColumn.deliveryTimeTuple, Column] = [EColumn.deliveryTimeTuple, {
     title: 'часові рамки',
     cellParam: {
         name: 'deliveryDay',
@@ -319,49 +159,48 @@ const deliveryTimeTuple: [string, Column] = ['deliveryDay', {
             }
         }]])
 }]
-export const testTable: TableStructure = {
-    shield: {
-        section: new Map<string, SectionTableStructure>([
-            ['orderInformation', {
-                sectionParams: {
-                    // hidden: true,
-                    title: 'інформація про клієнта',
-                    width: 100,
-                    fontSize: 12
-                },
-                columns: new Map<string, Column>([
-                    clientNameTuple,
-                    // clientPhoneTuple,
-                    deliveryTimeTuple,
-                ])
 
-            }],
-            ['houseInformation', {
-                sectionParams: {
-                    // hidden: true,
-                    title: 'інформація про будинок',
-                    width: 100,
-                    fontSize: 12
-                },
-                sectionInner: new Map([
-                    ['', {
-                        sectionParams: {
-                            title: 'test',
-                            width: 20,
-                            fontSize: 12,
-                        },
-                        columns: new Map([
-                            houseTypeTuple,
-                            houseAddressTuple,
-                        ])
-                    }]
-                ]),
+enum ESection {
+    clientInformation = 'clientInformation'
+}
 
-                columns: new Map([
-                    houseTypeTuple,
-                    houseAddressTuple,
-                ])
-            }]
+const sectionClientInformation: [ESection.clientInformation, SectionTableStructure] = [ESection.clientInformation, {
+    sectionParams: {
+        title: 'інформація про клієнта',
+        width: 100,
+        fontSize: 12
+    },
+    columns: new Map([
+        clientNameTuple,
+        clientPhoneTuple,
+        ['clientComment',clientComment],
+    ])
+
+}]
+
+
+export const section: SectionTable = new Map([
+    sectionClientInformation,
+    ['orderInformation2', {
+        sectionParams: {
+            title: 'замовлення',
+            width: 100,
+            fontSize: 12
+        },
+        columns: new Map([
+            ['deliveryAddress', deliveryAddress],
+            deliveryTimeTuple,
+            ['orderSum', orderSum],
+            ['deliveryComment',deliveryComment]
         ])
+
+    }]
+])
+
+
+export const testTable = {
+    shield: {
+        section
     }
 }
+

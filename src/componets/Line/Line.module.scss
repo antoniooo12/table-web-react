@@ -2,12 +2,17 @@
   height: fit-content;
   display: grid;
   position: relative;
+  border-left: 1px solid #dddddd;
 }
-
-.wrapperLaunch {
-
+.line{
+  display: flex;
+  width: fit-content;
+  overflow: hidden;
 }
-
+.buttonsSection{
+  display: flex;
+  flex-wrap: nowrap;
+}
 .deleteLine::before {
   content: '';
   position: absolute;

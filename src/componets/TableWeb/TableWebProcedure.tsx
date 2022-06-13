@@ -16,8 +16,8 @@ export type TTableWeb = {
     tableConnect: TTableConnect
 }
 
-export const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
-    const {tableStructure, optionsMap, tableData} = tableConnect
+export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
+    const {tableStructure, optionsMap, tableData, customComponents} = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
     const checkedShield = shieldChecker(shield)
@@ -40,18 +40,21 @@ export const TableWeb: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
                 },
                 optionsMap,
                 bigPictureController,
+                customComponents,
             }}
         >
-            <table
-                className={cl.wrapper}
-            >
-                <BottomTablePanel columnStructure={columns}/>
+            <div>
+                <div
+                    className={cl.wrapper}
+                >
+                    <BottomTablePanel columnStructure={columns}/>
 
-                <Header/>
-                <Shield shieldStructure={shield}/>
-                {bigPictureController.selectedLineIdToBigPicture !== undefined && <BigPicture/>}
+                    <Header/>
+                    <Shield shieldStructure={shield}/>
 
-            </table>
+                </div>
+                {bigPictureController.selectedLineIdToBigPicture && <BigPicture/>}
+            </div>
         </TableWebContext.Provider>
 
     );

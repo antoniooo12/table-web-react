@@ -1,14 +1,5 @@
 .wrapper {
   display: grid;
-  overflow: hidden;
-  //justify-content: flex-start;
-  //align-items: stretch;
-  //height: fit-content;
-  & > div:nth-child(even) {
-
-    border-left: none;
-  }
-
 }
 
 .wrapper * {
@@ -19,7 +10,6 @@
 
 .border {
   border: 1px solid #dddddd;
-  border-bottom: none;
 
 }
 
@@ -45,10 +35,11 @@
   }
 
   & > div:last-child {
+
     border-right: none;
   }
 
-  & > div:nth-child(2) {
+  & > div {
     border-left: none;
   }
 }
