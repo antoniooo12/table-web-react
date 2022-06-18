@@ -12,7 +12,7 @@ const BigPictureTable: React.FC<TBigPictureTableCustom> = ({lineData}) => {
             <LineContext.Provider
                 value={lineData.lineInformation}
             >
-                {customComponents.tableBigComponents &&
+                {customComponents && customComponents.tableBigComponents &&
                     <customComponents.tableBigComponents lineData={lineData} columnParam={columnsParam}/>
                 }
                 <BigPictureLines lineData={lineData} columnsParam={columnsParam}/>

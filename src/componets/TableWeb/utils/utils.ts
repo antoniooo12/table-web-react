@@ -1,5 +1,8 @@
 import {SectionParam, SectionTable, TShieldStructure} from "../../../types/TableStructure";
-import {useState} from "react";
+import {useCallback, useContext, useState} from "react";
+import {useInnerTable} from "../InnerTableConnector/InnerTableConnector";
+import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
+import {TableWebContext} from "../TableWebContext";
 
 const checkSectionSize = (shield: TShieldStructure): TShieldStructure => {
     return {
@@ -10,7 +13,8 @@ const checkSectionSize = (shield: TShieldStructure): TShieldStructure => {
             }, 0)
             const sectionParams: SectionParam = {...section.sectionParams, width}
             return accum.set(nameSection, {...section, sectionParams})
-        }, new Map())
+        }, new Map()),
+        innerTable: shield.innerTable
     }
 }
 export const shieldChecker = (shield: TShieldStructure): TShieldStructure => {
@@ -21,3 +25,4 @@ export const useOpenInBigPicture = () => {
     const [selectedLineIdToBigPicture, setSelectedLineIdToBigPicture] = useState<string>()
     return {selectedLineIdToBigPicture, setSelectedLineIdToBigPicture}
 }
+

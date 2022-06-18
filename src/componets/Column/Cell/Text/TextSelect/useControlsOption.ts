@@ -9,7 +9,6 @@ export const useControlOptionList = (): [boolean, TBaseInput, { setClickByOption
         setFocus(true)
     }
     useEffect(() => {
-        console.log(clickByOption)
     }, [clickByOption])
     // const onBlur = () => setFocus(false)
     const onBlur = useCallback(() => {

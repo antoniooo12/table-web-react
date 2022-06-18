@@ -3,16 +3,26 @@
   display: grid;
   position: relative;
   border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+
+  & > div:last-child {
+border-right: none;
+  }
 }
-.line{
+
+.line {
   display: flex;
   width: fit-content;
   overflow: hidden;
+  position: relative;
 }
-.buttonsSection{
+
+.buttonsSection {
   display: flex;
   flex-wrap: nowrap;
 }
+
 .deleteLine::before {
   content: '';
   position: absolute;

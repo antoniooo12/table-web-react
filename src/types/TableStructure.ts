@@ -73,6 +73,7 @@ export type DefaultValue<T> =
     { readonly value: T, readonly type: 'Default' }
     | { readonly type: 'Previous', readonly orNotPrevious: T }
     | { readonly type: 'defaultFunctions', value: TDefaultFunctions }
+    | { readonly type: 'customFunction', value: Function }
 export type CellParam<T> = {
     readonly default: DefaultValue<T>
     readonly type: InputType
@@ -81,16 +82,17 @@ export type CellParam<T> = {
     readonly  hidden?: boolean
     readonly  fontSize?: number
     readonly  placeholder?: string
+    readonly disabled?: boolean
+
 }
 export type ColumnWidth = number | 'inherit' | 'all'
 export type Column<T = string> = {
-    title: string
-    cellParam: CellParam<unknown>
-    width: ColumnWidth
-    hidden?: boolean
-    subColumns?: Map<T, Column>
-    subColumnsStyle?: 'line'
-
+    readonly title: string
+    readonly cellParam: CellParam<unknown>
+    readonly width: ColumnWidth
+    readonly hidden?: boolean
+    readonly subColumns?: Map<T, Column>
+    readonly subColumnsStyle?: 'line'
 }
 export type Columns<T = string> = Map<T, Column>
 export type SectionParam = {
@@ -99,15 +101,16 @@ export type SectionParam = {
     width: number
     fontSize: number
 }
-export type SectionTableStructure<T =string> = {
+export type SectionTableStructure<T = string> = {
     sectionParams: SectionParam
     sectionInner?: SectionTable
     columns: Columns<T>
 }
-export type SectionTable<T = string> = Map<T, SectionTableStructure>
-export type TShieldStructure<T= string> = {
+export type SectionTable<T = string, S = string> = Map<T, SectionTableStructure<S>>
+export type TShieldStructure<T = string> = {
     section: SectionTable<T>
+    innerTable?: TableStructure
 }
-export type TableStructure<T=string> = {
+export type TableStructure<T = string> = {
     shield: TShieldStructure<T>
 }

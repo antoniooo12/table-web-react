@@ -4,7 +4,8 @@ import {
     InputAdditionalAttributes,
     InputAdditionalParamsNumber,
     InputAdditionalParamsSelect,
-    InputAdditionalParamsTel, SectionTable,
+    InputAdditionalParamsTel,
+    SectionTable,
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
@@ -20,10 +21,10 @@ const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes,
     format: 'xxx_xxx_xx_xx_',
 }
 
-enum EColumn {
+export enum EColumnClientInfo {
     clientName = 'clientName',
-    deliveryTimeTuple = 'deliveryTimeTuple',
     clientPhone = 'clientPhone',
+    clientComment = 'clientComment'
 }
 
 const clientRatingColumn: Column = {
@@ -68,20 +69,45 @@ const deliveryAddress: Column = {
     },
     width: 150,
 }
-const clientPhoneTuple: [EColumn.clientPhone, Column] = [EColumn.clientPhone, clientPhoneColumn]
-const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
-const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
+const clientPhoneTuple: [EColumnClientInfo.clientPhone, Column] = [EColumnClientInfo.clientPhone, clientPhoneColumn]
+// const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
+// const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
+
+// const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
+//     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect,
+//     variants: [{
+//         text: 'Усі',
+//         value: '1',
+//         disabled: false,
+//         selected: true,
+//     }, {
+//         text: 'Новобудови',
+//         value: '2',
+//         disabled: false,
+//         selected: false,
+//     }, {
+//         text: 'Вториний ринок',
+//         value: '3',
+//         disabled: false,
+//         selected: false,
+//     },
+//     ]
+// }
 const orderSum: Column = {
     title: 'sum',
     cellParam: {
         name: 'sum',
-        default: {type: 'Default', value: 0},
+        default: {
+            type: 'Default',
+            value: 0,
+        },
         type: "number",
+        disabled: true,
     },
     width: 85
 }
 
-const clientNameTuple: [EColumn.clientName, Column] = [EColumn.clientName, {
+const clientNameTuple: [EColumnClientInfo.clientName, Column] = [EColumnClientInfo.clientName, {
     title: 'Імʼя клієнта',
     cellParam: {
         name: 'Імʼя клієнта',
@@ -92,27 +118,8 @@ const clientNameTuple: [EColumn.clientName, Column] = [EColumn.clientName, {
     width: 100,
 
 }]
-const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
-    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect,
-    variants: [{
-        text: 'Усі',
-        value: '1',
-        disabled: false,
-        selected: true,
-    }, {
-        text: 'Новобудови',
-        value: '2',
-        disabled: false,
-        selected: false,
-    }, {
-        text: 'Вториний ринок',
-        value: '3',
-        disabled: false,
-        selected: false,
-    },
-    ]
-}
-const clientComment : Column={
+
+const clientComment: Column = {
     title: 'коментар до клієнта',
     cellParam: {
         name: 'коментар до клієнта',
@@ -122,7 +129,7 @@ const clientComment : Column={
     },
     width: 150,
 }
-const deliveryComment : Column={
+const deliveryComment: Column = {
     title: 'коментар до доставки',
     cellParam: {
         name: 'коментар до доставки',
@@ -132,7 +139,80 @@ const deliveryComment : Column={
     },
     width: 150,
 }
-const deliveryTimeTuple: [EColumn.deliveryTimeTuple, Column] = [EColumn.deliveryTimeTuple, {
+const productCostCell: Column = {
+    title: 'ціна',
+    width: 100,
+    cellParam: {
+        name: 'productCost',
+        type: 'number',
+        default: {type: 'Default', value: 0},
+        fontSize: 18,
+    }
+}
+
+enum ESection {
+    clientInformation = 'clientInformation',
+    orderInformation2 = 'orderInformation2',
+}
+type TESection = keyof typeof ESection
+type TEColumn1 = keyof typeof EColumnClientInfo
+type TEColumn2 = keyof typeof EColumOrderInfo
+type TEColumn = TEColumn1 | TEColumn2
+const sectionClientInformation: [ESection.clientInformation, SectionTableStructure<TEColumn>] = [ESection.clientInformation, {
+    sectionParams: {
+        title: 'інформація про клієнта',
+        width: 100,
+        fontSize: 18
+    },
+    columns: new Map([
+        clientNameTuple,
+        clientPhoneTuple,
+        [EColumnClientInfo.clientComment, clientComment],
+    ])
+
+}]
+sectionClientInformation[1].columns.get('clientName')
+const innerTable: TableStructure = {
+    shield: {
+        section: new Map<string, SectionTableStructure>([
+            ['orderedProduct', {
+                sectionParams: {
+                    title: 'замовлені товари',
+                    width: 20,
+                    fontSize: 18,
+                },
+                columns: new Map<string, Column>([
+                    ['productName',
+                        {
+                            title: 'назва',
+                            width: 150,
+                            cellParam: {
+                                name: 'productName',
+                                type: 'text',
+                                default: {type: 'Default', value: ''},
+                                fontSize: 17,
+                            }
+                        }
+                    ], ['productCost',
+                        productCostCell
+                    ], ['productCount',
+                        {
+                            title: 'кількість',
+                            width: 100,
+                            cellParam: {
+                                name: 'productCount',
+                                type: 'number',
+                                default: {type: 'Default', value: 0},
+                                fontSize: 18,
+                            }
+                        }
+                    ]
+                ])
+            }]
+        ])
+    }
+}
+const deliveryTime:  Column =  {
     title: 'часові рамки',
     cellParam: {
         name: 'deliveryDay',
@@ -158,49 +238,39 @@ const deliveryTimeTuple: [EColumn.deliveryTimeTuple, Column] = [EColumn.delivery
                 name: 'beforeHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
             }
         }]])
-}]
-
-enum ESection {
-    clientInformation = 'clientInformation'
 }
 
-const sectionClientInformation: [ESection.clientInformation, SectionTableStructure] = [ESection.clientInformation, {
-    sectionParams: {
-        title: 'інформація про клієнта',
-        width: 100,
-        fontSize: 12
-    },
-    columns: new Map([
-        clientNameTuple,
-        clientPhoneTuple,
-        ['clientComment',clientComment],
-    ])
+enum EColumOrderInfo {
+    deliveryAddress = 'deliveryAddress',
+    orderSum = 'orderSum',
+    deliveryComment = 'deliveryComment',
+    deliveryTimeTuple = 'deliveryTimeTuple',
+}
 
-}]
-
-
-export const section: SectionTable = new Map([
+export const section: SectionTable<TESection> = new Map([
     sectionClientInformation,
-    ['orderInformation2', {
+    [ESection.orderInformation2, {
         sectionParams: {
             title: 'замовлення',
             width: 100,
-            fontSize: 12
+            fontSize: 18
         },
         columns: new Map([
-            ['deliveryAddress', deliveryAddress],
-            deliveryTimeTuple,
-            ['orderSum', orderSum],
-            ['deliveryComment',deliveryComment]
+            [EColumOrderInfo.deliveryAddress, deliveryAddress],
+            [EColumOrderInfo.deliveryTimeTuple,deliveryTime],
+            [EColumOrderInfo.orderSum, orderSum],
+            [EColumOrderInfo.deliveryComment, deliveryComment]
         ])
 
     }]
 ])
+section.get('orderInformation2')?.columns.get('')
 
-
-export const testTable = {
+export const testTable: TableStructure = {
     shield: {
-        section
-    }
+        section,
+        innerTable,
+    },
+
 }
 

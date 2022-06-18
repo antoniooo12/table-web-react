@@ -17,7 +17,7 @@ export type TTableWeb = {
 }
 
 export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
-    const {tableStructure, optionsMap, tableData, customComponents} = tableConnect
+    const {tableStructure, optionsMap, tableData, customComponents, viewMode = 'table',customFunctionMap } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
     const checkedShield = shieldChecker(shield)
@@ -29,6 +29,7 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         }
     }, [tableData])
     const bigPictureController = useOpenInBigPicture()
+
     return (
         <TableWebContext.Provider
             value={{
@@ -41,20 +42,28 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                 optionsMap,
                 bigPictureController,
                 customComponents,
+                viewMode,
+                customFunctionMap,
             }}
         >
-            <div>
-                <div
-                    className={cl.wrapper}
-                >
-                    <BottomTablePanel columnStructure={columns}/>
+            {/*<InnerTableConnectorContext.Provider*/}
+            {/*    value={{innerTableMap,setInnerTable }}*/}
+            {/*>*/}
 
-                    <Header/>
-                    <Shield shieldStructure={shield}/>
+                <div>
+                    <div
+                        className={cl.wrapper}
+                    >
+                        {viewMode === 'table' && <BottomTablePanel/>}
 
+                        <Header/>
+                        <Shield shieldStructure={shield}/>
+                        {viewMode === 'innerTable' && <BottomTablePanel/>}
+                    </div>
+                    {bigPictureController.selectedLineIdToBigPicture && <BigPicture/>}
                 </div>
-                {bigPictureController.selectedLineIdToBigPicture && <BigPicture/>}
-            </div>
+            {/*</InnerTableConnectorContext.Provider>*/}
+
         </TableWebContext.Provider>
 
     );

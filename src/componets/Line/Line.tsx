@@ -1,14 +1,16 @@
 import cl from './Line.module.scss'
-import React, {CSSProperties, useContext} from 'react';
+import React, {CSSProperties, useContext, useEffect} from 'react';
 import {Item, TStatus} from "../../redux/reduxTypes";
 import {CellBlock} from "../Column/CellBlock";
 import clsx from "clsx";
 import {LineContext} from "./LineContext";
-import {LineDeleteButton} from "./LineButtons/LineDeleteButton/LineDeleteButton";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {LineEditButton} from "./LineButtons/LineEditButton/LineEditButton";
 import {useGetWidth} from "./utils/utils";
-import {LineMoreButton} from "./LineButtons/LineMoreButton/LineMoreButton";
+import {LineInnerTable} from "./LineInnerTable/LineInnerTable";
+import {LineButtons} from "./LineButtons/LineButtons";
+import {InnerTableConnectorContext} from '../TableWeb/InnerTableConnector/InnerTableConnector';
+import {useInnerTableConnectorService} from "../TableWeb/InnerTableConnector/useInnerTableConnectorService";
+import {useLineService, useUpdateCustomFunction} from "./useLineService";
 
 export type TLineData = {
     status: TStatus
@@ -21,27 +23,25 @@ export type TLine = {
     lineIdt: string
     wasEdit: boolean
     toDelete: boolean
-    columnsData: Map<string, Item<unknown>>
+    columnsData: Map<string, Item>
     lineData: TLineData
 }
-const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
-    const {columns} = useContext(TableWebContext)
-    const clasName: string = clsx({
-        [cl.wrapper]: true,
-        [cl.allLine]: lineData.status === 'isAll',
-        [cl.newLine]: lineData.status === 'isNew',
-    })
-    const {width, widthGrid} = useGetWidth(columns)
+const Line: React.FC<TLine> = React.memo((props) => {
+    const {lineData, columnsData, lineIdt, status, wasEdit, toDelete} = props
+    const {columns, shield, viewMode} = useContext(TableWebContext)
+    const {styleGrid, clasName, innerTable,} = useLineService(props)
 
-
-    const styleGrid: CSSProperties = {
-        gridTemplateColumns: widthGrid,
-        width,
-    }
     return (
         <LineContext.Provider
             value={lineData}
         >
+            <InnerTableConnectorContext.Provider
+                value={{
+                    innerTableMap: innerTable.innerTableMap,
+                    isShowInnerTableController: innerTable.isShowInnerTableController
+                }}
+            >
+                <div>
             <span
                 className={cl.line}
             >
@@ -49,34 +49,29 @@ const Line: React.FC<TLine> = React.memo(({lineData, columnsData}) => {
                 <div
                     style={styleGrid}
                     className={clasName}
-                >
+                >{[...columnsData.entries()].map(([columnName, cellData]) => {
+                    return (
+                        <CellBlock
+                            viewType={'line'}
+                            key={cellData.id}
+                            columnName={columnName}
+                            cellData={cellData}
+                        />
+                    )
+                })}
 
-                    {[...columnsData.entries()].map(([columnName, cellData]) => {
-                        return (
-                            <>
-                                <CellBlock
-                                    viewType={'line'}
-                                    key={cellData.id}
-                                    columnName={columnName}
-                                    cellData={cellData}
-                                />
-                            </>
-                        )
-
-                    })}
-                    <div
-                        className={clsx({[cl.deleteLine]: lineData.toDelete})}
-                    />
                 </div>
+                 <div
+                     className={clsx({[cl.deleteLine]: lineData.toDelete})}
+                 />
                 <div className={cl.buttonsSection}>
-                    <LineDeleteButton
-                        lineId={lineData.id}
-                        status={lineData.status}
-                    />
-                    <LineEditButton lineId={lineData.id}/>
-                    <LineMoreButton lineId={lineData.id}/>
+                    <LineButtons/>
                 </div>
             </span>
+                    {shield.innerTable &&  innerTable.isShowInnerTableController.isShowInnerTable && <LineInnerTable tableStructure={shield.innerTable}
+                                                          setInnerTable={innerTable.setInnerTable}/>}
+                </div>
+            </InnerTableConnectorContext.Provider>
         </LineContext.Provider>
     );
 })

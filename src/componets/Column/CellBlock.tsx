@@ -12,6 +12,7 @@ type TColumn = {
 }
 
 const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
+
     const columnParam = useGetColumnParam(columnName)
     return (
         <>

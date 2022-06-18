@@ -16,7 +16,7 @@ export const useServiceCellTextSelect = ({
         throw new Error('TextSelect additional type is not select')
     }
     const {optionsMap} = useContext(TableWebContext)
-    const options = optionsMap.get(cellParam.name) || []
+    const options =optionsMap && optionsMap.get(cellParam.name) || []
     const [value, setValue] = useState(externalValue || '')
     const [isFocus, setIsFocus, listController] = useControlOptionList()
     const [text, setText] = useState(options.find(option => option.value === value)?.text || '')

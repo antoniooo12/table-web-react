@@ -11,7 +11,6 @@ export const debug = <T>(key?: string | 'spread') => (value: T): T => {
     if (key) {
         console.log(`DEBUG:${key}: ${value}`)
     } else {
-        console.log(value)
     }
     return value
 }
@@ -96,7 +95,8 @@ export function recursiveMapSearch<T>(columns: Map<string, T>, searchingName: st
 
     if (column === undefined) {
         debugger
-        throw new Error('Column not found')
+        throw new Error(`Column not found findingColumn: ${searchingName} || ${columns}`)
+
     }
     return column
 }

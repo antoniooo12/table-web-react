@@ -1,0 +1,27 @@
+.wrapper{
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.together{
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1.5px solid #dddddd;
+
+  &> button{
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0;
+  }
+  & > button:first-child{
+    border-left: none;
+  }
+  & > button:last-child{
+    border-right: none;
+  }
+}
+
+.default{
+  column-gap: 10px;
+}
