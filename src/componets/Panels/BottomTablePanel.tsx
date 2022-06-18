@@ -1,53 +1,27 @@
-import React, {useCallback, useContext} from 'react';
-import cl from './BottomTablePanel.module.scss'
-import {Columns} from "../../types/TableStructure";
-import {Button} from "../buttons/Button/Button";
-import {TableWebContext} from "../TableWeb/TableWebContext";
-import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
-import {downloadTxtFile, EnumOptionsDownloadTxtFile} from "../../API/downloadTxtFile";
-import {useCreateLine} from "./onActions/onCreateLine";
-import {onSave} from "./onActions/onSave";
+import React from 'react';
+import {ButtonGroup} from "../buttons/Button/ButtonGroup/ButtonGroup";
+import {useBottomPanelService} from "./useBottomPanelService";
 
-type BottomTablePanel = {
-    columnStructure: Columns
-}
-const BottomTablePanel: React.FC<BottomTablePanel> = ({columnStructure}) => {
-    const {previous: [previousValues], tableConnect} = useContext(TableWebContext)
-    const stateTable = useTableTypedSelector(state => state.tableStore.storage)
-    const onCreateLine = useCreateLine(columnStructure, previousValues)
+type BottomTablePanel = {}
 
-    const onSaveMemo = useCallback(() => onSave(tableConnect.setTableExternalState),
-        [stateTable])
 
-    const onDownload = useCallback(() => {
-        downloadTxtFile(stateTable.data, {
-            params: {
-                propertyToSave: {
-                    type: 'all'
-                }
-            },
-            columns: {type: EnumOptionsDownloadTxtFile.toSaveExcept, fields: []}
-        })
-    }, [stateTable.data])
-
+const BottomTablePanel: React.FC<BottomTablePanel> = React.memo(() => {
+    const {buttonsStyle, onDownload, onSaveMemo, onCreateLine, buttonsGroupStyle} = useBottomPanelService()
     return (
-        <div className={cl.wrapper}>
-            <Button
-                onClick={onCreateLine}
-                style={'blue'}
-            >Add</Button>
-            <Button
-                onClick={onSaveMemo}
-            >Save
-            </Button>
-            <Button
-                onClick={onDownload}
-                style={'blue'}
-            >
-                Download
-            </Button>
+        <div>
+            <ButtonGroup buttonGroupMode={buttonsGroupStyle} buttonsMode={buttonsStyle}>
+                <ButtonGroup.Button
+                    onClick={onCreateLine}
+                >Add</ButtonGroup.Button>
+                <ButtonGroup.Button
+                    onClick={onSaveMemo}
+                >Save</ButtonGroup.Button>
+                <ButtonGroup.Button
+                    onClick={onDownload}
+                >Download</ButtonGroup.Button>
+            </ButtonGroup>
         </div>
     );
-};
+});
 
 export {BottomTablePanel};

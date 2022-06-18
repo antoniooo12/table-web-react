@@ -1,22 +1,26 @@
 import {MReactDispSetter, WithOptional} from "../types/HelperTypes";
-import {Item, TLineInformation, TTableLine} from "../redux/reduxTypes";
+import {Item, TableReduxStructure, TLineInformation, TTableLine} from "../redux/reduxTypes";
 import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 import {TBigPictureHeaderTitleCustom} from "../componets/BigPicture/BigPictureType";
+import {CustomFunctionMap} from "./customFunction";
 
 export type TTableInit = {
     tableStructure: TableStructure,
     externalData: TableExternalShieldData,
     externalOptionsMap: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
+    customFunctionMap?: CustomFunctionMap
 }
+export type ViewMode = 'table' | 'innerTable'
 export type TTableConnect = {
-    // tableExternalState: TableReduxStructure
-    setTableExternalState: MReactDispSetter<TTableExternalState>
+    setTableExternalState?: MReactDispSetter<TableReduxStructure>
     tableStructure: TableStructure
     tableData?: TInitialValue[]
-    optionsMap: Map<string, TSelectOptions[]>
-    customComponents: CustomComponents
+    optionsMap?: Map<string, TSelectOptions[]>
+    customComponents?: CustomComponents
+    customFunctionMap?: CustomFunctionMap
+    viewMode?: ViewMode
 }
 export type TTableExternalState = {
     toUpdate: TTableLine[]
@@ -30,7 +34,7 @@ export type TableExternalLineData = {
 }
 export type TableExternalShieldData = TableExternalLineData[]
 
-export type ExternalDataColumn<T> = WithOptional<Item<unknown>, 'value' | 'nameColumn'>
+export type ExternalDataColumn<T> = WithOptional<Item, 'value' | 'nameColumn'>
 
 export type CustomHeaderBigComponents = {} & TBigPictureHeaderTitleCustom
 

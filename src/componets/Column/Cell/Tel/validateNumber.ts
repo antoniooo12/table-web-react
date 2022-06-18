@@ -18,5 +18,4 @@ export const customSetExternalCell = <N>(setExternal: React.Dispatch<React.SetSt
         setExternal(value)
     }
 export const ccTest = <N>(middleware: (str: N) => N, value: N) => {
-    console.log(middleware(value))
 }

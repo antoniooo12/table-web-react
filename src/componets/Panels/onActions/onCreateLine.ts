@@ -28,6 +28,10 @@ export const findInitialValueToCreateLine = (columnStructure: Columns, previousV
                     accum.set(key, {value: defaultFunctions[initialValue.value]()})
                     break
                 }
+                case "customFunction": {
+                    const a = initialValue.value
+                    break
+                }
                 default:
                     absurd(initialValue)
             }

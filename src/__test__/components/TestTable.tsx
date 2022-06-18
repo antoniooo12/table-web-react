@@ -4,10 +4,8 @@ import {TableWebProviderComponent} from "../../componets/TableWeb/TableWebProvid
 import {useConnectWebTableState} from "../../API/TableWebAPI";
 import {exampleExternalData} from "../../exampleExternalData";
 import {TSelectOptions} from "../../types/TableStructure";
-import {CustomComponents, CustomHeaderBigComponents, CustomTableBigComponents} from "../../API/TableWebAPITypes";
-import {useGetColumnParam} from "../../componets/Column/utils";
-import {Item, TTableLine} from "../../redux/reduxTypes";
-import {CellBlock} from "../../componets/Column/CellBlock";
+import {CustomComponents, CustomHeaderBigComponents} from "../../API/TableWebAPITypes";
+import {CustomFunctionMap, TCustomFunction, TCustomFunctionObj} from "../../API/customFunction";
 
 
 const HeaderTitle: React.FC<CustomHeaderBigComponents> = ({lineData}) => {
@@ -20,31 +18,33 @@ const HeaderTitle: React.FC<CustomHeaderBigComponents> = ({lineData}) => {
         return <div>error</div>
     }
 }
-const getColumnData = (lineData: TTableLine) => (name: string):Item<unknown> => {
-    const item = lineData.columns.get(name)
-    if(!item) throw new Error(`item by name: ${name} not find in store`)
-    return item
-}
-// const TableBigComponent: React.FC<CustomTableBigComponents> = ({lineData, columnParam}) => {
-//    const columnsDataByName = getColumnData(lineData)
-//     return <div>
-//
-//         <div>
-//             <CellBlock columnName={'clientName'} cellData={columnsDataByName('clientName')} viewType={'bigPicture'}/>
-//         </div>
-//
-//     </div>
-// }
+
+
 const TestTable = () => {
     const components: CustomComponents = {
         headerBigComponents: HeaderTitle,
         // tableBigComponents:TableBigComponent,
     }
+    const calcSum: TCustomFunction<number> = ({innerTableMap, tableWebContext}) => {
+        const sum = innerTableMap?.data.reduce((accum, line) => {
+            const count = line.columns.get('productCount')?.value
+            const cost = line.columns.get('productCost')?.value
+            accum += Number(cost) * Number(count)
+            return accum
+        }, 0)
+        console.log(sum)
+        return sum || 0
+    }
+    const calcSumObj: TCustomFunctionObj<number> = {onUpdate: calcSum}
+    const customFunctionMap: CustomFunctionMap = new Map([
+        ['orderSum', calcSumObj]
+    ])
     const {api, connector} = useConnectWebTableState({
         tableStructure: testTable,
         externalData: exampleExternalData,
         externalOptionsMap: new Map<string, TSelectOptions[]>(),
         customComponents: components,
+        customFunctionMap,
     })
     // const s = api.columnsMapped.columnsMapped
 

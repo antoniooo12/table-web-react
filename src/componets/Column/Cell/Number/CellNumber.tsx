@@ -1,10 +1,11 @@
 import cl from '../Input.module.scss'
 
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {TCell} from "../cellTypes";
 import {InputAdditionalAttributes, InputAdditionalParamsNumber} from "../../../../types/TableStructure";
 import {useTest} from "../cellHooks";
+import {useInnerTable} from "../../../TableWeb/InnerTableConnector/InnerTableConnector";
 
 
 const CellNumber: React.FC<TCell<number>> = ({setExternalValue, externalValue, additionalParams, cellParam}) => {
@@ -15,6 +16,7 @@ const CellNumber: React.FC<TCell<number>> = ({setExternalValue, externalValue, a
 
     return (
         <input
+            disabled={cellParam.disabled}
             value={externalValue as number}
             onChange={setValueHtml}
             max={additionalParams?.max}

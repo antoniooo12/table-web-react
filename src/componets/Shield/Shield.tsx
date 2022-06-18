@@ -1,15 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Line} from "../Line/Line";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {TShieldStructure} from "../../types/TableStructure";
 import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
 import {TableWebContext} from "../TableWeb/TableWebContext";
+import {ViewMode} from "../../API/TableWebAPITypes";
+import {TableReduxStructure, TableState} from "../../redux/reduxTypes";
+import {useInnerTable} from "../TableWeb/InnerTableConnector/InnerTableConnector";
 
 export type ComponentShield = {
     shieldStructure: TShieldStructure
 }
+
 const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
     const {storage} = useTableTypedSelector(state => state.tableStore)
+    const {viewMode} = useContext(TableWebContext)
     const {columns} = useContext(TableWebContext)
     return (
         <div>
@@ -24,7 +29,6 @@ const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
                         key={line.lineInformation.id.toString()}
                     />)
             })}
-            <BottomTablePanel columnStructure={columns}/>
 
         </div>
     );

@@ -5,7 +5,7 @@ import {pipe} from "fp-ts/function";
 import {ExternalDataColumn} from "../API/TableWebAPITypes";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
-export const createDefaultItem = <T>(name: string, initialValue: T, id?: string): Item<unknown> => {
+export const createDefaultItem = <T>(name: string, initialValue: T, id?: string): Item => {
     return {
         id: id || uuidv4(),
         nameColumn: name,
@@ -16,7 +16,7 @@ export const createDefaultItem = <T>(name: string, initialValue: T, id?: string)
 export const createColumns = (columnsStructure: Columns) => (initialValue: TInitialValue) => {
     return [...columnsStructure.entries()].reduce((accum, [key, columnStructure]) => {
         const value = initialValue.get(key)
-        const item: Item<unknown> = {
+        const item: Item = {
             ...createDefaultItem(key, value?.value),
             subColumns: columnStructure.subColumns && value && value.subData &&
                 createColumns(columnStructure.subColumns)(value.subData)

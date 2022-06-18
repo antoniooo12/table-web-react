@@ -1,12 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React from 'react';
 import {Item} from "../../../redux/reduxTypes";
 import {CellParam} from "../../../types/TableStructure";
-import {useActionsTable} from "../../../hooks/useActionsTable";
-import {LineContext} from "../../Line/LineContext";
-import {useEffectSkipMount} from "../../../hooks/utils";
 import {customSetExternalCell} from "./Tel/validateNumber";
-import {cells, initialCells} from "./cellCompose";
-import {TableWebContext} from "../../TableWeb/TableWebContext";
+import {useCellAggregatorService} from "./useCellAgregatorService";
 
 export type TCellAggregator = {
     nameInput: string
@@ -16,28 +12,10 @@ export type TCellAggregator = {
 }
 
 
-const CellAggregator: React.FC<TCellAggregator> = React.memo(({cellParam, nameInput, cellData}) => {
-    const {previous:[previousValues, setPreviousValue]} = useContext(TableWebContext)
-    const {getCells} = initialCells(cells)
-    const selectedCell = getCells(cellParam.type)
-    const [value, setValue] = useState(cellData.value)
-    const {tableChangeCell} = useActionsTable()
-    const lineData = useContext(LineContext)
-    const Component = selectedCell.cell
-    useEffectSkipMount(()=>{
-        if(cellData.value !== value){
-            setValue(cellData.value)
-        }
-    },[cellData])
-    useEffectSkipMount(() => {
-        tableChangeCell({
-            status: lineData.status,
-            lineId: lineData.id,
-            nameCell: nameInput,
-            value: value
-        })
-        setPreviousValue(nameInput, value)
-    }, [value])
+const CellAggregator: React.FC<TCellAggregator> = React.memo((props) => {
+
+    const {Component ,setValue,value, cellParam} = useCellAggregatorService(props)
+
     return (
         <>
             < Component

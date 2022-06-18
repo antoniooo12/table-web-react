@@ -10,6 +10,7 @@ import {
 import {executeColumns} from "../hooks/executeColumns";
 import {arrayOfObjectsToMap} from "../hellpers/helpers";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
+import {TableReduxStructure} from "../redux/reduxTypes";
 
 
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure): TInitialValue[] => {
@@ -41,7 +42,7 @@ type TUseConnectWebTableState = {
         // setTableExternalDataJSON: MReactDispSetter<TableExternalShieldData>
         setOptionsMap: React.Dispatch<React.SetStateAction<Map<string, TSelectOptions[]>>>
         data: {
-            tableExternalState: TTableExternalState
+            tableExternalState: TableReduxStructure
         }
         columnsMapped: {
             columns: Map<string, Column>
@@ -58,10 +59,11 @@ export const useConnectWebTableState = ({
                                             tableStructure,
                                             externalData,
                                             externalOptionsMap,
-                                            customComponents
+                                            customComponents,
+                                            customFunctionMap,
                                         }: TTableInit): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
-    const [tableExternalState, setTableExternalState] = useState<TTableExternalState>(prepareTableExternalState())
+    const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data:[]})
 
     const tableData: TInitialValue[] | undefined = useMemo(() => {
         return tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
@@ -74,6 +76,7 @@ export const useConnectWebTableState = ({
         optionsMap,
         tableData,
         customComponents: customComponents ? customComponents : {},
+        customFunctionMap,
     }), [optionsMap, tableStructure, tableData])
 
     return {

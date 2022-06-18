@@ -1,7 +1,6 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
-import {section} from "../example";
 
 export type TableState = {
     storage: TableReduxStructure
@@ -29,7 +28,7 @@ export type Item<T = unknown> = {
     nameColumn: string;
     value: T
     wasEdit: boolean;
-    subColumns?: Map<string, Item<T>>
+    subColumns?: Map<string, Item>
     dependencyId?: Record<string, number>
 }
 export type TExternalData<T> = Map<string, { nameColumn: string, value: T }>

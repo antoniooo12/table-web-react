@@ -9,11 +9,11 @@ const BigPictureHeader: React.FC<TBigPictureHeader> = ({closeBigPicture,lineData
     return (
         <div className={cl.header}>
             <div>
-                {customComponents.headerBigComponents &&
+                {customComponents && customComponents.headerBigComponents &&
                     < customComponents.headerBigComponents lineData={lineData}/>
                 }
             </div>
-            <Button onClick={closeBigPicture} style={'danger'}>close</Button>
+            <Button onClick={closeBigPicture} styleMode={'danger'}>close</Button>
         </div>
     );
 };
