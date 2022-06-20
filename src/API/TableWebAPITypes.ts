@@ -4,6 +4,9 @@ import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 import {TBigPictureHeaderTitleCustom} from "../componets/BigPicture/BigPictureType";
 import {CustomFunctionMap} from "./customFunction";
+import React, {FC} from "react";
+import {TCell} from "../componets/Column/Cell/cellTypes";
+import {TLine} from "../componets/Line/Line";
 
 export type TTableInit = {
     tableStructure: TableStructure,
@@ -11,6 +14,12 @@ export type TTableInit = {
     externalOptionsMap: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
+    customCells?: CustomCells
+    customLine?: CustomLine
+}
+export type CustomCells = {
+    table?: CustomCellMap<any>
+    innerTable?: CustomCellMap<any>
 }
 export type ViewMode = 'table' | 'innerTable'
 export type TTableConnect = {
@@ -20,8 +29,14 @@ export type TTableConnect = {
     optionsMap?: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
+    customCells?: CustomCells
     viewMode?: ViewMode
+    customLine?: CustomLine
 }
+export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
+
+export type CustomCellComponent<T = unknown> = FC<CustomCellProps<T>>
+export type CustomCellMap<T = any> = Map<string, CustomCellComponent<T>>
 export type TTableExternalState = {
     toUpdate: TTableLine[]
     toDelete: TTableLine[]
@@ -42,7 +57,10 @@ export type CustomTableBigComponents = {
     columnParam: Map<string, Column>
     lineData: TTableLine
 }
+
 export type CustomComponents = {
     headerBigComponents?: React.FC<CustomHeaderBigComponents>
     tableBigComponents?: React.FC<CustomTableBigComponents>
 }
+
+export type CustomLine = FC<TLine>

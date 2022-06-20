@@ -1,5 +1,5 @@
 import cl from './TableWeb.module.scss'
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Shield} from "../Shield/Shield";
 import {Header} from "../Header/Header";
 import {TableWebContext} from "./TableWebContext";
@@ -8,8 +8,9 @@ import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
 import {useActionsTable} from "../../hooks/useActionsTable";
 import {BigPicture} from "../BigPicture/BigPicture";
-import {TTableConnect} from "../../API/TableWebAPITypes";
+import {CustomCellMap, TTableConnect} from "../../API/TableWebAPITypes";
 import {shieldChecker, useOpenInBigPicture} from "./utils/utils";
+import {CustomContext} from "./customContext";
 
 
 export type TTableWeb = {
@@ -17,7 +18,15 @@ export type TTableWeb = {
 }
 
 export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
-    const {tableStructure, optionsMap, tableData, customComponents, viewMode = 'table',customFunctionMap } = tableConnect
+    const {
+        tableStructure,
+        optionsMap,
+        tableData,
+        customComponents,
+        viewMode = 'table',
+        customFunctionMap,
+        customLine,
+    } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
     const checkedShield = shieldChecker(shield)
@@ -29,6 +38,15 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         }
     }, [tableData])
     const bigPictureController = useOpenInBigPicture()
+    const customCellMap: CustomCellMap | undefined = useMemo(() => {
+        if (viewMode === 'table')
+            return tableConnect.customCells?.table
+        if (viewMode === 'innerTable')
+            return tableConnect.customCells?.innerTable
+    }, [tableConnect.customCells])
+    const customCellMapInner: CustomCellMap | undefined = useMemo(() => {
+        return tableConnect.customCells?.innerTable
+    }, [tableConnect.customCells])
 
     return (
         <TableWebContext.Provider
@@ -43,14 +61,15 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                 bigPictureController,
                 customComponents,
                 viewMode,
+                customCellMap,
                 customFunctionMap,
+                dataToInnerTable: {
+                    customCellMapInner: customCellMapInner
+                }
             }}
         >
-            {/*<InnerTableConnectorContext.Provider*/}
-            {/*    value={{innerTableMap,setInnerTable }}*/}
-            {/*>*/}
-
-                <div>
+            <CustomContext.Provider value={{customCellMap, customFunctionMap,customComponents, CustomLine: customLine}}>
+                <table>
                     <div
                         className={cl.wrapper}
                     >
@@ -61,9 +80,8 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                         {viewMode === 'innerTable' && <BottomTablePanel/>}
                     </div>
                     {bigPictureController.selectedLineIdToBigPicture && <BigPicture/>}
-                </div>
-            {/*</InnerTableConnectorContext.Provider>*/}
-
+                </table>
+            </CustomContext.Provider>
         </TableWebContext.Provider>
 
     );

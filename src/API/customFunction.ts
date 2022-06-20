@@ -8,15 +8,5 @@ export type TCustomFunctionObj<T=string> = {
     onMount?: TCustomFunction<T>
     onUpdate?: TCustomFunction<T>
 }
-export type CustomFunctionMap = Map<string, TCustomFunctionObj<unknown>>
+export type CustomFunctionMap<T =any> = Map<string, TCustomFunctionObj<T>>
 
-export const useCustomFunctionExecute = (columName: string, setter: MReactDispSetter<unknown>) => {
-    // const tableWebContext = useContext(TableWebContext)
-    // const {customFunction} = tableWebContext
-    // const func = customFunction?.get(columName).
-    // if (func) {
-    //     const value = func(tableWebContext)
-    //     setter(value)
-    // }
-
-}

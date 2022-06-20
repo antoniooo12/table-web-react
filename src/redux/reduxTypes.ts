@@ -23,9 +23,9 @@ export type TTableLine = {
 }
 
 export type TableColumn = Map<string, Item>
-export type Item<T = unknown> = {
+export type Item<T = unknown, S  = string> = {
     id: number | string;
-    nameColumn: string;
+    nameColumn: S;
     value: T
     wasEdit: boolean;
     subColumns?: Map<string, Item>

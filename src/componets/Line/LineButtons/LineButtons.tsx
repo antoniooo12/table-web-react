@@ -10,7 +10,7 @@ import {useInnerTable} from "../../TableWeb/InnerTableConnector/InnerTableConnec
 const LineButtons = () => {
     const {bigPictureController, viewMode} = useContext(TableWebContext)
     const {innerTableMap, isShowInnerTableController: {setIsShowInnerTable, isShowInnerTable}} = useInnerTable()
-    const {id, wasEdit, toDelete, status} = useContext(LineContext)
+    const {lineInformation:{id, wasEdit, toDelete, status}} = useContext(LineContext)
     const buttonsAutomationStale = useGetButtonsStyle()
     const buttonsStyle: TButton = {
         ...buttonsAutomationStale,

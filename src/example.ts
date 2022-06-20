@@ -3,12 +3,18 @@ import {
     EnumTypeAdditionalParamsSelect,
     InputAdditionalAttributes,
     InputAdditionalParamsNumber,
-    InputAdditionalParamsSelect,
     InputAdditionalParamsTel,
     SectionTable,
     SectionTableStructure,
     TableStructure
 } from "./types/TableStructure";
+
+export enum EColumOrderInfo {
+    deliveryAddress = 'deliveryAddress',
+    orderSum = 'orderSum',
+    deliveryComment = 'deliveryComment',
+    deliveryTimeTuple = 'deliveryTimeTuple',
+}
 
 const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber,
@@ -96,13 +102,13 @@ const clientPhoneTuple: [EColumnClientInfo.clientPhone, Column] = [EColumnClient
 const orderSum: Column = {
     title: 'sum',
     cellParam: {
-        name: 'sum',
+        name: EColumOrderInfo.orderSum,
         default: {
             type: 'Default',
             value: 0,
         },
-        type: "number",
-        disabled: true,
+        type: "custom",
+        disabled: false,
     },
     width: 85
 }
@@ -139,21 +145,12 @@ const deliveryComment: Column = {
     },
     width: 150,
 }
-const productCostCell: Column = {
-    title: 'ціна',
-    width: 100,
-    cellParam: {
-        name: 'productCost',
-        type: 'number',
-        default: {type: 'Default', value: 0},
-        fontSize: 18,
-    }
-}
 
 enum ESection {
     clientInformation = 'clientInformation',
     orderInformation2 = 'orderInformation2',
 }
+
 type TESection = keyof typeof ESection
 type TEColumn1 = keyof typeof EColumnClientInfo
 type TEColumn2 = keyof typeof EColumOrderInfo
@@ -172,6 +169,26 @@ const sectionClientInformation: [ESection.clientInformation, SectionTableStructu
 
 }]
 sectionClientInformation[1].columns.get('clientName')
+
+export enum EProductInfo {
+    productName = 'productName',
+    productCost = 'productCost',
+    productCount = 'productCount',
+    productSum = 'productSum',
+}
+
+export type TEProductInfo = keyof typeof EProductInfo
+const productCostCell: Column = {
+    title: 'ціна',
+    width: 100,
+    cellParam: {
+        name: EProductInfo.productCost,
+        type: 'number',
+        default: {type: 'Default', value: 0},
+        fontSize: 18,
+    }
+}
+
 const innerTable: TableStructure = {
     shield: {
         section: new Map<string, SectionTableStructure>([
@@ -182,37 +199,52 @@ const innerTable: TableStructure = {
                     fontSize: 18,
                 },
                 columns: new Map<string, Column>([
-                    ['productName',
+                    [EProductInfo.productName,
                         {
                             title: 'назва',
                             width: 150,
                             cellParam: {
-                                name: 'productName',
-                                type: 'text',
+                                name: EProductInfo.productName,
+                                type: 'custom',
                                 default: {type: 'Default', value: ''},
-                                fontSize: 17,
+                                // fontSize: 17,
                             }
                         }
-                    ], ['productCost',
-                        productCostCell
-                    ], ['productCount',
+                    ], [EProductInfo.productCost,
                         {
                             title: 'кількість',
                             width: 100,
                             cellParam: {
-                                name: 'productCount',
-                                type: 'number',
+                                name: EProductInfo.productCost,
+                                type: 'custom',
                                 default: {type: 'Default', value: 0},
-                                fontSize: 18,
                             }
                         }
-                    ]
+                    ], [EProductInfo.productCount,
+                        {
+                            title: 'кількість',
+                            width: 100,
+                            cellParam: {
+                                name: EProductInfo.productCount,
+                                type: 'custom',
+                                default: {type: 'Default', value: 0},
+                            }
+                        }
+                    ], [EProductInfo.productSum, {
+                        title: 'sum',
+                        width: 80,
+                        cellParam: {
+                            name: EProductInfo.productSum,
+                            type: 'custom',
+                            default: {type: 'Default', value: 0},
+                        }
+                    }]
                 ])
             }]
         ])
     }
 }
-const deliveryTime:  Column =  {
+const deliveryTime: Column = {
     title: 'часові рамки',
     cellParam: {
         name: 'deliveryDay',
@@ -240,12 +272,6 @@ const deliveryTime:  Column =  {
         }]])
 }
 
-enum EColumOrderInfo {
-    deliveryAddress = 'deliveryAddress',
-    orderSum = 'orderSum',
-    deliveryComment = 'deliveryComment',
-    deliveryTimeTuple = 'deliveryTimeTuple',
-}
 
 export const section: SectionTable<TESection> = new Map([
     sectionClientInformation,
@@ -257,14 +283,13 @@ export const section: SectionTable<TESection> = new Map([
         },
         columns: new Map([
             [EColumOrderInfo.deliveryAddress, deliveryAddress],
-            [EColumOrderInfo.deliveryTimeTuple,deliveryTime],
+            [EColumOrderInfo.deliveryTimeTuple, deliveryTime],
             [EColumOrderInfo.orderSum, orderSum],
             [EColumOrderInfo.deliveryComment, deliveryComment]
         ])
 
     }]
 ])
-section.get('orderInformation2')?.columns.get('')
 
 export const testTable: TableStructure = {
     shield: {

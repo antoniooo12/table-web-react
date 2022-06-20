@@ -26,7 +26,6 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
 
             return produce(state, draft => {
                 const line = draft.storage!.data[lineIndex]
-                // debugger
                 const cell = recursiveMapSearch(line.columns, nameCell, 'subColumns')
                 if (!line.columns.has(nameCell)) {
                     line.columns.forEach(line => {

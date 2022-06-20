@@ -2,16 +2,16 @@
   height: fit-content;
   display: grid;
   position: relative;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
-
-  & > div:last-child {
-border-right: none;
-  }
+  //border-left: 1px solid #dddddd;
+  //border-right: 1px solid #dddddd;
+  //border-bottom: 1px solid #dddddd;
+  //& > div:last-child {
+  //  border-right: none;
+  //}
 }
 
 .line {
+  padding-left: 1px;
   display: flex;
   width: fit-content;
   overflow: hidden;

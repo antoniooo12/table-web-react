@@ -1,16 +1,15 @@
 import cl from './Line.module.scss'
-import React, {CSSProperties, useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Item, TStatus} from "../../redux/reduxTypes";
-import {CellBlock} from "../Column/CellBlock";
-import clsx from "clsx";
 import {LineContext} from "./LineContext";
 import {TableWebContext} from "../TableWeb/TableWebContext";
-import {useGetWidth} from "./utils/utils";
 import {LineInnerTable} from "./LineInnerTable/LineInnerTable";
-import {LineButtons} from "./LineButtons/LineButtons";
 import {InnerTableConnectorContext} from '../TableWeb/InnerTableConnector/InnerTableConnector';
-import {useInnerTableConnectorService} from "../TableWeb/InnerTableConnector/useInnerTableConnectorService";
-import {useLineService, useUpdateCustomFunction} from "./useLineService";
+import {useLineService} from "./useLineService";
+import {LineViewColumns} from "./Views/LineViewColumns";
+import {LineServiceContext} from "./LineContexrService";
+import {LineViewButtons} from "./Views/LineViewButtons";
+import {useCustomContext} from "../TableWeb/customContext";
 
 export type TLineData = {
     status: TStatus
@@ -29,48 +28,38 @@ export type TLine = {
 const Line: React.FC<TLine> = React.memo((props) => {
     const {lineData, columnsData, lineIdt, status, wasEdit, toDelete} = props
     const {columns, shield, viewMode} = useContext(TableWebContext)
-    const {styleGrid, clasName, innerTable,} = useLineService(props)
-
+    const {styleGrid, lineBaseClass, innerTable,} = useLineService(props)
+    const {CustomLine} = useCustomContext()
     return (
         <LineContext.Provider
-            value={lineData}
+            value={{columns: columnsData, lineInformation: lineData}}
         >
+
             <InnerTableConnectorContext.Provider
                 value={{
                     innerTableMap: innerTable.innerTableMap,
                     isShowInnerTableController: innerTable.isShowInnerTableController
                 }}
             >
-                <div>
-            <span
-                className={cl.line}
-            >
+                <LineServiceContext.Provider
+                    value={{styleGrid}}
+                >
+                    <span className={cl.line}>
+                      {CustomLine ?
+                          <CustomLine {...props}/> :
+                          <>
+                              <LineViewColumns/>
+                              <LineViewButtons/>
+                          </>
+                      }
 
-                <div
-                    style={styleGrid}
-                    className={clasName}
-                >{[...columnsData.entries()].map(([columnName, cellData]) => {
-                    return (
-                        <CellBlock
-                            viewType={'line'}
-                            key={cellData.id}
-                            columnName={columnName}
-                            cellData={cellData}
-                        />
-                    )
-                })}
-
-                </div>
-                 <div
-                     className={clsx({[cl.deleteLine]: lineData.toDelete})}
-                 />
-                <div className={cl.buttonsSection}>
-                    <LineButtons/>
-                </div>
-            </span>
-                    {shield.innerTable &&  innerTable.isShowInnerTableController.isShowInnerTable && <LineInnerTable tableStructure={shield.innerTable}
-                                                          setInnerTable={innerTable.setInnerTable}/>}
-                </div>
+                    </span>
+                    <>
+                        {shield.innerTable && innerTable.isShowInnerTableController.isShowInnerTable &&
+                            <LineInnerTable tableStructure={shield.innerTable}
+                                            setInnerTable={innerTable.setInnerTable}/>}
+                    </>
+                </LineServiceContext.Provider>
             </InnerTableConnectorContext.Provider>
         </LineContext.Provider>
     );

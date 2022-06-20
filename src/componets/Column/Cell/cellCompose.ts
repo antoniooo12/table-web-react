@@ -9,6 +9,7 @@ import {TCell} from "./cellTypes";
 import {CellTextSelect} from "./Text/TextSelect/CellTextSelect";
 import {CellData} from "./Data/CellData/CellData";
 import {CellTime} from "./Time/CellTime/CellTime";
+import {CellCustom} from "./Custom/CellCustom";
 
 type TInitialCells = { [key in InputType]: { cell: React.FC<TCell<any>> } }
 export const cells: TInitialCells = {
@@ -21,6 +22,7 @@ export const cells: TInitialCells = {
     textSelect: {cell: CellTextSelect},
     date: {cell: CellData},
     time: {cell: CellTime},
+    custom: {cell: CellCustom},
 }
 
 export const initialCells = (outerCells: TInitialCells) => {

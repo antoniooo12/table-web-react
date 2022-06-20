@@ -23,4 +23,4 @@ const CellTextSelectOptionList: React.FC<{ variants: TSelectOptions[], setSelect
     );
 };
 
-export {CellTextSelectOptionList};
+export default CellTextSelectOptionList;

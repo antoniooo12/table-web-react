@@ -18,10 +18,8 @@ export const useUpdateCustomFunction = (lineId: string, status: TStatus, innerTa
             [...customFunctionMap.entries()].forEach(([nameCell, funcBody]) => {
                 const func = funcBody.onUpdate
                 if (func) {
-                    console.log(nameCell)
                     const value = func({innerTableMap: innerTableData, tableWebContext})
                     tableChangeCell({lineId, value, nameCell, status})
-                    console.log(value)
                 }
             })
         }
@@ -52,7 +50,7 @@ export const useLineService = (props: TLine) => {
         width,
     }
 
-    const clasName: string = clsx({
+    const lineBaseClass: string = clsx({
         [cl.wrapper]: true,
         [cl.allLine]: lineData.status === 'isAll',
         [cl.newLine]: lineData.status === 'isNew',
@@ -62,7 +60,7 @@ export const useLineService = (props: TLine) => {
     useUpdateCustomFunction(lineIdt, props.status, innerTableMap)
 
     return {
-        clasName,
+        lineBaseClass,
         styleGrid,
         innerTable: {
             setInnerTable, innerTableMap,
