@@ -1,5 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {CustomCellProps} from "../../../../API/TableWebAPITypes";
+import cl from '../CustomCell.module.scss'
 
 const ProductName: React.FC<CustomCellProps<string>> = ({cellInformation, lineInformation}) => {
     const onClick = (e: ChangeEvent<HTMLInputElement>) => {
@@ -7,7 +8,7 @@ const ProductName: React.FC<CustomCellProps<string>> = ({cellInformation, lineIn
     }
     return (
         <>
-            <input type="text" list="cars" value={cellInformation.externalValue} onChange={onClick}/>
+            <input className={cl.wrapper} type="text" list="cars" value={cellInformation.externalValue} onChange={onClick}/>
             <datalist id="cars">
                 <option>Volvo</option>
                 <option>Saab</option>

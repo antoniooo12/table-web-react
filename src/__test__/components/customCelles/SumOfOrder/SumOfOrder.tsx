@@ -2,8 +2,8 @@ import React, {useEffect, useMemo} from 'react';
 import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
 import {useInnerTable} from "../../../../componets/TableWeb/InnerTableConnector/InnerTableConnector";
 import {EProductInfo} from "../../../../example";
-
-const SumOfOrder: CustomCellComponent<number> = ({cellInformation, lineInformation}) => {
+import cl from '../CustomCell.module.scss'
+const SumOfOrder: CustomCellComponent<number> = ({cellInformation}) => {
     const {innerTableMap} = useInnerTable()
     const sum = useMemo(() => {
         if (innerTableMap) {
@@ -23,7 +23,9 @@ const SumOfOrder: CustomCellComponent<number> = ({cellInformation, lineInformati
     }, [sum])
 
     return (
-        <input value={sum}/>
+        <>
+            <input className={cl.wrapper} value={sum} readOnly={true}/>
+        </>
     );
 };
 

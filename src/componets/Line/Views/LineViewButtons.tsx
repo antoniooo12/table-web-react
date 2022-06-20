@@ -4,9 +4,9 @@ import {LineButtons} from "../LineButtons/LineButtons";
 
 const LineViewButtons: React.FC = () => {
     return (
-        <div className={cl.buttonsSection}>
+        < >
             <LineButtons/>
-        </div>
+        </>
     );
 };
 

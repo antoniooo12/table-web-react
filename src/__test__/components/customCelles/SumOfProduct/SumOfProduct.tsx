@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
 import {EProductInfo} from "../../../../example";
+import cl from '../CustomCell.module.scss'
 
 const SumOfProduct: CustomCellComponent<number> = ({lineInformation}) => {
     const sum = useMemo(() => {
@@ -15,9 +16,7 @@ const SumOfProduct: CustomCellComponent<number> = ({lineInformation}) => {
         return sumArr.join('') + '.00'
     }, [lineInformation])
     return (
-        <div>
-            {sum}
-        </div>
+        <input className={cl.wrapper} type="number" value={sum} readOnly={true}/>
     );
 };
 

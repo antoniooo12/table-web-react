@@ -17,7 +17,7 @@ const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
     const {viewMode} = useContext(TableWebContext)
     const {columns} = useContext(TableWebContext)
     return (
-        <div>
+        <>
             {storage.data.map((line) => {
                     return (<Line
                         status={line.lineInformation.status}
@@ -30,7 +30,7 @@ const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
                     />)
             })}
 
-        </div>
+        </>
     );
 })
 
