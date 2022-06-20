@@ -53,11 +53,16 @@ const Line: React.FC<TLine> = React.memo((props) => {
                             </>
                         }
                     </tr>
-                    {/*</span>*/}
                     <>
-                        {shield.innerTable && innerTable.isShowInnerTableController.isShowInnerTable &&
-                            <LineInnerTable tableStructure={shield.innerTable}
-                                            setInnerTable={innerTable.setInnerTable}/>}
+                        {shield.innerTable &&
+                            <div
+                                style={{display: innerTable.isShowInnerTableController.isShowInnerTable ? "block" : 'none'}}
+                            >
+                                <LineInnerTable tableStructure={shield.innerTable}
+                                                setInnerTable={innerTable.setInnerTable}
+
+                                />
+                            </div>}
                     </>
                 </LineServiceContext.Provider>
             </InnerTableConnectorContext.Provider>
