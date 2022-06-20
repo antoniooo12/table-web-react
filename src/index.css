@@ -10,3 +10,7 @@ html, body{
   position: relative;
   /*overflow: hidden;*/
 }
+table, th, td {
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+}

@@ -1,16 +1,16 @@
 .wrapper {
 
   //margin-right: 6px;
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid #dddddd;
-  border-bottom: none;
+  //display: flex;
+  //align-items: stretch;
+  //flex-direction: column;
+  //justify-content: center;
+  //border: 1px solid #dddddd;
+  //border-bottom: none;
 
 
   .subLine {
-    display: flex;
+    //display: flex;
     color: #2E3B52;
 
     input {
@@ -19,27 +19,27 @@
   }
 
   .subLine {
-    border-top: 1px solid #dddddd;
+    //border-top: 1px solid #dddddd;
 
     & > div {
-      border-top: none;
+      //border-top: none;
     }
 
     & > div:first-child {
-      border-bottom: none;
+      //border-bottom: none;
     }
 
     & > div:nth-child(2) {
-      border-bottom: none;
+      //border-bottom: none;
     }
 
 
     & > div:not(:last-child) {
-      border-left: none;
+      //border-left: none;
     }
 
     & > div:not(:first-child) {
-      border-right: none;
+      //border-right: none;
     }
 
   }
@@ -52,8 +52,8 @@
 }
 
 .borderInLine {
-  border-top: none;
-  border-left: none;
+  //border-top: none;
+  //border-left: none;
 
   /////FIX BUG
   //&:first-child {
@@ -77,5 +77,5 @@
 }
 
 .line {
-  display: flex;
+  //display: flex;
 }

@@ -10,10 +10,11 @@ const LineViewColumns: React.FC<TLineView> = () => {
     const {columns} = useLineContext()
     const {styleGrid} = useLineServiceContext()
     return (
-            <div
-                style={styleGrid}
-                className={cl.wrapper}
-            >{[...columns.entries()].map(([columnName, cellData]) => {
+            <
+                // style={styleGrid}
+                // className={cl.wrapper}
+            >
+                {[...columns.entries()].map(([columnName, cellData]) => {
                 return (
                     <CellBlock
                         viewType={'line'}
@@ -23,7 +24,7 @@ const LineViewColumns: React.FC<TLineView> = () => {
                     />
                 )
             })}
-            </div>
+            </>
     );
 };
 
