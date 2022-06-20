@@ -1,7 +1,7 @@
 import React from 'react';
 import {CellText} from "../CellText";
 import {TCell} from "../../cellTypes";
-import {CellTextSelectOptionList} from "./CellTextSelectOptionList";
+import CellTextSelectOptionList from "./CellTextSelectOptionList";
 import {useServiceCellTextSelect} from "./ServiceCellTextSelect";
 import {ContextCellTextSelect} from "./hellpers/ContextCellTextSelect";
 

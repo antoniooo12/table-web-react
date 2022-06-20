@@ -61,6 +61,8 @@ export const useConnectWebTableState = ({
                                             externalOptionsMap,
                                             customComponents,
                                             customFunctionMap,
+                                            customCells,
+                                            customLine,
                                         }: TTableInit): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
     const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data:[]})
@@ -77,8 +79,9 @@ export const useConnectWebTableState = ({
         tableData,
         customComponents: customComponents ? customComponents : {},
         customFunctionMap,
+        customCells,
+        customLine,
     }), [optionsMap, tableStructure, tableData])
-
     return {
         connector,
         api: {

@@ -6,6 +6,8 @@ import {exampleExternalData} from "../../exampleExternalData";
 import {TSelectOptions} from "../../types/TableStructure";
 import {CustomComponents, CustomHeaderBigComponents} from "../../API/TableWebAPITypes";
 import {CustomFunctionMap, TCustomFunction, TCustomFunctionObj} from "../../API/customFunction";
+import {customCells} from "./customCelles";
+import {CustomLine} from "./customLine/customLine";
 
 
 const HeaderTitle: React.FC<CustomHeaderBigComponents> = ({lineData}) => {
@@ -23,7 +25,6 @@ const HeaderTitle: React.FC<CustomHeaderBigComponents> = ({lineData}) => {
 const TestTable = () => {
     const components: CustomComponents = {
         headerBigComponents: HeaderTitle,
-        // tableBigComponents:TableBigComponent,
     }
     const calcSum: TCustomFunction<number> = ({innerTableMap, tableWebContext}) => {
         const sum = innerTableMap?.data.reduce((accum, line) => {
@@ -32,21 +33,32 @@ const TestTable = () => {
             accum += Number(cost) * Number(count)
             return accum
         }, 0)
-        console.log(sum)
         return sum || 0
     }
+    const setName: TCustomFunction<string> = ({innerTableMap, tableWebContext}) => {
+        const sum = innerTableMap?.data.reduce((accum, line) => {
+            const count = line.columns.get('productCount')?.value
+            const cost = line.columns.get('productCost')?.value
+            accum += Number(cost) * Number(count)
+            return accum
+        }, 0)
+        return 'sum' || 0
+    }
     const calcSumObj: TCustomFunctionObj<number> = {onUpdate: calcSum}
-    const customFunctionMap: CustomFunctionMap = new Map([
-        ['orderSum', calcSumObj]
-    ])
+    const setNameObj: TCustomFunctionObj = {onUpdate: setName}
+    // const customFunctionMap: CustomFunctionMap<string> = new Map([
+    //     ['orderSum', setNameObj],
+    //     ['clientName', calcSumObj],
+    // ])
     const {api, connector} = useConnectWebTableState({
         tableStructure: testTable,
         externalData: exampleExternalData,
         externalOptionsMap: new Map<string, TSelectOptions[]>(),
         customComponents: components,
-        customFunctionMap,
+        // customFunctionMap,
+        customCells: customCells,
+        customLine: CustomLine
     })
-    // const s = api.columnsMapped.columnsMapped
 
 
     return (

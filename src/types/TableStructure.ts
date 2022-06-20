@@ -22,7 +22,7 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' | 'time'
+export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' | 'time' | 'custom'
 
 export enum EnumTypeAdditionalParamsSelect {
     InputAdditionalParamsSelect = 'InputAdditionalParamsSelect',
@@ -78,10 +78,10 @@ export type CellParam<T> = {
     readonly default: DefaultValue<T>
     readonly type: InputType
     readonly name: string
-    readonly  additionalParams?: InputAdditionalAttributes
-    readonly  hidden?: boolean
-    readonly  fontSize?: number
-    readonly  placeholder?: string
+    readonly additionalParams?: InputAdditionalAttributes
+    readonly hidden?: boolean
+    readonly fontSize?: number
+    readonly placeholder?: string
     readonly disabled?: boolean
 
 }

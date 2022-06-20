@@ -28,7 +28,7 @@ export const useCellAggregatorService = ({cellParam, cellData, parentCell, nameI
     const selectedCell = getCells(cellParam.type)
     const [value, setValue] = useState(cellData.value)
     const {tableChangeCell} = useActionsTable()
-    const lineData = useContext(LineContext)
+    const {lineInformation:{status,id}} = useContext(LineContext)
     const Component = selectedCell.cell
     useEffectSkipMount(() => {
         if (cellData.value !== value) {
@@ -38,8 +38,8 @@ export const useCellAggregatorService = ({cellParam, cellData, parentCell, nameI
     // useUpdateCustomFunction(nameInput, setValue)
     useEffectSkipMount(() => {
         tableChangeCell({
-            status: lineData.status,
-            lineId: lineData.id,
+            status: status,
+            lineId: id,
             nameCell: nameInput,
             value: value
         })
