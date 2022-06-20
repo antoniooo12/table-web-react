@@ -1,7 +1,6 @@
 import cl from './TableWeb.module.scss'
 import React, {useEffect, useMemo, useState} from 'react';
 import {Shield} from "../Shield/Shield";
-import {Header} from "../Header/Header";
 import {TableWebContext} from "./TableWebContext";
 import {executeColumns} from "../../hooks/executeColumns";
 import {BottomTablePanel} from "../Panels/BottomTablePanel";
@@ -77,7 +76,6 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                     >
                         {viewMode === 'table' && <BottomTablePanel/>}
 
-                        <Header/>
                         <TableHeader/>
                         <Shield shieldStructure={shield}/>
                         {viewMode === 'innerTable' && <BottomTablePanel/>}
