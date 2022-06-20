@@ -5,14 +5,16 @@ import {applyMiddleware, createStore} from "redux";
 import {rootTableReducer} from "../../../redux";
 import thunk from "redux-thunk";
 import {Provider} from "react-redux";
-import {SetInnerTable, ShowInnerTable} from "./LineInnerTable";
+import {SetInnerTable} from "./LineInnerTable";
 import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
 import {composeWithDevTools} from "redux-devtools-extension";
 
 const GetGetInnerTableState: React.FC<SetInnerTable> = React.memo(({setInnerTable}) => {
     const {storage} = useTableTypedSelector(state => state.tableStore)
     useEffect(() => {
-        setInnerTable(storage)
+        if(storage.data.length > 0) {
+            setInnerTable(storage)
+        }
     }, [storage])
     return <>
     </>
