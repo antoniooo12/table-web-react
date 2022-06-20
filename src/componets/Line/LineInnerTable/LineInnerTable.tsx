@@ -8,7 +8,7 @@ import {TableWebContext} from "../../TableWeb/TableWebContext";
 export type SetInnerTable = { setInnerTable: React.Dispatch<React.SetStateAction<TableReduxStructure | undefined>> }
 export type ShowInnerTable = { showInnerTable: boolean }
 type TLineInnerTable = TTableConnect
-const LineInnerTable: React.FC<TLineInnerTable & SetInnerTable  > = React.memo(({tableStructure, setInnerTable}) => {
+const LineInnerTable: React.FC<TLineInnerTable & SetInnerTable &{id: string| number}  > = React.memo(({id,tableStructure, setInnerTable}) => {
     const {dataToInnerTable} = useContext(TableWebContext)
     const connector: TTableConnect = {
         tableStructure,
@@ -16,7 +16,7 @@ const LineInnerTable: React.FC<TLineInnerTable & SetInnerTable  > = React.memo((
         customCells: {innerTable: dataToInnerTable?.customCellMapInner}
     }
 
-    return <GetInnerTable tableConnect={connector} setInnerTable={setInnerTable}  />
+    return <GetInnerTable tableConnect={connector} setInnerTable={setInnerTable} id={id} />
 
 
 });

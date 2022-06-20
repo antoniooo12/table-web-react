@@ -19,12 +19,13 @@ const GetGetInnerTableState: React.FC<SetInnerTable> = React.memo(({setInnerTabl
     return <>
     </>
 })
-const GetInnerTable: React.FC<{ tableConnect: TTableConnect } & SetInnerTable> = React.memo((
+const GetInnerTable: React.FC<{ tableConnect: TTableConnect } & SetInnerTable & {id: string | number}> = React.memo((
     {
         tableConnect,
         setInnerTable,
+        id,
     }) => {
-    const composeParams = composeWithDevTools({name: 'inner table', serialize: true,});
+    const composeParams = composeWithDevTools({name: `inner table ${id}`, serialize: true,});
     const tableStore = createStore(rootTableReducer, composeParams(applyMiddleware(thunk)))
     return (
         <Provider store={tableStore}>

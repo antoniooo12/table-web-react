@@ -60,7 +60,7 @@ const Line: React.FC<TLine> = React.memo((props) => {
                             >
                                 <LineInnerTable tableStructure={shield.innerTable}
                                                 setInnerTable={innerTable.setInnerTable}
-
+                                                id={lineIdt}
                                 />
                             </div>}
                     </>
