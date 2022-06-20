@@ -18,13 +18,12 @@ const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
         <>
             {!columnParam.hidden &&
                 <td
-                    // style={{
-                    //     width: `${columnParam.width}px`,
-                    // }}
+                    style={{
+                        width: `${columnParam.width}px`,
+                    }}
                     className={
                         clsx({
                             [cl.wrapper]: true,
-                            // [cl.borderInLine]: viewType === 'line',
                         })
                     }
                 >
@@ -35,7 +34,7 @@ const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
                     />
                     {cellData.subColumns && <div
                         className={clsx({
-                            [cl.line]: columnParam.subColumnsStyle === 'line'
+                            // [cl.line]: columnParam.subColumnsStyle === 'line'
                         })}
                     >
                         {

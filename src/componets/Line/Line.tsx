@@ -45,14 +45,13 @@ const Line: React.FC<TLine> = React.memo((props) => {
                     value={{styleGrid}}
                 >
                     <tr>
-                        {/*<span className={cl.line}>*/}
-                        {/*{CustomLine ?*/}
-                        {/*    <CustomLine {...props}/> :*/}
-                        {/*    <>*/}
-                        <LineViewColumns/>
-                        {/*<LineViewButtons/>*/}
-                        {/*    </>*/}
-                        {/*}*/}
+                        {CustomLine ?
+                            <CustomLine {...props}/> :
+                            <>
+                                <LineViewColumns/>
+                                <LineViewButtons/>
+                            </>
+                        }
                     </tr>
                     {/*</span>*/}
                     <>
