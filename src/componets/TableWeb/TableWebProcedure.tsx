@@ -11,6 +11,7 @@ import {BigPicture} from "../BigPicture/BigPicture";
 import {CustomCellMap, TTableConnect} from "../../API/TableWebAPITypes";
 import {shieldChecker, useOpenInBigPicture} from "./utils/utils";
 import {CustomContext} from "./customContext";
+import {TableHeader} from "../Header/TableHeader/TableHeader";
 
 
 export type TTableWeb = {
@@ -68,7 +69,8 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                 }
             }}
         >
-            <CustomContext.Provider value={{customCellMap, customFunctionMap,customComponents, CustomLine: customLine}}>
+            <CustomContext.Provider
+                value={{customCellMap, customFunctionMap, customComponents, CustomLine: customLine}}>
                 <table>
                     <div
                         className={cl.wrapper}
@@ -76,6 +78,7 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                         {viewMode === 'table' && <BottomTablePanel/>}
 
                         <Header/>
+                        <TableHeader/>
                         <Shield shieldStructure={shield}/>
                         {viewMode === 'innerTable' && <BottomTablePanel/>}
                     </div>
