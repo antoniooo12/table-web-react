@@ -212,7 +212,7 @@ const innerTable: TableStructure = {
                         }
                     ], [EProductInfo.productCost,
                         {
-                            title: 'кількість',
+                            title: 'ціна',
                             width: 100,
                             cellParam: {
                                 name: EProductInfo.productCost,

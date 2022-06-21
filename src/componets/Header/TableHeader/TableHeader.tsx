@@ -7,10 +7,10 @@ const TableHeader = () => {
     const {sectionTemplate,columnsTemplate} = useTableHeaderService()
 
     return (
-        <>
+        <thead>
             <TableHeaderLine  headerBlockArray={sectionTemplate}/>
             <TableHeaderLine  headerBlockArray={columnsTemplate}/>
-        </>
+        </thead>
     );
 };
 
