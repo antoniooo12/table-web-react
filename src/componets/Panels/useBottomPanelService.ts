@@ -7,14 +7,14 @@ import {getButtonGroupsStyle, getButtonsStyle} from "../../utils/buttonUtils";
 
 
 export const useBottomPanelService = () => {
-    const {previous: [previousValues], tableConnect, viewMode, columns} = useContext(TableWebContext)
+    const {previous: [previousValues],  viewMode, columns} = useContext(TableWebContext)
     const stateTable = useTableTypedSelector(state => state.tableStore.storage)
     const onCreateLine = useCreateLine(columns, previousValues)
     const buttonsStyle = getButtonsStyle(viewMode)
     const buttonsGroupStyle = getButtonGroupsStyle(viewMode)
     const onSaveMemo = useCallback(() => {
-        tableConnect.setTableExternalState &&    tableConnect.setTableExternalState(stateTable)
-    }, [stateTable])
+        // tableConnect.setTableExternalState &&    tableConnect.setTableExternalState(stateTable)
+    }, [])
 
     const onDownload = useCallback(() => {
         downloadTxtFile(stateTable.data, {

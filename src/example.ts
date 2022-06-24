@@ -14,6 +14,7 @@ export enum EColumOrderInfo {
     orderSum = 'orderSum',
     deliveryComment = 'deliveryComment',
     deliveryTimeTuple = 'deliveryTimeTuple',
+    deliveryTimeBefore = 'deliveryTimeBefore',
 }
 
 const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
@@ -261,13 +262,15 @@ const deliveryTime: Column = {
             cellParam: {
                 name: 'afterHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
             }
-        }], ['beforeHour',
+        }], [EColumOrderInfo.deliveryTimeBefore,
         {
             // hidden: true,
             title: '',
             width: 100,
             cellParam: {
-                name: 'beforeHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
+                name: EColumOrderInfo.deliveryTimeBefore,
+                type: 'custom',
+                default: {type: 'Default', value: '18:30'}
             }
         }]])
 }

@@ -1,4 +1,11 @@
-import {EnumTableReducer, IOnChangeCell, TOnDeleteLine, TOnLoadExternalData, TOnSetEditableLine} from "./reduxTypes";
+import {
+    EnumTableReducer,
+    IOnChangeCell,
+    TOnDeleteLine,
+    TOnLoadExternalData,
+    TOnSetEditableLine,
+    TOnSetInnerTable
+} from "./reduxTypes";
 import {Columns} from "../types/TableStructure";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 
@@ -21,5 +28,9 @@ export const tableLoadExternalData = (information: TOnLoadExternalData) => ({
 })
 export const tableSetEditableLine = (information: TOnSetEditableLine) => ({
     type: EnumTableReducer.SetEditableLine,
+    payload: information,
+})
+export const tableSetInnerTable = (information: TOnSetInnerTable) => ({
+    type: EnumTableReducer.SetInnerTable,
     payload: information,
 })

@@ -11,6 +11,8 @@ import {CustomCellMap, TTableConnect} from "../../API/TableWebAPITypes";
 import {shieldChecker, useOpenInBigPicture} from "./utils/utils";
 import {CustomContext} from "./customContext";
 import {TableHeader} from "../Header/TableHeader/TableHeader";
+import {useUpdateExternalStore} from "./utils/updateExternalStore";
+import {useCalcColumns} from "./utils/useCalcColumns";
 
 
 export type TTableWeb = {
@@ -26,24 +28,33 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         viewMode = 'table',
         customFunctionMap,
         customLine,
+        customCells,
     } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
     const checkedShield = shieldChecker(shield)
-    const columns = executeColumns(tableStructure)
-    const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
-    useEffect(() => {
-        if (tableData) {
-            tableLoadExternalData({externalData: tableData, columnsStructure: columns})
-        }
-    }, [tableData])
-    const bigPictureController = useOpenInBigPicture()
     const customCellMap: CustomCellMap | undefined = useMemo(() => {
         if (viewMode === 'table')
             return tableConnect.customCells?.table
         if (viewMode === 'innerTable')
             return tableConnect.customCells?.innerTable
     }, [tableConnect.customCells])
+    const columns = useCalcColumns(tableStructure, customCellMap)
+    console.log(columns)
+    const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
+    useEffect(() => {
+        if (tableData) {
+            tableLoadExternalData({externalData: tableData, columnsStructure: columns})
+        }
+    }, [tableData])
+   // useUpdateExternalStore(tableConnect.setTableExternalState)
+    const bigPictureController = useOpenInBigPicture()
+    // const customCellMap: CustomCellMap | undefined = useMemo(() => {
+    //     if (viewMode === 'table')
+    //         return tableConnect.customCells?.table
+    //     if (viewMode === 'innerTable')
+    //         return tableConnect.customCells?.innerTable
+    // }, [tableConnect.customCells])
     const customCellMapInner: CustomCellMap | undefined = useMemo(() => {
         return tableConnect.customCells?.innerTable
     }, [tableConnect.customCells])
@@ -54,9 +65,9 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                 columns,
                 shield: checkedShield,
                 previous: [previousValues, setterPreviousValues(setPreviousValues)],
-                tableConnect: {
-                    setTableExternalState: tableConnect.setTableExternalState
-                },
+                // tableConnect: {
+                //     setTableExternalState: tableConnect.setTableExternalState
+                // },
                 optionsMap,
                 bigPictureController,
                 customComponents,

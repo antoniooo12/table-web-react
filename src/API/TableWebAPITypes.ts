@@ -1,6 +1,6 @@
 import {MReactDispSetter, WithOptional} from "../types/HelperTypes";
 import {Item, TableReduxStructure, TLineInformation, TTableLine} from "../redux/reduxTypes";
-import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
+import {Column, DefaultValue, TableStructure, TSelectOptions} from "../types/TableStructure";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 import {TBigPictureHeaderTitleCustom} from "../componets/BigPicture/BigPictureType";
 import {CustomFunctionMap} from "./customFunction";
@@ -36,7 +36,13 @@ export type TTableConnect = {
 export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
 
 export type CustomCellComponent<T = unknown> = FC<CustomCellProps<T>>
-export type CustomCellMap<T = any> = Map<string, CustomCellComponent<T>>
+export type CustomCell<T = any> = {
+    Component: CustomCellComponent<T>
+    cellParam?: {
+        default?: DefaultValue<T>
+    }
+}
+export type CustomCellMap<T = any> = Map<string, CustomCell<T>>
 export type TTableExternalState = {
     toUpdate: TTableLine[]
     toDelete: TTableLine[]

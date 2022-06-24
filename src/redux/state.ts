@@ -1,4 +1,4 @@
-import {EnumStatus, EnumTableReducer, TableReducerActions, TableState} from "./reduxTypes";
+import {EnumStatus, EnumTableReducer, TableReducerActions, TableState, TTableLine} from "./reduxTypes";
 import produce, {enableMapSet} from "immer";
 import {createColumns, createLine, createLineToTable} from './reduxHellpers'
 import {recursiveMapSearch} from "../hellpers/helpers";
@@ -71,6 +71,13 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
             return produce(state, draft => {
                 draft.storage.data.find(line => line.lineInformation.id = lineId)!.lineInformation.wasEdit = true
             })
+        }
+        case EnumTableReducer.SetInnerTable : {
+            const {storage, lineId} = action.payload
+            return produce(state, draft => {
+                draft.storage.data.find(line => line.lineInformation.id === lineId)!.innerTableInformation = storage
+            })
+
         }
         default:
             return state

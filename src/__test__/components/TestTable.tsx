@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {testTable} from "../../example";
 import {TableWebProviderComponent} from "../../componets/TableWeb/TableWebProviderComponent";
 import {useConnectWebTableState} from "../../API/TableWebAPI";
@@ -35,7 +35,7 @@ const TestTable = () => {
         }, 0)
         return sum || 0
     }
-    const setName: TCustomFunction<string> = ({innerTableMap, tableWebContext}) => {
+    const setName: TCustomFunction = ({innerTableMap, tableWebContext}) => {
         const sum = innerTableMap?.data.reduce((accum, line) => {
             const count = line.columns.get('productCount')?.value
             const cost = line.columns.get('productCost')?.value
@@ -60,7 +60,10 @@ const TestTable = () => {
         customLine: CustomLine
     })
 
-
+    useEffect(() => {
+        console.log('update')
+        console.log(api.data.tableExternalState.data)
+    }, [api.data])
     return (
         <>
             <TableWebProviderComponent

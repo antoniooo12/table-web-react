@@ -6,11 +6,9 @@ import {useLineContext} from "../../../Line/LineContext";
 const CellCustom: React.FC<TCell<unknown>> = (cellInformation) => {
     const {customCellMap} = useContext(TableWebContext)
     const lineInformation = useLineContext()
-    console.log(customCellMap)
-    console.log(cellInformation.cellParam.name)
-    const CustomComponent = customCellMap?.get(cellInformation.cellParam.name)
-    if (CustomComponent) {
-        return <CustomComponent cellInformation={cellInformation} lineInformation={lineInformation}/>
+    const Component = customCellMap?.get(cellInformation.cellParam.name)?.Component
+    if (Component) {
+        return <Component cellInformation={cellInformation} lineInformation={lineInformation}/>
     }
 
 

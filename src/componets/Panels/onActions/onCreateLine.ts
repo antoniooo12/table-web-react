@@ -3,6 +3,7 @@ import {useActionsTable} from "../../../hooks/useActionsTable";
 import {useCallback} from "react";
 import {absurd} from "fp-ts/function";
 import {defaultFunctions} from "../../../hellpers/defaultFunctions/defaultFunctions";
+import {useTableWebContext} from "../../TableWeb/TableWebContext";
 
 type TColumnToRedux = { value: unknown, subData?: TInitialValue }
 export type TInitialValue = Map<string, TColumnToRedux>
@@ -49,6 +50,8 @@ export const findInitialValueToCreateLine = (columnStructure: Columns, previousV
 
 export const useCreateLine = (columnStructure: Columns, previousValues: Map<string, unknown>) => {
     const {tableCreateLine} = useActionsTable()
+    const {customComponents} = useTableWebContext()
+
     return useCallback(() => {
         const initialValueToCreateLine = findInitialValueToCreateLine(columnStructure, previousValues)
         tableCreateLine(columnStructure, initialValueToCreateLine)

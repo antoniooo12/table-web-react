@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import {composeParams, rootTableReducer} from "../../redux";
 import {TableReducerActions, TableState} from "../../redux/reduxTypes";
 import {SetInnerTable} from "../Line/LineInnerTable/LineInnerTable";
+import {UpdateExternalStore} from "./utils/UtilsComponent/UpdateExternalStore";
 
 export type TTableStore =
     Store<EmptyObject & { tableStore: TableState }, TableReducerActions<any>>
@@ -18,6 +19,7 @@ const TableWebProviderComponent: React.FC<TTableWeb &{ children?: React.ReactNod
     return (
         <Provider store={tableStore}>
             <TableWebProcedure tableConnect={tableConnect}/>
+            <UpdateExternalStore setTableExternalState={tableConnect.setTableExternalState}/>
         </Provider>
     );
 })

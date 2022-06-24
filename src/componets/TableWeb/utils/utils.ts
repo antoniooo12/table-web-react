@@ -1,8 +1,5 @@
 import {SectionParam, SectionTable, TShieldStructure} from "../../../types/TableStructure";
-import {useCallback, useContext, useState} from "react";
-import {useInnerTable} from "../InnerTableConnector/InnerTableConnector";
-import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
-import {TableWebContext} from "../TableWebContext";
+import {useState} from "react";
 
 const checkSectionSize = (shield: TShieldStructure): TShieldStructure => {
     return {

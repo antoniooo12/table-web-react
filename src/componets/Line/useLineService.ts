@@ -56,7 +56,7 @@ export const useLineService = (props: TLine) => {
         [cl.newLine]: lineData.status === 'isNew',
     })
 
-    const {setInnerTable, innerTableMap} = useInnerTableConnectorService()
+    const {setInnerTable, innerTableMap} = useInnerTableConnectorService(lineIdt)
     useUpdateCustomFunction(lineIdt, props.status, innerTableMap)
 
     return {
