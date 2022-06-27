@@ -27,7 +27,7 @@ const columnsDataStructureBySection = (sections: Map<string, SectionTableStructu
         } else {
             accum.set(keySection, {
                 sectionParams: section.sectionParams,
-                columns: new Map<string, Item>([[key, item]]),
+                columns: new Map<string, Item<unknown>>([[key, item]]),
             })
         }
         return accum
@@ -53,7 +53,7 @@ const BigPictureLines: React.FC<TBigPictureTable> = ({lineData, columnsParam}) =
                             <div>{columnsParam.get(key)?.title}</div>
                             <CellBlock
                                 viewType={'bigPicture'}
-                                columnName={key}
+                                cellName={key}
                                 cellData={cellData}
                                 key={key}
                             />

@@ -29,6 +29,7 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         customFunctionMap,
         customLine,
         customCells,
+        tableButtons,
     } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
@@ -40,7 +41,6 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
             return tableConnect.customCells?.innerTable
     }, [tableConnect.customCells])
     const columns = useCalcColumns(tableStructure, customCellMap)
-    console.log(columns)
     const [previousValues, setPreviousValues] = useState<Map<string, unknown>>(new Map())
     useEffect(() => {
         if (tableData) {
@@ -85,7 +85,7 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
                     <div
                         className={cl.wrapper}
                     >
-                        {viewMode === 'table' && <BottomTablePanel/>}
+                        {viewMode === 'table' && tableButtons?.isShow && <BottomTablePanel/>}
 
                         <TableHeader/>
                         <Shield shieldStructure={shield}/>

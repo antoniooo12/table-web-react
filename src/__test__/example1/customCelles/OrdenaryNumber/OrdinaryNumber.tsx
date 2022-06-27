@@ -7,7 +7,14 @@ const OrdinaryNumber: CustomCellComponent<number> = ({cellInformation, lineInfor
     const {externalValue, setExternalValue} = cellInformation
     const onChangeSet = onChange<number>(setExternalValue, 'number')
     return (
-        <input className={cl.wrapper} value={externalValue} onChange={onChangeSet} type={"number"}/>
+        <td>
+            <input
+                className={cl.wrapper}
+                value={externalValue}
+                onChange={(e)=>{setExternalValue(Number(e.target.value))}}
+                type={"number"}
+            />
+        </td>
     );
 };
 

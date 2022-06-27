@@ -23,9 +23,9 @@ const SumOfOrder: CustomCellComponent<number> = ({cellInformation}) => {
     }, [sum])
 
     return (
-        <>
+        <td>
             <input className={cl.wrapper} value={sum} readOnly={true}/>
-        </>
+        </td>
     );
 };
 

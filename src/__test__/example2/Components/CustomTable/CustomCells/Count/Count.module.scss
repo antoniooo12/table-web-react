@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  background-color: inherit;
+}
+
+.data {
+  min-width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.type {
+  font-size: 12px;
+}

@@ -44,15 +44,15 @@ const Line: React.FC<TLine> = React.memo((props) => {
                 <LineServiceContext.Provider
                     value={{styleGrid}}
                 >
-                    <tr>
+                    <>
                         {CustomLine ?
                             <CustomLine {...props}/> :
-                            <>
+                            <tr>
                                 <LineViewColumns/>
                                 <LineViewButtons/>
-                            </>
+                            </tr>
                         }
-                    </tr>
+                    </>
                     <>
                         {shield.innerTable &&
                             <div

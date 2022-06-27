@@ -1,60 +1,31 @@
-import cl from './Column.module.scss'
 import React from 'react';
 import {Item} from "../../redux/reduxTypes";
-import clsx from "clsx";
-import {CellAggregator} from "./Cell/CellAggregator";
 import {useGetColumnParam} from "./utils";
+import {CellGenerator} from "./Cell/CellGenerator";
 
-type TColumn = {
-    columnName: string
-    cellData: Item
-    viewType: 'line' | 'bigPicture'
+export type TColumn = {
+    cellName: string
+    cellData: Item<unknown>
+    viewType?: 'line' | 'bigPicture'
+    className?: string
 }
 
-const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
+const CellBlock: React.FC<TColumn> = (props) => {
+    const {cellData, cellName, viewType = 'line', className} = props
+    const columnParam = useGetColumnParam(cellName)
+    const Cell = <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
+                                className={className}/>
+    // const Cell = useBinder(props)
 
-    const columnParam = useGetColumnParam(columnName)
     return (
         <>
             {!columnParam.hidden &&
-                <td
-                    style={{
-                        width: `${columnParam.width}px`,
-                    }}
-                    className={
-                        clsx({
-                            [cl.wrapper]: true,
-                        })
-                    }
-                >
-                    <CellAggregator
-                        nameInput={columnName}
-                        cellData={cellData}
-                        cellParam={columnParam.cellParam}
-                    />
-                    {cellData.subColumns && <div
-                        className={clsx({
-                            // [cl.line]: columnParam.subColumnsStyle === 'line'
-                        })}
-                    >
-                        {
-                            <div
-                                className={cl.subLine}
-                            >
-                                {[...cellData.subColumns.entries()].map(([subCellName, subCellDatta]) =>
-
-                                    <CellBlock
-                                        viewType={viewType}
-                                        columnName={subCellName}
-                                        cellData={subCellDatta}
-                                        key={subCellName}
-                                    />
-                                )}
-                            </div>
-
-                        }
-                    </div>}
-
+            columnParam.cellParam.type === "custom" ?
+                <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
+                               className={className}/> :
+                <td>
+                    <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
+                                   className={className}/> {/*{Cell}*/}
                 </td>
             }
         </>
@@ -63,3 +34,12 @@ const CellBlock: React.FC<TColumn> = ({cellData, columnName, viewType}) => {
 
 }
 export {CellBlock}
+
+
+function CellBlock1<T>(props: TColumn) {
+    return (
+        <div>{props.cellName}</div>
+    );
+}
+
+export {CellBlock1};

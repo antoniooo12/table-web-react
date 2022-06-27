@@ -7,7 +7,7 @@ const ProductName: React.FC<CustomCellProps<string>> = ({cellInformation, lineIn
         cellInformation.setExternalValue(e.target.value)
     }
     return (
-        <>
+        <td>
             <input className={cl.wrapper} type="text" list="cars" value={cellInformation.externalValue} onChange={onClick}/>
             <datalist id="cars">
                 <option>Volvo</option>
@@ -15,7 +15,7 @@ const ProductName: React.FC<CustomCellProps<string>> = ({cellInformation, lineIn
                 <option>Mercedes</option>
                 <option>Audi</option>
             </datalist>
-        </>
+        </td>
     )
         ;
 };

@@ -26,44 +26,19 @@ const TestTable = () => {
     const components: CustomComponents = {
         headerBigComponents: HeaderTitle,
     }
-    const calcSum: TCustomFunction<number> = ({innerTableMap, tableWebContext}) => {
-        const sum = innerTableMap?.data.reduce((accum, line) => {
-            const count = line.columns.get('productCount')?.value
-            const cost = line.columns.get('productCost')?.value
-            accum += Number(cost) * Number(count)
-            return accum
-        }, 0)
-        return sum || 0
-    }
-    const setName: TCustomFunction = ({innerTableMap, tableWebContext}) => {
-        const sum = innerTableMap?.data.reduce((accum, line) => {
-            const count = line.columns.get('productCount')?.value
-            const cost = line.columns.get('productCost')?.value
-            accum += Number(cost) * Number(count)
-            return accum
-        }, 0)
-        return 'sum' || 0
-    }
-    const calcSumObj: TCustomFunctionObj<number> = {onUpdate: calcSum}
-    const setNameObj: TCustomFunctionObj = {onUpdate: setName}
-    // const customFunctionMap: CustomFunctionMap<string> = new Map([
-    //     ['orderSum', setNameObj],
-    //     ['clientName', calcSumObj],
-    // ])
+
+
     const {api, connector} = useConnectWebTableState({
         tableStructure: testTable,
         externalData: exampleExternalData,
         externalOptionsMap: new Map<string, TSelectOptions[]>(),
         customComponents: components,
-        // customFunctionMap,
         customCells: customCells,
-        customLine: CustomLine
+        customLine: CustomLine,
+        tableButtons:{isShow:true}
     })
 
-    useEffect(() => {
-        console.log('update')
-        console.log(api.data.tableExternalState.data)
-    }, [api.data])
+
     return (
         <>
             <TableWebProviderComponent

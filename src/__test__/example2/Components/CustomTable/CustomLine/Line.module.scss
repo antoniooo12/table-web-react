@@ -1,0 +1,49 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  display: flex;
+  background-color: #fff;
+  gap: 10px;
+  min-height: 85px;
+  align-items: center;
+  &:not(:last-child){
+    margin-bottom: 10px;
+  }
+}
+
+.title {
+  width: 85px;
+}
+
+.leftBlock {
+  font-family: Inter, serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-weight: normal;
+
+}
+
+.rightBlock {
+  display: flex;
+  font-size: 14px;
+  flex: 1;
+  justify-content: right;
+
+  .rightBlockInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.sum {
+  line-height: 16px;
+  letter-spacing: 0.03em;
+  color: #151515;
+}

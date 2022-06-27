@@ -1,7 +1,7 @@
 import {useMemo, useState} from "react";
 import {Column, TableStructure, TSelectOptions} from "../types/TableStructure";
 import {
-    CustomComponents,
+    CustomComponents, TableButtons,
     TableExternalShieldData,
     TTableConnect,
     TTableExternalState,
@@ -63,9 +63,10 @@ export const useConnectWebTableState = ({
                                             customFunctionMap,
                                             customCells,
                                             customLine,
+                                            tableButtons,
                                         }: TTableInit): TUseConnectWebTableState => {
-    const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData)
-    const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data:[]})
+    const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData || [])
+    const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data: []})
 
     const tableData: TInitialValue[] | undefined = useMemo(() => {
         return tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
@@ -81,6 +82,7 @@ export const useConnectWebTableState = ({
         customFunctionMap,
         customCells,
         customLine,
+        tableButtons,
     }), [optionsMap, tableStructure, tableData])
     return {
         connector,

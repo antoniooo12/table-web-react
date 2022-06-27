@@ -24,10 +24,10 @@ export const createColumns = (columnsStructure: Columns) => (initialValue: TInit
 
         accum.set(key, item)
         return accum
-    }, new Map<string, Item<unknown>>())
+    }, new Map<string, Item>())
 }
 
-export const createLine = (status: TStatus) => (id?: string) => (columns: Map<string, Item<unknown>>): TTableLine => {
+export const createLine = (status: TStatus) => (id?: string) => (columns: Map<string, Item>): TTableLine => {
 
     return {
         lineInformation: {

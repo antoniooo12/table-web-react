@@ -16,7 +16,9 @@ const SumOfProduct: CustomCellComponent<number> = ({lineInformation}) => {
         return sumArr.join('') + '.00'
     }, [lineInformation])
     return (
-        <input className={cl.wrapper} type="number" value={sum} readOnly={true}/>
+        <td>
+            <input className={cl.wrapper} type="number" value={sum} readOnly={true}/>
+        </td>
     );
 };
 

@@ -20,7 +20,7 @@ export const useBottomPanelService = () => {
         downloadTxtFile(stateTable.data, {
             params: {
                 propertyToSave: {
-                    type: 'all'
+                    type: 'all',
                 }
             },
             columns: {type: EnumOptionsDownloadTxtFile.toSaveExcept, fields: []}

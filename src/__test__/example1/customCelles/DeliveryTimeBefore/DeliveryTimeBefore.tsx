@@ -6,12 +6,13 @@ import cl from '../CustomCell.module.scss'
 const DeliveryTimeBefore: CustomCellComponent<string> = ({cellInformation}) => {
 
     return (
-        <BaseInputText
-            externalValue={cellInformation.externalValue}
-            setExternalValue={cellInformation.setExternalValue}
-            baseInputProps={{type: "time", className: cl.wrapper}}
-
-        />
+        <td>
+            <BaseInputText
+                externalValue={cellInformation.externalValue}
+                setExternalValue={cellInformation.setExternalValue}
+                baseInputProps={{type: "time", className: cl.wrapper}}
+            />
+        </td>
     );
 };
 

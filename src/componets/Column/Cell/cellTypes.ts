@@ -9,4 +9,5 @@ export type TCell<N> = {
     // setExternalValue: (value: N) => void
     cellParam: CellParam<N>,
     additionalParams?: InputAdditionalAttributes
+    className?:string
 }

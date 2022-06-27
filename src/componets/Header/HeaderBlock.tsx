@@ -11,7 +11,7 @@ const HeaderBlock: React.FC<{ title: string, width?: ColumnWidth, widthGrid?: st
         widthGrid
     }) => {
     const className = {
-        [cl.border]: true,
+        // [cl.border]: true,
     }
     const styleInner: CSSProperties = {
         gridTemplateColumns: widthGrid

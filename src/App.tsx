@@ -1,11 +1,11 @@
 import React from 'react';
-import {TestTable} from "./__test__/components/TestTable";
+import {TestExamplesNavigation} from "./__test__/TestExamplesNavigation";
 
 function App() {
 
     return (
         <div className="App">
-            <TestTable/>
+            <TestExamplesNavigation/>
         </div>
     );
 }

@@ -8,14 +8,18 @@ import React, {FC} from "react";
 import {TCell} from "../componets/Column/Cell/cellTypes";
 import {TLine} from "../componets/Line/Line";
 
+export type TableButtons = {
+    isShow: boolean
+}
 export type TTableInit = {
     tableStructure: TableStructure,
-    externalData: TableExternalShieldData,
-    externalOptionsMap: Map<string, TSelectOptions[]>
+    externalData?: TableExternalShieldData,
+    externalOptionsMap?: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
     customCells?: CustomCells
     customLine?: CustomLine
+    tableButtons?: TableButtons
 }
 export type CustomCells = {
     table?: CustomCellMap<any>
@@ -32,6 +36,8 @@ export type TTableConnect = {
     customCells?: CustomCells
     viewMode?: ViewMode
     customLine?: CustomLine
+    tableButtons?: TableButtons
+
 }
 export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
 
@@ -50,7 +56,7 @@ export type TTableExternalState = {
 }
 export type CellExternalData<T> = { nameColumn: string, value: T }
 export type TableExternalLineData = {
-    lineInformation: TLineInformation
+    lineInformation: WithOptional<TLineInformation, 'id'>
     columns: ExternalDataColumn<unknown>[]
 }
 export type TableExternalShieldData = TableExternalLineData[]

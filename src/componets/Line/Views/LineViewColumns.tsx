@@ -8,18 +8,16 @@ import {useLineServiceContext} from "../LineContexrService";
 export type TLineView = {}
 const LineViewColumns: React.FC<TLineView> = () => {
     const {columns} = useLineContext()
-    const {styleGrid} = useLineServiceContext()
     return (
             <
-                // style={styleGrid}
-                // className={cl.wrapper}
+
             >
                 {[...columns.entries()].map(([columnName, cellData]) => {
                 return (
                     <CellBlock
                         viewType={'line'}
                         key={cellData.id}
-                        columnName={columnName}
+                        cellName={columnName}
                         cellData={cellData}
                     />
                 )

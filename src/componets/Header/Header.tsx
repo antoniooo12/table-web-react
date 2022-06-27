@@ -16,7 +16,7 @@ const Header: React.FC<ComponentHeader> = (
     const header = useMemo(() => {
         const buildColumn = (columns: [string, Column][]) => {
             return columns.flatMap(([colName, col]) => {
-                if (!col.hidden) {
+                if (!col.hidden && col.title) {
                     return <HeaderBlock title={col.title} width={col.width}/>
                 }
             },)

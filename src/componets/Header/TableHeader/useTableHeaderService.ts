@@ -19,7 +19,7 @@ export const useTableHeaderService = () => {
             const columnWidth = typeof width === "number" ? width : undefined
             const headerBlock: TTableHeaderBlock = {
                 colSpan: 1,
-                title: title,
+                title: title || '',
                 width: columnWidth,
             }
             return headerBlock

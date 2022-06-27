@@ -22,7 +22,17 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType = 'select' | 'text' | 'number' | 'textarea' | 'tel' | 'checkbox' | 'textSelect' | 'date' | 'time' | 'custom'
+export type InputType =
+    'select'
+    | 'text'
+    | 'number'
+    | 'textarea'
+    | 'tel'
+    | 'checkbox'
+    | 'textSelect'
+    | 'date'
+    | 'time'
+    | 'custom'
 
 export enum EnumTypeAdditionalParamsSelect {
     InputAdditionalParamsSelect = 'InputAdditionalParamsSelect',
@@ -83,34 +93,33 @@ export type CellParam<T> = {
     readonly fontSize?: number
     readonly placeholder?: string
     readonly disabled?: boolean
-
 }
 export type ColumnWidth = number | 'inherit' | 'all'
-export type Column<T = string> = {
-    readonly title: string
-    readonly cellParam: CellParam<unknown>
-    readonly width: ColumnWidth
+export type Column<Val = any, T = string, > = {
+    readonly title?: string
+    readonly cellParam: CellParam<Val>
+    readonly width?: ColumnWidth
     readonly hidden?: boolean
     readonly subColumns?: Map<T, Column>
     readonly subColumnsStyle?: 'line'
 }
-export type Columns<T = string> = Map<T, Column>
+export type Columns<T = string, Val = any> = Map<T, Column<Val>>
 export type SectionParam = {
     hidden?: boolean
     title: string
     width: number
-    fontSize: number
+    fontSize?: number
 }
-export type SectionTableStructure<T = string> = {
+export type SectionTableStructure<T = string, Val = any> = {
     sectionParams: SectionParam
     sectionInner?: SectionTable
-    columns: Columns<T>
+    columns: Columns<T, Val>
 }
-export type SectionTable<T = string, S = string> = Map<T, SectionTableStructure<S>>
-export type TShieldStructure<T = string> = {
-    section: SectionTable<T>
+export type SectionTable<T = string, S = string, Val = any> = Map<T, SectionTableStructure<S, Val>>
+export type TShieldStructure<T = string, S = string, Val = any> = {
+    section: SectionTable<T, S, Val>
     innerTable?: TableStructure
 }
-export type TableStructure<T = string> = {
-    shield: TShieldStructure<T>
+export type TableStructure<T = string, S = string, Val = any> = {
+    shield: TShieldStructure<T, S, Val>
 }

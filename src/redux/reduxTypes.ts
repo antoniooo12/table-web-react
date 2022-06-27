@@ -23,13 +23,13 @@ export type TTableLine = {
     innerTableInformation?: TableReduxStructure
 }
 
-export type TableColumn = Map<string, Item>
+export type TableColumn = Map<string, Item<unknown>>
 export type Item<T = unknown, S = string> = {
-    id: number | string;
+    id:  string;
     nameColumn: S;
     value: T
     wasEdit: boolean;
-    subColumns?: Map<string, Item>
+    subColumns?: Map<string, Item<unknown>>
     dependencyId?: Record<string, number>
 }
 export type TExternalData<T> = Map<string, { nameColumn: string, value: T }>

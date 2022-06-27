@@ -6,19 +6,21 @@ import {useCellAggregatorService} from "./useCellAgregatorService";
 
 export type TCellAggregator = {
     nameInput: string
-    cellData: Item
+    cellData: Item<unknown>
     cellParam: CellParam<unknown>
     parentCell?: string
+    className?: string
 }
 
 
 const CellAggregator: React.FC<TCellAggregator> = React.memo((props) => {
 
-    const {Component ,setValue,value, cellParam} = useCellAggregatorService(props)
+    const {Component, setValue, value, cellParam} = useCellAggregatorService(props)
 
     return (
         <>
             < Component
+                className={props.className}
                 setExternalValue={customSetExternalCell(setValue)}
                 externalValue={value}
                 additionalParams={cellParam.additionalParams}
@@ -27,6 +29,7 @@ const CellAggregator: React.FC<TCellAggregator> = React.memo((props) => {
         </>
     );
 },);
+
 
 
 export {CellAggregator}
