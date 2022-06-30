@@ -1,9 +1,16 @@
 import {createContext, useContext} from "react";
 import {Column, TSelectOptions, TShieldStructure} from "../../types/TableStructure";
-import {CustomCellMap, CustomComponents, ViewMode} from "../../API/TableWebAPITypes";
+import {
+    CustomCellMap,
+    CustomComponents,
+    SetInnerTable,
+    TableExternalShieldData,
+    ViewMode
+} from "../../API/TableWebAPITypes";
 import {MReactDispSetter} from "../../types/HelperTypes";
 import {TableReduxStructure} from "../../redux/reduxTypes";
 import {CustomFunctionMap} from "../../API/customFunction";
+import {TLine} from "../Line/Line";
 
 export type TableWebContext = {
     columns: Map<string, Column>
@@ -22,6 +29,7 @@ export type TableWebContext = {
     dataToInnerTable?: {
         customCellMapInner?: CustomCellMap
     }
+    setInnerTable?: SetInnerTable
 }
 
 export const TableWebContext = createContext<TableWebContext>({} as TableWebContext)

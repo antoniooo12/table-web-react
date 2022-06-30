@@ -7,7 +7,7 @@ import {
     SectionTable,
     SectionTableStructure,
     TableStructure
-} from "./types/TableStructure";
+} from "../../../types/TableStructure";
 
 export enum EColumOrderInfo {
     deliveryAddress = 'deliveryAddress',
@@ -77,29 +77,7 @@ const deliveryAddress: Column = {
     width: 150,
 }
 const clientPhoneTuple: [EColumnClientInfo.clientPhone, Column] = [EColumnClientInfo.clientPhone, clientPhoneColumn]
-// const clientActiveTuple: [string, Column] = ['clientActive', clientActiveColumn]
-// const clientRatingTuple: [string, Column] = ['clientRating', clientRatingColumn]
 
-// const houseTypeColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsSelect> = {
-//     type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsSelect,
-//     variants: [{
-//         text: 'Усі',
-//         value: '1',
-//         disabled: false,
-//         selected: true,
-//     }, {
-//         text: 'Новобудови',
-//         value: '2',
-//         disabled: false,
-//         selected: false,
-//     }, {
-//         text: 'Вториний ринок',
-//         value: '3',
-//         disabled: false,
-//         selected: false,
-//     },
-//     ]
-// }
 const orderSum: Column = {
     title: 'sum',
     cellParam: {

@@ -1,6 +1,6 @@
 import {CustomCell, CustomCellComponent, CustomCellMap, CustomCells} from "../../../API/TableWebAPITypes";
 import {SumOfProduct} from "./SumOfProduct/SumOfProduct";
-import {EColumOrderInfo, EProductInfo} from "../../../example";
+import {EColumOrderInfo, EProductInfo} from "../tableExampleData/example";
 import {ProductName} from "./ProductName/ProductName";
 import {SumOfOrder} from "./SumOfOrder/SumOfOrder";
 import {OrdinaryNumber} from "./OrdenaryNumber/OrdinaryNumber";

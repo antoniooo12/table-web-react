@@ -1,6 +1,7 @@
 import {Columns} from "../types/TableStructure";
 import {HTMLInputTypeAttribute} from "react";
 import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
+import {TransformedExternalLineToRedux} from "../API/TableWebAPI";
 
 export type TableState = {
     storage: TableReduxStructure
@@ -61,7 +62,7 @@ export type TOnDeleteLine = {
     status: TStatus
 }
 export type TOnLoadExternalData = {
-    externalData: TInitialValue[]
+    externalData: TransformedExternalLineToRedux[]
     columnsStructure: Columns
 }
 export type TOnSetEditableLine = {

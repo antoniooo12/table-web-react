@@ -7,10 +7,12 @@ import {CustomFunctionMap} from "./customFunction";
 import React, {FC} from "react";
 import {TCell} from "../componets/Column/Cell/cellTypes";
 import {TLine} from "../componets/Line/Line";
+import {TransformedExternalLineToRedux} from "./TableWebAPI";
 
 export type TableButtons = {
     isShow: boolean
 }
+export type SetInnerTable = (lineInformation: TLine) => TableExternalShieldData | undefined
 export type TTableInit = {
     tableStructure: TableStructure,
     externalData?: TableExternalShieldData,
@@ -20,6 +22,7 @@ export type TTableInit = {
     customCells?: CustomCells
     customLine?: CustomLine
     tableButtons?: TableButtons
+    setInnerTable?: SetInnerTable
 }
 export type CustomCells = {
     table?: CustomCellMap<any>
@@ -29,7 +32,7 @@ export type ViewMode = 'table' | 'innerTable'
 export type TTableConnect = {
     setTableExternalState?: MReactDispSetter<TableReduxStructure>
     tableStructure: TableStructure
-    tableData?: TInitialValue[]
+    tableData?: TransformedExternalLineToRedux[]
     optionsMap?: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
@@ -37,7 +40,7 @@ export type TTableConnect = {
     viewMode?: ViewMode
     customLine?: CustomLine
     tableButtons?: TableButtons
-
+    setInnerTable?: SetInnerTable
 }
 export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
 

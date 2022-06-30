@@ -60,9 +60,9 @@ const LineButtons = () => {
             <ButtonGroup.Button onClick={onEdit}>
                 <ButtonGroup.SvgEdit/>
             </ButtonGroup.Button>
-            <ButtonGroup.Button onClick={onMore}>
-                <ButtonGroup.SvgMore/>
-            </ButtonGroup.Button>
+            {/*<ButtonGroup.Button onClick={onMore}>*/}
+            {/*    <ButtonGroup.SvgMore/>*/}
+            {/*</ButtonGroup.Button>*/}
             {viewMode === 'table' && <ButtonGroup.Button onClick={onShowInnerTable}>
                 <ButtonGroup.SvgFabric svgName={'SvgArrowDown'}/>
             </ButtonGroup.Button>}

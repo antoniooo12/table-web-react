@@ -6,7 +6,6 @@ export enum EColumns2 {
     'cost' = 'cost',
     'type' = 'type',
     'sum' = 'sum',
-
 }
 
 const titleColumn: [EColumns2, Column<TString>] = [EColumns2.title, {

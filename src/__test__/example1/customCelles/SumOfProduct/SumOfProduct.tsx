@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
-import {EProductInfo} from "../../../../example";
+import {EProductInfo} from "../../tableExampleData/example";
 import cl from '../CustomCell.module.scss'
 
 const SumOfProduct: CustomCellComponent<number> = ({lineInformation}) => {

@@ -13,7 +13,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
     switch (action.type) {
         case EnumTableReducer.createLine: {
             const {columnsStructure, initialValue} = action.payload
-            const lineToTable = createLineToTable(columnsStructure, initialValue, EnumStatus.isNew)
+            const lineToTable = createLineToTable(columnsStructure, initialValue, EnumStatus.isNew, )
             return produce(state, draft => {
                 draft.storage.data.push(lineToTable)
             })
@@ -57,7 +57,7 @@ export function tableStoreReducer(state: TableState = defaultState, action: Tabl
         case EnumTableReducer.loadExternalData: {
             const {externalData, columnsStructure} = action.payload
             const table = externalData.map(externalLine => {
-                return createLine(EnumStatus.isAll)()(createColumns(columnsStructure)(externalLine))
+                return createLine(EnumStatus.isAll)(externalLine.lineInformation.id)(createColumns(columnsStructure)(externalLine.columnInformation))
             })
             return produce(state, draft => {
                 const filteredTable = draft.storage.data

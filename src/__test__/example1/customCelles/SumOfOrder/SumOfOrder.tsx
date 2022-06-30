@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
 import {useInnerTable} from "../../../../componets/TableWeb/InnerTableConnector/InnerTableConnector";
-import {EProductInfo} from "../../../../example";
+import {EProductInfo} from "../../tableExampleData/example";
 import cl from '../CustomCell.module.scss'
 const SumOfOrder: CustomCellComponent<number> = ({cellInformation}) => {
     const {innerTableMap} = useInnerTable()

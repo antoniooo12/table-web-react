@@ -5,7 +5,7 @@ import {absurd} from "fp-ts/function";
 import {defaultFunctions} from "../../../hellpers/defaultFunctions/defaultFunctions";
 import {useTableWebContext} from "../../TableWeb/TableWebContext";
 
-type TColumnToRedux = { value: unknown, subData?: TInitialValue }
+type TColumnToRedux = { value: unknown, subData?: TInitialValue, id?: string }
 export type TInitialValue = Map<string, TColumnToRedux>
 export const findInitialValueToCreateLine = (columnStructure: Columns, previousValues?: Map<string, unknown>): TInitialValue => {
     const values = [...columnStructure.entries()]

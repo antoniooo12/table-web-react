@@ -18,7 +18,7 @@ const TestExamplesNavigation = () => {
         title: 'variant 2',
     }]
 
-    const [variant, setVariant] = useState<Variant>(variants[1])
+    const [variant, setVariant] = useState<Variant>(variants[0])
 
     return (
 
