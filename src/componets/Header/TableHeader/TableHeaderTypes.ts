@@ -1,7 +1,7 @@
 
 export type TTableHeaderBlock = {
     title: string
-    colSpan: number
+    colSpan?: number
     width?: number
 }
 

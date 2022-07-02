@@ -15,18 +15,12 @@ const CellBlock: React.FC<TColumn> = (props) => {
     const columnParam = useGetColumnParam(cellName)
     const Cell = <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
                                 className={className}/>
-    // const Cell = useBinder(props)
 
     return (
         <>
             {!columnParam.hidden &&
-            columnParam.cellParam.type === "custom" ?
                 <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
-                               className={className}/> :
-                <td>
-                    <CellGenerator cellName={cellName} cellData={cellData} viewType={viewType}
-                                   className={className}/> {/*{Cell}*/}
-                </td>
+                               className={className}/>
             }
         </>
     );

@@ -1,6 +1,4 @@
 import React, {createContext, useContext} from "react";
-import {TLineData} from "./Line";
-import {TableColumn, TTableLine} from "../../redux/reduxTypes";
 
 type LineContext = {
     styleGrid:  React.CSSProperties

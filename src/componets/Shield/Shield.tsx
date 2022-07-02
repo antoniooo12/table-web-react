@@ -1,21 +1,11 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Line} from "../Line/Line";
-import {BottomTablePanel} from "../Panels/BottomTablePanel";
-import {TShieldStructure} from "../../types/TableStructure";
 import {useTableTypedSelector} from "../../hooks/useTableTypedSelector";
-import {TableWebContext} from "../TableWeb/TableWebContext";
-import {ViewMode} from "../../API/TableWebAPITypes";
-import {TableReduxStructure, TableState} from "../../redux/reduxTypes";
-import {useInnerTable} from "../TableWeb/InnerTableConnector/InnerTableConnector";
 
-export type ComponentShield = {
-    shieldStructure: TShieldStructure
-}
 
-const Shield: React.FC<ComponentShield> = React.memo(({shieldStructure}) => {
+const Shield: React.FC = React.memo(() => {
     const {storage} = useTableTypedSelector(state => state.tableStore)
-    const {viewMode} = useContext(TableWebContext)
-    const {columns} = useContext(TableWebContext)
+
     return (
         <>
             {storage.data.map((line) => {

@@ -1,6 +1,5 @@
 import {createContext, useContext} from "react";
-import {TLineData} from "./Line";
-import {TableColumn, TTableLine} from "../../redux/reduxTypes";
+import {TTableLine} from "../../redux/reduxTypes";
 
 type LineContext =TTableLine
 

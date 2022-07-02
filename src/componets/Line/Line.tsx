@@ -1,5 +1,4 @@
-import cl from './Line.module.scss'
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {Item, TStatus} from "../../redux/reduxTypes";
 import {LineContext} from "./LineContext";
 import {TableWebContext} from "../TableWeb/TableWebContext";
@@ -10,9 +9,8 @@ import {LineViewColumns} from "./Views/LineViewColumns";
 import {LineServiceContext} from "./LineContexrService";
 import {LineViewButtons} from "./Views/LineViewButtons";
 import {useCustomContext} from "../TableWeb/customContext";
-import {TableExternalShieldData, TTableInit} from "../../API/TableWebAPITypes";
-import {EColumns2} from "../../__test__/example2/table/tableStructure";
-import {EColumOrderInfo, EProductInfo} from "../../__test__/example1/tableExampleData/example";
+import {TTableInit} from "../../API/TableWebAPITypes";
+import {LineViewCustom} from "./Views/LineViewCustom";
 
 export type TLineData = {
     status: TStatus
@@ -59,25 +57,30 @@ const Line: React.FC<TLine> = React.memo((props) => {
                 >
                     <>
                         {CustomLine ?
-                            <CustomLine {...props}/> :
+                            <LineViewCustom {...props} />:
+                            // <CustomLine {...props}/> :
                             <tr>
                                 <LineViewColumns/>
                                 <LineViewButtons/>
                             </tr>
                         }
                     </>
-                    <>
+                    <tr>
                         {shield.innerTable && tableInit &&
-                            <div
-                                style={{display: innerTable.isShowInnerTableController.isShowInnerTable ? "block" : 'none'}}
+                            <td
+                                colSpan={12}
+                                style={{
+                                    display: innerTable.isShowInnerTableController.isShowInnerTable ? "table-cell" : 'none'
+                                }}
                             >
+
                                 <LineInnerTable
                                     tableInit={tableInit}
                                     setInnerTable={innerTable.setInnerTable}
                                     id={lineIdt}
                                 />
-                            </div>}
-                    </>
+                            </td>}
+                    </tr>
                 </LineServiceContext.Provider>
             </InnerTableConnectorContext.Provider>
         </LineContext.Provider>

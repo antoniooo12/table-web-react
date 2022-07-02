@@ -22,17 +22,7 @@ const allTypes = {
 export type ColumnParam = {
     width: number
 }
-export type InputType =
-    'select'
-    | 'text'
-    | 'number'
-    | 'textarea'
-    | 'tel'
-    | 'checkbox'
-    | 'textSelect'
-    | 'date'
-    | 'time'
-    | 'custom'
+export type InputType = 'custom'
 
 export enum EnumTypeAdditionalParamsSelect {
     InputAdditionalParamsSelect = 'InputAdditionalParamsSelect',
@@ -61,22 +51,6 @@ export type TSelectOptions = {
     text: string
 }
 
-export type InputAdditionalParamsTel = {
-    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel
-    format: string
-}
-export type InputAdditionalParamsNumber = {
-    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber
-    min: number
-    max: number
-    step: number
-}
-// export type InputAdditionalAttributes = { Tel: InputAdditionalParamsTel } | { number: InputAdditionalParamsNumber }
-export type InputAdditionalAttributes =
-    InputAdditionalParamsTel
-    | InputAdditionalParamsNumber
-    | InputAdditionalParamsSelect
-    | InputAdditionalParamsSelectV2
 
 type TDefaultFunctions = keyof typeof defaultFunctions
 export type DefaultValue<T> =
@@ -86,9 +60,8 @@ export type DefaultValue<T> =
     | { readonly type: 'customFunction', value: Function }
 export type CellParam<T> = {
     readonly default: DefaultValue<T>
-    readonly type: InputType
+    // readonly type?: InputType //delete
     readonly name: string
-    readonly additionalParams?: InputAdditionalAttributes
     readonly hidden?: boolean
     readonly fontSize?: number
     readonly placeholder?: string

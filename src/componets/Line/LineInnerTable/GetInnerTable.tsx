@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import {SetInnerTable} from "./LineInnerTable";
 import {useTableTypedSelector} from "../../../hooks/useTableTypedSelector";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {UpdateExternalStore} from "../../TableWeb/utils/UtilsComponent/UpdateExternalStore";
 
 const GetGetInnerTableState: React.FC<SetInnerTable> = React.memo(({setInnerTable}) => {
     const {storage} = useTableTypedSelector(state => state.tableStore)

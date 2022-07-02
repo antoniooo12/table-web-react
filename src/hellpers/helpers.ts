@@ -40,14 +40,7 @@ export const selectType = <T>(initialValue: T | number | boolean, value: T | num
     return value
 }
 
-export const selectCellType = (type: InputType, value?: SNB | undefined): SNB => {
-    if (type === 'checkbox') {
-        return value ? Boolean(value) : false
-    } else if (type === 'number') {
-        return value ? Number(value) : 0
-    }
-    return value || ''
-}
+
 
 export const arrayOfObjectsToMap = <T>(objs: T[], key: keyof T): Map<T[keyof T], T> => {
     return objs.reduce((accum, obj) => {

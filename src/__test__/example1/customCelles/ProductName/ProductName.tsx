@@ -1,8 +1,11 @@
 import React, {ChangeEvent} from 'react';
-import {CustomCellProps} from "../../../../API/TableWebAPITypes";
+import {CustomCellComponent, CustomCellProps} from "../../../../API/TableWebAPITypes";
 import cl from '../CustomCell.module.scss'
+import {useCellCustomContext} from "../../../../componets/Column/Cell/Custom/CellCustomContext";
 
-const ProductName: React.FC<CustomCellProps<string>> = ({cellInformation, lineInformation}) => {
+const ProductName: CustomCellComponent = ({cellName}) => {
+    const {cellInformation, lineInformation} = useCellCustomContext<string>(cellName)
+
     const onClick = (e: ChangeEvent<HTMLInputElement>) => {
         cellInformation.setExternalValue(e.target.value)
     }

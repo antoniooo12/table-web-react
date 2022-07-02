@@ -1,15 +1,12 @@
-import cl from './TableWeb.module.scss'
 import React, {useEffect, useMemo, useState} from 'react';
-import {Shield} from "../Shield/Shield";
 import {TableWebContext} from "./TableWebContext";
-import {BottomTablePanel} from "../Panels/BottomTablePanel";
 import {setterPreviousValues} from "./TableWebUtils";
 import {useActionsTable} from "../../hooks/useActionsTable";
 import {CustomCellMap, TTableConnect} from "../../API/TableWebAPITypes";
 import {shieldChecker, useOpenInBigPicture} from "./utils/utils";
 import {CustomContext} from "./customContext";
-import {TableHeader} from "../Header/TableHeader/TableHeader";
 import {useCalcColumns} from "./utils/useCalcColumns";
+import {TableWebView} from "./View/TableWebView";
 
 
 export type TTableWeb = {
@@ -19,7 +16,6 @@ export type TTableWeb = {
 export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}) => {
     const {
         tableStructure,
-        optionsMap,
         tableData,
         customComponents,
         viewMode = 'table',
@@ -28,6 +24,7 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         customCells,
         tableButtons,
         setInnerTable,
+        isHeaderShow,
     } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
     const {shield} = tableStructure
@@ -50,38 +47,30 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
     const customCellMapInner: CustomCellMap | undefined = useMemo(() => {
         return tableConnect.customCells?.innerTable
     }, [tableConnect.customCells])
-
+    const tableWebContextData: TableWebContext = {
+        columns,
+        shield: checkedShield,
+        previous: [previousValues, setterPreviousValues(setPreviousValues)],
+        bigPictureController,
+        customComponents,
+        viewMode,
+        customCellMap,
+        customFunctionMap,
+        dataToInnerTable: {
+            customCellMapInner: customCellMapInner
+        },
+        setInnerTable,
+    }
     return (
         <TableWebContext.Provider
-            value={{
-                columns,
-                shield: checkedShield,
-                previous: [previousValues, setterPreviousValues(setPreviousValues)],
-                optionsMap,
-                bigPictureController,
-                customComponents,
-                viewMode,
-                customCellMap,
-                customFunctionMap,
-                dataToInnerTable: {
-                    customCellMapInner: customCellMapInner
-                },
-                setInnerTable,
-            }}
+            value={tableWebContextData}
         >
             <CustomContext.Provider
                 value={{customCellMap, customFunctionMap, customComponents, CustomLine: customLine}}>
-                <table>
-                    <div
-                        className={cl.wrapper}
-                    >
-                        {viewMode === 'table' && tableButtons?.isShow && <BottomTablePanel/>}
-
-                        <TableHeader/>
-                        <Shield shieldStructure={shield}/>
-                        {viewMode === 'innerTable' && <BottomTablePanel/>}
-                    </div>
-                </table>
+                {tableConnect.customTable  ?
+                    <  tableConnect.customTable tableWebContext={tableWebContextData} shieldStructure={shield}/> :
+                    <TableWebView shieldStructure={shield} viewMode={viewMode} tableButtons={tableButtons} isHeaderShow={isHeaderShow}/>
+                }
             </CustomContext.Provider>
         </TableWebContext.Provider>
 

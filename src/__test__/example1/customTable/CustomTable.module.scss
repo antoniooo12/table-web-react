@@ -1,0 +1,12 @@
+.table {
+  table {
+    table-layout: fixed;
+    width: fit-content;
+  }
+
+  table, th, td {
+    border: 1px solid #2E3B52;
+    border-collapse: collapse;
+  }
+
+}

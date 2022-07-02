@@ -4,8 +4,11 @@ import {CustomCellComponent} from "../../../../../../API/TableWebAPITypes";
 import {EColumns2} from "../../../../table/tableStructure";
 import {SvgAdd} from "./SVG/SvgAdd";
 import {SvgMinus} from "./SVG/SvgMinus";
+import {useCellCustomContext} from "../../../../../../componets/Column/Cell/Custom/CellCustomContext";
 
-const CellCount: CustomCellComponent<number> = ({cellInformation, lineInformation}) => {
+const CellCount: CustomCellComponent<number> = ({cellName}) => {
+    const {cellInformation, lineInformation} = useCellCustomContext<number>(cellName)
+
     const type = lineInformation.columns.get(EColumns2.type)?.value as string
     const {externalValue, setExternalValue} = cellInformation
 

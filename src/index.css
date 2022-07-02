@@ -8,9 +8,4 @@ html, body{
   margin: 0;
   font-size: 18px;
   position: relative;
-  /*overflow: hidden;*/
-}
-table, th, td {
-  /*border: 1px solid #2E3B52;*/
-  border-collapse: collapse;
 }

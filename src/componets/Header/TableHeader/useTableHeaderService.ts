@@ -1,14 +1,20 @@
 import {useContext} from "react";
 import {TableWebContext} from "../../TableWeb/TableWebContext";
 import {TTableHeaderBlock} from "./TableHeaderTypes";
+import {SectionTable, SectionTableStructure} from "../../../types/TableStructure";
 
 
 export const useTableHeaderService = () => {
     const {shield: {section}} = useContext(TableWebContext)
     let sectionTemplate: TTableHeaderBlock[] = [...section.values()].map(({sectionParams, columns}) => {
         const colSpan = [...columns.keys()].length
+        const width = [...columns.values()].reduce((accum: number, col) => {
+            accum += typeof col.width === "number" ? col.width : 0
+            return accum
+        }, 0)
         const headerBlock: TTableHeaderBlock = {
             colSpan,
+            width,
             title: sectionParams.title,
         }
         return headerBlock

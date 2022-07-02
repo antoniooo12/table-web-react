@@ -13,13 +13,13 @@ export const createDefaultItem = <T>(name: string, initialValue: T, id?: string)
         value: initialValue,
     }
 }
-export const createColumns = (columnsStructure: Columns) => (initialValue: TInitialValue) => {
+export const createColumns = (columnsStructure: Columns) => (initialValue?: TInitialValue) => {
     return [...columnsStructure.entries()].reduce((accum, [key, columnStructure]) => {
-        const column = initialValue.get(key)
+        const column = initialValue && initialValue.get(key)
         const item: Item = {
             ...createDefaultItem(key, column?.value, column?.id),
-            subColumns: columnStructure.subColumns && column && column.subData &&
-                createColumns(columnStructure.subColumns)(column.subData)
+            subColumns: columnStructure.subColumns &&
+                createColumns(columnStructure.subColumns)(column?.subData)
         }
 
         accum.set(key, item)

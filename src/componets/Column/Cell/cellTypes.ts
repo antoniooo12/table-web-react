@@ -1,6 +1,4 @@
-import {CellParam, InputAdditionalAttributes} from "../../../types/TableStructure";
-import React from "react";
-import {BaseInput} from "./BaseInput/BaseInput";
+import {CellParam} from "../../../types/TableStructure";
 import {MReactDispSetter} from "../../../types/HelperTypes";
 
 export type TCell<N> = {
@@ -8,6 +6,10 @@ export type TCell<N> = {
     setExternalValue: MReactDispSetter<N>
     // setExternalValue: (value: N) => void
     cellParam: CellParam<N>,
-    additionalParams?: InputAdditionalAttributes
-    className?:string
+    className?: string
+}
+export type TCell2<N> = {
+    setExternalValue: <T>(value: T) => void
+    cellParam: CellParam<N>,
+    className?: string
 }

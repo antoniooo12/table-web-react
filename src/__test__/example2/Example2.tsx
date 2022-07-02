@@ -13,12 +13,13 @@ const Example2 = () => {
 
     return (
         <div className={cl.wrapper}>
-
-            <TableWebProviderComponent
-                tableConnect={connector}
-            />
-            <div className={cl.orderButton}>
-            <MakeOrderButton cost={cost}/>
+            <div className={cl.orderPanel}>
+                <TableWebProviderComponent
+                    tableConnect={connector}
+                />
+                <div className={cl.orderButton}>
+                    <MakeOrderButton cost={cost}/>
+                </div>
             </div>
         </div>
     );

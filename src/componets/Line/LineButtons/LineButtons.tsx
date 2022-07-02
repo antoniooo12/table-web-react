@@ -30,20 +30,9 @@ const LineButtons = () => {
     const onDelete = () => {
         tableDeleteLine({lineId: id, status})
     }
-    const [c, sC] = useState(0)
-    useEffect(() => {
-        // innerTableMap?.subscribe(()=> {sC(prevState => prevState++)})
-        // console.log(innerTableMap?.getState().tableStore.storage.data)
-    }, [c])
-    // const s = l && l(state => state.tableStore.storage)
 
     const {tableSetEditableLine} = useActionsTable()
     const onEdit = () => {
-
-        console.log('00000')
-        console.log(innerTableMap)
-        console.log('fffffffff')
-
         tableSetEditableLine({lineId: id})
     }
     const onMore = () => {

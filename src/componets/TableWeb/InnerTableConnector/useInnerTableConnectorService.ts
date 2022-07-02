@@ -1,9 +1,7 @@
-import {useContext, useEffect, useState} from "react";
-import {TableReduxStructure, TableState} from "../../../redux/reduxTypes";
-import {TTableStore} from "../TableWebProviderComponent";
+import {useEffect, useState} from "react";
+import {TableReduxStructure} from "../../../redux/reduxTypes";
 import {useActionsTable} from "../../../hooks/useActionsTable";
-import {tableSetEditableLine, tableSetInnerTable} from "../../../redux/tableReducer";
-import {useLineContext} from "../../Line/LineContext";
+import {tableSetInnerTable} from "../../../redux/tableReducer";
 
 export const useInnerTableConnectorService = (id: string) => {
     const {tableSetInnerTable} = useActionsTable()

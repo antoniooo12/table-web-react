@@ -1,9 +1,6 @@
 import {
     Column,
     EnumTypeAdditionalParamsSelect,
-    InputAdditionalAttributes,
-    InputAdditionalParamsNumber,
-    InputAdditionalParamsTel,
     SectionTable,
     SectionTableStructure,
     TableStructure
@@ -13,20 +10,11 @@ export enum EColumOrderInfo {
     deliveryAddress = 'deliveryAddress',
     orderSum = 'orderSum',
     deliveryComment = 'deliveryComment',
-    deliveryTimeTuple = 'deliveryTimeTuple',
+    deliveryDay = 'deliveryDay',
     deliveryTimeBefore = 'deliveryTimeBefore',
+    deliveryTimeAfter = 'deliveryTimeAfter',
 }
 
-const clientRatingColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsNumber> = {
-    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsNumber,
-    max: 10,
-    min: 1,
-    step: 0.25,
-}
-const clientPhoneColumnAdditionalInformation: Extract<InputAdditionalAttributes, InputAdditionalParamsTel> = {
-    type: EnumTypeAdditionalParamsSelect.InputAdditionalParamsTel,
-    format: 'xxx_xxx_xx_xx_',
-}
 
 export enum EColumnClientInfo {
     clientName = 'clientName',
@@ -39,30 +27,18 @@ const clientRatingColumn: Column = {
     width: 90,
     cellParam: {
         name: 'рейтинг',
-        type: 'number',
         default: {value: 3, type: 'Default'},
-        additionalParams: clientRatingColumnAdditionalInformation
     },
 
 }
 
-const clientActiveColumn: Column = {
-    title: 'активний',
-    cellParam: {
-        name: 'активний',
-        default: {value: true, type: 'Default'},
-        type: 'checkbox'
-    },
-    width: 90,
-}
+
 const clientPhoneColumn: Column = {
     title: 'номер',
     cellParam: {
-        placeholder: 'номер клієнта',
+        placeholder: EColumnClientInfo.clientPhone,
         name: 'номер',
         default: {type: 'Previous', orNotPrevious: ''},
-        type: 'tel',
-        additionalParams: clientPhoneColumnAdditionalInformation,
     },
     width: 180,
 }
@@ -70,13 +46,21 @@ const deliveryAddress: Column = {
     title: 'адресса',
     cellParam: {
         placeholder: 'адрес доставки',
-        name: 'адресса',
+        name: EColumOrderInfo.deliveryAddress,
         default: {type: 'Default', value: ''},
-        type: 'text',
     },
     width: 150,
 }
-const clientPhoneTuple: [EColumnClientInfo.clientPhone, Column] = [EColumnClientInfo.clientPhone, clientPhoneColumn]
+const clientPhoneTuple: [EColumnClientInfo.clientPhone, Column] = [EColumnClientInfo.clientPhone, {
+    title: 'номер',
+    cellParam: {
+        placeholder: 'номер',
+        name: EColumnClientInfo.clientPhone,
+        // default: {type: 'Previous', orNotPrevious: ''},
+        default: {type: 'Default', value: ''},
+    },
+    width: 180,
+}]
 
 const orderSum: Column = {
     title: 'sum',
@@ -86,7 +70,6 @@ const orderSum: Column = {
             type: 'Default',
             value: 0,
         },
-        type: "custom",
         disabled: false,
     },
     width: 85
@@ -95,9 +78,8 @@ const orderSum: Column = {
 const clientNameTuple: [EColumnClientInfo.clientName, Column] = [EColumnClientInfo.clientName, {
     title: 'Імʼя клієнта',
     cellParam: {
-        name: 'Імʼя клієнта',
+        name: EColumnClientInfo.clientName,
         default: {type: 'Default', value: ''},
-        type: 'text',
         placeholder: 'імʼя'
     },
     width: 100,
@@ -107,9 +89,8 @@ const clientNameTuple: [EColumnClientInfo.clientName, Column] = [EColumnClientIn
 const clientComment: Column = {
     title: 'коментар до клієнта',
     cellParam: {
-        name: 'коментар до клієнта',
+        name: EColumnClientInfo.clientComment,
         default: {type: 'Default', value: ''},
-        type: 'textarea',
         placeholder: 'коментар до клієнта'
     },
     width: 150,
@@ -117,9 +98,8 @@ const clientComment: Column = {
 const deliveryComment: Column = {
     title: 'коментар до доставки',
     cellParam: {
-        name: 'коментар до доставки',
+        name: EColumOrderInfo.deliveryComment,
         default: {type: 'Default', value: ''},
-        type: 'textarea',
         placeholder: 'коментар до доставки'
     },
     width: 150,
@@ -162,7 +142,6 @@ const productCostCell: Column = {
     width: 100,
     cellParam: {
         name: EProductInfo.productCost,
-        type: 'number',
         default: {type: 'Default', value: 0},
         fontSize: 18,
     }
@@ -184,9 +163,7 @@ const innerTable: TableStructure = {
                             width: 150,
                             cellParam: {
                                 name: EProductInfo.productName,
-                                type: 'custom',
                                 default: {type: 'Default', value: ''},
-                                // fontSize: 17,
                             }
                         }
                     ], [EProductInfo.productCost,
@@ -195,7 +172,6 @@ const innerTable: TableStructure = {
                             width: 100,
                             cellParam: {
                                 name: EProductInfo.productCost,
-                                type: 'custom',
                                 default: {type: 'Default', value: 0},
                             }
                         }
@@ -205,7 +181,6 @@ const innerTable: TableStructure = {
                             width: 100,
                             cellParam: {
                                 name: EProductInfo.productCount,
-                                type: 'custom',
                                 default: {type: 'Default', value: 0},
                             }
                         }
@@ -214,7 +189,6 @@ const innerTable: TableStructure = {
                         width: 80,
                         cellParam: {
                             name: EProductInfo.productSum,
-                            type: 'custom',
                             default: {type: 'Default', value: 0},
                         }
                     }]
@@ -226,28 +200,25 @@ const innerTable: TableStructure = {
 const deliveryTime: Column = {
     title: 'часові рамки',
     cellParam: {
-        name: 'deliveryDay',
-        type: 'date',
+        name: EColumOrderInfo.deliveryDay,
         default: {type: 'defaultFunctions', value: 'currentData'},
     },
     width: 200,
     subColumnsStyle: 'line',
-    subColumns: new Map<string, Column>([['afterHour',
+    subColumns: new Map<string, Column>([[EColumOrderInfo.deliveryTimeAfter,
         {
-            // hidden: true,
             title: '',
             width: 100,
             cellParam: {
-                name: 'afterHour', type: 'time', default: {type: 'defaultFunctions', value: 'currentHour'}
+                name: EColumOrderInfo.deliveryTimeAfter,
+                default: {type: 'defaultFunctions', value: 'currentHour'}
             }
         }], [EColumOrderInfo.deliveryTimeBefore,
         {
-            // hidden: true,
             title: '',
             width: 100,
             cellParam: {
                 name: EColumOrderInfo.deliveryTimeBefore,
-                type: 'custom',
                 default: {type: 'Default', value: '18:30'}
             }
         }]])
@@ -264,7 +235,7 @@ export const section: SectionTable<TESection> = new Map([
         },
         columns: new Map([
             [EColumOrderInfo.deliveryAddress, deliveryAddress],
-            [EColumOrderInfo.deliveryTimeTuple, deliveryTime],
+            [EColumOrderInfo.deliveryDay, deliveryTime],
             [EColumOrderInfo.orderSum, orderSum],
             [EColumOrderInfo.deliveryComment, deliveryComment]
         ])

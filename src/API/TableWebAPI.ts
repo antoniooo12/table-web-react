@@ -16,12 +16,17 @@ export type TransformedExternalLineToRedux = { lineInformation: Partial<TLineInf
 const transformExternalData = (tableExternalData: TableExternalShieldData) => (tableStructure: TableStructure):
     TransformedExternalLineToRedux[] => {
     const columns = executeColumns(tableStructure)
-    const s: TransformedExternalLineToRedux[] = tableExternalData.map(line => {
+    const lines: TransformedExternalLineToRedux[] = tableExternalData.map(line => {
         const temp = arrayOfObjectsToMap(line.columns, "nameColumn")
+        console.log('000000')
+        console.log(line)
+
         const columnInformation: TInitialValue = [...columns.entries()].reduce((accum: TInitialValue, [key, columnParams]) => {
             const column = temp.get(key)
-            return accum.set(key, {value: column?.value, id: column?.id})
+            return accum.set(key, {value: column?.value, id: column?.id, subData: column?.subColumns})
         }, new Map())
+        console.log('cells: ')
+        console.log(temp.size)
         return {
             columnInformation,
             lineInformation: {
@@ -29,27 +34,13 @@ const transformExternalData = (tableExternalData: TableExternalShieldData) => (t
             }
         }
     })
-    return s
+    return lines
 }
-const useUploadOptions = (columns: Map<string, Column>, externalOptionsMap: Map<string, TSelectOptions[]> = new Map<string, TSelectOptions[]>()) => useMemo(() => {
-    const newOptionsMap = new Map<string, TSelectOptions[]>()
-    for (const [columnKey, column] of columns) {
-        if (column?.cellParam.type === 'textSelect') {
-            const additionalParams = column.cellParam.additionalParams
-            if (additionalParams?.type === 'InputAdditionalParamsSelectV2') {
-                const externalOptions = externalOptionsMap.get(column.cellParam.name) || []
-                newOptionsMap.set(column.cellParam.name, [...additionalParams.variants, ...externalOptions])
-            }
-        }
-    }
-    return newOptionsMap
-}, [])
+
 
 type TUseConnectWebTableState = {
     connector: TTableConnect
     api: {
-        // setTableExternalDataJSON: MReactDispSetter<TableExternalShieldData>
-        setOptionsMap: React.Dispatch<React.SetStateAction<Map<string, TSelectOptions[]>>>
         data: {
             tableExternalState: TableReduxStructure
         }
@@ -74,6 +65,9 @@ export const useConnectWebTableState = ({
                                             customLine,
                                             tableButtons,
                                             setInnerTable,
+                                            customTable,
+                                            customHeader,
+                                            isHeaderShow,
                                         }: TTableInit): TUseConnectWebTableState => {
     const [tableExternalDataJSON, setTableExternalDataJSON] = useState<TableExternalShieldData>(externalData || [])
     const [tableExternalState, setTableExternalState] = useState<TableReduxStructure>({data: []})
@@ -82,11 +76,9 @@ export const useConnectWebTableState = ({
         return tableExternalDataJSON && transformExternalData(tableExternalDataJSON)(tableStructure)
     }, [])
     const columns = executeColumns(tableStructure)
-    const [optionsMap, setOptionsMap] = useState<Map<string, TSelectOptions[]>>(useUploadOptions(columns, externalOptionsMap))
     const connector: TTableConnect = useMemo(() => ({
         setTableExternalState,
         tableStructure,
-        optionsMap,
         tableData,
         customComponents: customComponents ? customComponents : {},
         customFunctionMap,
@@ -94,11 +86,13 @@ export const useConnectWebTableState = ({
         customLine,
         tableButtons,
         setInnerTable,
-    }), [optionsMap, tableStructure, tableData])
+        customTable,
+        customHeader,
+        isHeaderShow,
+    }), [tableStructure, tableData])
     return {
         connector,
         api: {
-            setOptionsMap,
             data: {
                 tableExternalState
             },

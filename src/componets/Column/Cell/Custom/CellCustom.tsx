@@ -7,8 +7,12 @@ const CellCustom: React.FC<TCell<unknown>> = (cellInformation) => {
     const {customCellMap} = useContext(TableWebContext)
     const lineInformation = useLineContext()
     const Component = customCellMap?.get(cellInformation.cellParam.name)?.Component
+
     if (Component) {
-        return <Component cellInformation={cellInformation} lineInformation={lineInformation}/>
+
+        return (
+                <Component cellName={cellInformation.cellParam.name} />
+        )
     }
 
 

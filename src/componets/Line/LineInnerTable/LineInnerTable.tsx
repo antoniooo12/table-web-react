@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {TTableConnect, TTableInit} from "../../../API/TableWebAPITypes";
 import {TableReduxStructure} from "../../../redux/reduxTypes";
 import {GetInnerTable} from "./GetInnerTable";
@@ -20,13 +20,14 @@ const LineInnerTable: React.FC<TLineInnerTable & SetInnerTable & { id: string | 
         const {dataToInnerTable} = useContext(TableWebContext)
         const {connector, api} = useConnectWebTableState({
             ...tableInit,
-            tableButtons: {isShow:true}
+            tableButtons: {isShow: true}
         })
         const innerConnector: TTableConnect = {
             ...connector,
             viewMode: "innerTable",
             customCells: {innerTable: dataToInnerTable?.customCellMapInner}
         }
+
         return <GetInnerTable tableConnect={innerConnector} setInnerTable={setInnerTable} id={id}/>
 
 

@@ -3,7 +3,10 @@ import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
 import {useInnerTable} from "../../../../componets/TableWeb/InnerTableConnector/InnerTableConnector";
 import {EProductInfo} from "../../tableExampleData/example";
 import cl from '../CustomCell.module.scss'
-const SumOfOrder: CustomCellComponent<number> = ({cellInformation}) => {
+import {useCellCustomContext} from "../../../../componets/Column/Cell/Custom/CellCustomContext";
+const SumOfOrder: CustomCellComponent<number> = ({cellName}) => {
+    const {cellInformation, lineInformation} = useCellCustomContext<number>(cellName)
+
     const {innerTableMap} = useInnerTable()
     const sum = useMemo(() => {
         if (innerTableMap) {

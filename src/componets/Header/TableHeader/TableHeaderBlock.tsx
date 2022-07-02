@@ -5,12 +5,12 @@ import {TTableHeaderBlock} from "./TableHeaderTypes";
 const TableHeaderBlock: React.FC<TTableHeaderBlock> = ({title, colSpan, width}) => {
 
     return (
-        <th
+        <td
             colSpan={colSpan}
-            style={{width: `${width}px`}}
+            width={width}
         >
             {title}
-        </th>
+        </td>
     );
 };
 

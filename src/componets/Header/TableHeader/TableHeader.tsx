@@ -4,12 +4,13 @@ import {TableHeaderLine} from "./TableHeaderLine";
 
 const TableHeader = () => {
 
-    const {sectionTemplate,columnsTemplate} = useTableHeaderService()
+    const {sectionTemplate, columnsTemplate} = useTableHeaderService()
 
     return (
         <thead>
-            <TableHeaderLine  headerBlockArray={sectionTemplate}/>
-            <TableHeaderLine  headerBlockArray={columnsTemplate}/>
+            <TableHeaderLine headerBlockArray={sectionTemplate}/>
+            <TableHeaderLine headerBlockArray={columnsTemplate}/>
+
         </thead>
     );
 };

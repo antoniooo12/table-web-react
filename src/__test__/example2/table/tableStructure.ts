@@ -11,7 +11,6 @@ export enum EColumns2 {
 const titleColumn: [EColumns2, Column<TString>] = [EColumns2.title, {
     cellParam: {
         name: EColumns2.title,
-        type: "custom",
         default: {
             type: 'Default', value: {
                 type: 'String',
@@ -23,7 +22,6 @@ const titleColumn: [EColumns2, Column<TString>] = [EColumns2.title, {
 const costColumn: [EColumns2, Column<TNumber>] = [EColumns2.cost, {
     cellParam: {
         name: EColumns2.cost,
-        type: "custom",
         default: {
             type: 'Default', value: {
                 type: 'Number',
@@ -35,7 +33,6 @@ const costColumn: [EColumns2, Column<TNumber>] = [EColumns2.cost, {
 const count: Column<TNumber> = {
     cellParam: {
         name: EColumns2.count,
-        type: "custom",
         default: {
             type: 'Default', value: {
                 type: 'Number',
@@ -48,7 +45,6 @@ const countColumn: [EColumns2, Column<TNumber>] = [EColumns2.count, count]
 const sumColumn: [EColumns2, Column<TNumber>] = [EColumns2.sum, {
     cellParam: {
         name: EColumns2.sum,
-        type: "custom",
         default: {
             type: 'Default', value: {
                 type: 'Number',
@@ -69,7 +65,6 @@ const type: Column<TString> = {
     hidden: true,
     cellParam: {
         name: EColumns2.type,
-        type: "custom",
         default: {type: 'Default', value: {type: "String", value: ''}}
     }
 }

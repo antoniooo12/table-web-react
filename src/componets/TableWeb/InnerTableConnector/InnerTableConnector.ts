@@ -2,7 +2,6 @@ import {createContext, useContext} from "react";
 import {TableReduxStructure} from "../../../redux/reduxTypes";
 import {MReactDispSetter} from "../../../types/HelperTypes";
 
-export type getSetterOfSetInnerTable<T> = T extends object ? T extends { setInnerTable: unknown } ? T['setInnerTable'] : null : null
 export type TInnerTableConnector = {
     innerTableMap: TableReduxStructure | undefined
     isShowInnerTableController: {

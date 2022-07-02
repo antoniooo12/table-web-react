@@ -1,13 +1,14 @@
 import {MReactDispSetter, WithOptional} from "../types/HelperTypes";
 import {Item, TableReduxStructure, TLineInformation, TTableLine} from "../redux/reduxTypes";
 import {Column, DefaultValue, TableStructure, TSelectOptions} from "../types/TableStructure";
-import {TInitialValue} from "../componets/Panels/onActions/onCreateLine";
 import {TBigPictureHeaderTitleCustom} from "../componets/BigPicture/BigPictureType";
 import {CustomFunctionMap} from "./customFunction";
 import React, {FC} from "react";
 import {TCell} from "../componets/Column/Cell/cellTypes";
 import {TLine} from "../componets/Line/Line";
 import {TransformedExternalLineToRedux} from "./TableWebAPI";
+import {TableWebCustomView} from "../componets/TableWeb/View/TableWebCustomViewTypes";
+import {HeaderCustomView} from "../componets/Header/CustomHeader/CustomHeaderType";
 
 export type TableButtons = {
     isShow: boolean
@@ -21,8 +22,11 @@ export type TTableInit = {
     customFunctionMap?: CustomFunctionMap
     customCells?: CustomCells
     customLine?: CustomLine
+    customTable?: TCustomTable
+    customHeader?: TCustomHeader
     tableButtons?: TableButtons
     setInnerTable?: SetInnerTable
+    isHeaderShow?: boolean
 }
 export type CustomCells = {
     table?: CustomCellMap<any>
@@ -33,18 +37,20 @@ export type TTableConnect = {
     setTableExternalState?: MReactDispSetter<TableReduxStructure>
     tableStructure: TableStructure
     tableData?: TransformedExternalLineToRedux[]
-    optionsMap?: Map<string, TSelectOptions[]>
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
     customCells?: CustomCells
     viewMode?: ViewMode
     customLine?: CustomLine
+    customTable?: TCustomTable
+    customHeader?: TCustomHeader
     tableButtons?: TableButtons
+    isHeaderShow?: boolean
     setInnerTable?: SetInnerTable
 }
 export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
 
-export type CustomCellComponent<T = unknown> = FC<CustomCellProps<T>>
+export type CustomCellComponent<T = unknown> = React.FC<{cellName:string}>
 export type CustomCell<T = any> = {
     Component: CustomCellComponent<T>
     cellParam?: {
@@ -74,8 +80,11 @@ export type CustomTableBigComponents = {
 }
 
 export type CustomComponents = {
-    headerBigComponents?: React.FC<CustomHeaderBigComponents>
-    tableBigComponents?: React.FC<CustomTableBigComponents>
+    headerBigComponents?: FC<CustomHeaderBigComponents>
+    tableBigComponents?: FC<CustomTableBigComponents>
 }
 
 export type CustomLine = FC<TLine>
+
+export type TCustomTable = FC<TableWebCustomView>
+export type TCustomHeader = FC<HeaderCustomView>

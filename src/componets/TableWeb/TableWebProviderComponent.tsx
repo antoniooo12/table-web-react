@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TableWebProcedure, TTableWeb} from "./TableWebProcedure";
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore, EmptyObject, Store} from "redux";
 import thunk from "redux-thunk";
 import {composeParams, rootTableReducer} from "../../redux";
 import {TableReducerActions, TableState} from "../../redux/reduxTypes";
-import {SetInnerTable} from "../Line/LineInnerTable/LineInnerTable";
 import {UpdateExternalStore} from "./utils/UtilsComponent/UpdateExternalStore";
 
 export type TTableStore =

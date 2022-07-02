@@ -2,8 +2,11 @@ import React, {useMemo} from 'react';
 import {CustomCellComponent} from "../../../../API/TableWebAPITypes";
 import {EProductInfo} from "../../tableExampleData/example";
 import cl from '../CustomCell.module.scss'
+import {useCellCustomContext} from "../../../../componets/Column/Cell/Custom/CellCustomContext";
 
-const SumOfProduct: CustomCellComponent<number> = ({lineInformation}) => {
+const SumOfProduct: CustomCellComponent = ({cellName}) => {
+    const {cellInformation, lineInformation} = useCellCustomContext<number>(cellName)
+
     const sum = useMemo(() => {
         const productCost = lineInformation.columns.get(EProductInfo.productCost)!.value as number
         const productCount = lineInformation.columns.get(EProductInfo.productCount)!.value as number
