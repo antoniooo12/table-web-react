@@ -8,7 +8,7 @@ const DeliveryTimeBefore: CustomCellComponent<string> = ({cellName}) => {
     const {cellInformation, lineInformation} = useCellCustomContext<string>(cellName)
 
     return (
-        <td >
+        <td style={{borderRight: 'none', borderLeft:'none', borderBottom: 'none'}} >
             <BaseInputText
                 externalValue={cellInformation.externalValue}
                 setExternalValue={cellInformation.setExternalValue}

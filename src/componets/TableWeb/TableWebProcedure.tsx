@@ -27,6 +27,16 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
         isHeaderShow,
     } = tableConnect
     const {tableLoadExternalData} = useActionsTable()
+    const customLineView = useMemo(() => {
+        if (viewMode === 'table') {
+            return customLine.table
+        } else {
+            if (!customLine.innerTable) {
+                throw  new Error('We can`t get a custom line to inner table')
+            }
+            return customLine.innerTable
+        }
+    }, [viewMode])
     const {shield} = tableStructure
     const checkedShield = shieldChecker(shield)
     const customCellMap: CustomCellMap | undefined = useMemo(() => {
@@ -66,11 +76,23 @@ export const TableWebProcedure: React.FC<TTableWeb> = React.memo(({tableConnect}
             value={tableWebContextData}
         >
             <CustomContext.Provider
-                value={{customCellMap, customFunctionMap, customComponents, CustomLine: customLine}}>
-                {tableConnect.customTable  ?
-                    <  tableConnect.customTable tableWebContext={tableWebContextData} shieldStructure={shield}/> :
-                    <TableWebView shieldStructure={shield} viewMode={viewMode} tableButtons={tableButtons} isHeaderShow={isHeaderShow}/>
+                value={{
+                    customCellMap,
+                    customFunctionMap,
+                    customComponents,
+                    customLine: customLine,
+                    customTable: tableConnect.customTable
+                }}>
+                {viewMode === 'table' &&
+                    <  tableConnect.customTable.table tableWebContext={tableWebContextData} shieldStructure={shield}/>}
+                {viewMode === 'innerTable' && tableConnect.customTable.innerTable &&
+                    <  tableConnect.customTable.innerTable tableWebContext={tableWebContextData}
+                                                           shieldStructure={shield}/>
                 }
+
+                {/*// <TableWebView shieldStructure={shield} viewMode={viewMode} tableButtons={tableButtons}*/}
+                {/*//               isHeaderShow={isHeaderShow}/>*/}
+
             </CustomContext.Provider>
         </TableWebContext.Provider>
 

@@ -7,11 +7,10 @@ import {CellText} from "../customCelles/BaseCells/CellText";
 import {EColumnClientInfo, EColumOrderInfo} from "../tableExampleData/example";
 import {DeliveryDay} from "../customCelles/DeliveryDay/DeliveryDay";
 import {DeliveryTimeBefore} from "../customCelles/DeliveryTimeBefore/DeliveryTimeBefore";
+import {SumOfOrder} from "../customCelles/SumOfOrder/SumOfOrder";
 
 
 const CustomLine: React.FC<TLine> = (props) => {
-    // const CellClient = useGetCell<EColumnClientInfo>([EColumnClientInfo.clientName, EColumnClientInfo.clientComment, EColumnClientInfo.clientPhone], {})
-    // const CellOrder = useGetCell<EColumOrderInfo>([EColumOrderInfo.orderSum, EColumOrderInfo.deliveryTimeBefore, EColumOrderInfo.deliveryDay, EColumOrderInfo.deliveryAddress, EColumOrderInfo.deliveryTimeAfter, EColumOrderInfo.deliveryComment], {})
     const className = clsx({
         [cl.delete]: props.toDelete
     })
@@ -20,19 +19,21 @@ const CustomLine: React.FC<TLine> = (props) => {
             <CellText cellName={EColumnClientInfo.clientName}/>
             <CellText cellName={EColumnClientInfo.clientPhone}/>
             <CellText cellName={EColumnClientInfo.clientComment}/>
-            <td>
-                <table style={{width: '100%'}}>
-                    <tr>
-                        <DeliveryDay cellName={EColumOrderInfo.deliveryDay}/>
-                    </tr>
-                    <tr style={{width: '100%'}}>
-                        <DeliveryTimeBefore cellName={EColumOrderInfo.deliveryTimeAfter}/>
-                        <DeliveryTimeBefore cellName={EColumOrderInfo.deliveryTimeBefore}/>
-                    </tr>
-                </table>
+            <CellText cellName={EColumOrderInfo.deliveryAddress}/>
+            <td style={{height: '1px'}}>
+                    <table style={{width: '100%', height:'100%', border: 'none'}}>
+                        <tr style={{height:'100%'}}>
+                            <DeliveryDay  cellName={EColumOrderInfo.deliveryDay}/>
+                        </tr>
+                        <tr >
+                            <DeliveryTimeBefore cellName={EColumOrderInfo.deliveryTimeAfter}/>
+                            <DeliveryTimeBefore cellName={EColumOrderInfo.deliveryTimeBefore}/>
+                        </tr>
+                    </table>
             </td>
-            {/*{CellOrder.orderSum}*/}
-            {/*{CellOrder.deliveryComment}*/}
+            <SumOfOrder cellName={EColumOrderInfo.orderSum}/>
+            <CellText cellName={EColumOrderInfo.deliveryComment}/>
+
             <LineViewButtons/>
         </tr>
     );

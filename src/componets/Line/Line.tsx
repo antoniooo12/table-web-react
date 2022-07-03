@@ -30,15 +30,18 @@ const Line: React.FC<TLine> = React.memo((props) => {
     const {lineData, columnsData, lineIdt, status, wasEdit, toDelete} = props
     const {columns, shield, viewMode, setInnerTable} = useContext(TableWebContext)
     const {styleGrid, lineBaseClass, innerTable,} = useLineService(props)
-    const {CustomLine} = useCustomContext()
+    const customComponents = useCustomContext()
 
     const tableInit: TTableInit | undefined = useMemo(() => {
         if (shield.innerTable) {
             const innerTableData = setInnerTable && setInnerTable({...props})
-            return {
+            const tableInit: TTableInit = {
                 tableStructure: shield.innerTable,
                 externalData: innerTableData,
+                customLine: customComponents.customLine,
+                customTable: customComponents.customTable,
             }
+            return tableInit
         }
     }, [])
     return (
@@ -56,14 +59,8 @@ const Line: React.FC<TLine> = React.memo((props) => {
                     value={{styleGrid}}
                 >
                     <>
-                        {CustomLine ?
-                            <LineViewCustom {...props} />:
-                            // <CustomLine {...props}/> :
-                            <tr>
-                                <LineViewColumns/>
-                                <LineViewButtons/>
-                            </tr>
-                        }
+
+                        <LineViewCustom {...props} />
                     </>
                     <tr>
                         {shield.innerTable && tableInit &&

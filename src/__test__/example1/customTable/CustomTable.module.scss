@@ -1,7 +1,13 @@
 .table {
   table {
+    height: 1px;
     table-layout: fixed;
     width: fit-content;
+  }
+
+  td {
+    min-height: 10px;
+
   }
 
   table, th, td {

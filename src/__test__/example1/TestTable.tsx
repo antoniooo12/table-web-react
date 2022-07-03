@@ -8,6 +8,8 @@ import {CustomLine} from "./customLine/customLine";
 import {exampleData1} from "./tableExampleData/exampleData1";
 import {innerTableData} from "./tableExampleData/exampleInnerTableData1";
 import {CustomTable} from "./customTable/CustomTable";
+import {CustomLineInnerTable} from "./customLine/CustomLineInnerTable/CustomLineInnerTable";
+import {CustomTableInnerTable} from "./customTable/CustomTableInnerTable";
 
 
 const HeaderTitle: React.FC<CustomHeaderBigComponents> = ({lineData}) => {
@@ -36,9 +38,9 @@ const TestTable = () => {
         externalData: exampleData1,
         customComponents: components,
         // customCells: customCells,
-        customLine: CustomLine,
+        customLine: {table: CustomLine, innerTable: CustomLineInnerTable},
         tableButtons: {isShow: true},
-        customTable: CustomTable,
+        customTable: {table: CustomTable, innerTable: CustomTableInnerTable},
         setInnerTable,
     })
 

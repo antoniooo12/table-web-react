@@ -1,12 +1,19 @@
 import {createContext, useContext} from "react";
-import {CustomCellMap, CustomComponents, CustomLine} from "../../API/TableWebAPITypes";
+import {
+    CustomCellMap,
+    CustomComponents,
+    CustomLine,
+    CustomLineWrapper,
+    CustomTableWrapper
+} from "../../API/TableWebAPITypes";
 import {CustomFunctionMap} from "../../API/customFunction";
 
 export type CustomContext = {
     customComponents?: CustomComponents
     customFunctionMap?: CustomFunctionMap
     customCellMap?: CustomCellMap
-    CustomLine?: CustomLine
+    customLine: CustomLineWrapper
+    customTable: CustomTableWrapper
 }
 
 export const CustomContext = createContext<CustomContext>({} as CustomContext)

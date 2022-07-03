@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {CellCustomContext} from "../../Column/Cell/Custom/CellCustomContext";
 import {TLine} from "../Line";
 import {useInnerTable} from "../../TableWeb/InnerTableConnector/InnerTableConnector";
@@ -13,11 +13,20 @@ import {setCellValue} from "./utils";
 export type TToCell = { setValue: (val: any) => void }
 const LineViewCustom: React.FC<TLine> = (props) => {
     const {innerTableMap} = useInnerTable()
-    const {CustomLine} = useCustomContext()
+    const {customLine} = useCustomContext()
 
-    const {columns} = useTableWebContext()
+    const {columns, viewMode} = useTableWebContext()
     const {tableChangeCell} = useActionsTable()
-
+    const CustomLineView = useMemo(() => {
+        if (viewMode === 'table' ) {
+            return customLine.table
+        } else {
+            if(!customLine.innerTable){
+                throw  new Error('We can`t get a custom line to inner table')
+            }
+            return customLine.innerTable
+        }
+    }, [viewMode])
     const cellMap: Map<string, TCell2<unknown>> = [...props.columnsData.values()].reduce((accum, col) => {
         const cellParam = recursiveMapSearch(columns, col.nameColumn, 'subColumns').cellParam
         const setterToRedux = setCellValue(tableChangeCell)(props.lineData.id, col.nameColumn)
@@ -54,7 +63,7 @@ const LineViewCustom: React.FC<TLine> = (props) => {
                 }}
             >
                 <>
-                    {CustomLine && <CustomLine {...props}/>}
+                    {customLine && <CustomLineView {...props}/>}
                 </>
             </CellCustomContext.Provider>
         </>

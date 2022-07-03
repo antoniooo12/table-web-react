@@ -8,7 +8,7 @@ const DeliveryDay: CustomCellComponent<string> = ({cellName}) => {
     const {cellInformation, lineInformation} = useCellCustomContext<string>(cellName)
 
     return (
-        <td colSpan={2} style={{width: '100%'}}>
+        <td colSpan={2} style={{width: '100%', borderRight: 'none', borderLeft:'none', borderTop:'none'}}>
             <BaseInputText
                 externalValue={cellInformation.externalValue}
                 setExternalValue={cellInformation.setExternalValue}
