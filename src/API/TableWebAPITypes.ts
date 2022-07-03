@@ -14,8 +14,8 @@ export type TableButtons = {
     isShow: boolean
 }
 export type SetInnerTable = (lineInformation: TLine) => TableExternalShieldData | undefined
-export type CustomLineWrapper ={ table: CustomLine, innerTable?: CustomLine }
-export type CustomTableWrapper ={ table: TCustomTable, innerTable?: TCustomTable }
+export type CustomLineWrapper = { table: CustomLine, innerTable?: CustomLine }
+export type CustomTableWrapper = { table: TCustomTable, innerTable?: TCustomTable }
 export type TTableInit = {
     tableStructure: TableStructure,
     externalData?: TableExternalShieldData,
@@ -52,7 +52,7 @@ export type TTableConnect = {
 }
 export type CustomCellProps<T = unknown> = { cellInformation: TCell<T>, lineInformation: TTableLine }
 
-export type CustomCellComponent<T = unknown> = React.FC<{ cellName: string }>
+export type CustomCellComponent<T = unknown> = React.FC<{ cellName: string, className?: string }>
 export type CustomCell<T = any> = {
     Component: CustomCellComponent<T>
     cellParam?: {

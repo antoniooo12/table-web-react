@@ -11,9 +11,11 @@ const CellSum: CustomCellComponent<number> = ({cellName}) => {
 
     const cost = useGetCellValue(EColumns2.cost) as number
     const count = useGetCellValue(EColumns2.count) as number
-
+    console.log('cost: ' + cost)
+    console.log('count: ' +count)
     const sum = roundNumber(cost * count)
     useEffect(() => {
+
         cellInformation.setExternalValue(sum)
     }, [sum])
     return (
